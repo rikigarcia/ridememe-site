@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RideMeme — Philippine &amp; world motoring news, updated hourly</title>
-<meta name="description" content="The motoring news river: Philippine car and motorcycle headlines first, the world's right behind. Auto-curated from 54 publications.">
+<meta name="description" content="The motoring news river: Philippine car and motorcycle headlines first, the world's right behind. Auto-curated from 55 publications.">
 <style>
   :root {
     --bg:#faf9f7; --card:#ffffff; --ink:#1c1b1a; --muted:#6b6862;
@@ -43,6 +43,11 @@
   .hed { font-size:16.5px; font-weight:650; line-height:1.3; margin:0; letter-spacing:-0.2px; }
   .hed a:hover { color:var(--accent); }
   .snip { font-size:13px; color:var(--muted); margin:5px 0 0; }
+  .river-sep { display:flex; align-items:center; gap:10px; margin:18px 0 12px;
+                font-size:12.5px; font-weight:700; text-transform:uppercase;
+                letter-spacing:1.2px; color:var(--muted); }
+  .river-sep::after { content:""; flex:1; height:1px; background:var(--line); }
+  .river-sep::before { content:""; width:4px; height:16px; border-radius:2px; background:var(--accent); }
   .more { margin-top:9px; display:flex; flex-wrap:wrap; gap:5px; align-items:center; }
   .morelabel { font-size:11px; text-transform:uppercase; letter-spacing:0.6px; color:var(--muted); margin-right:3px; }
   .chip { font-size:12px; background:var(--chipbg); border:1px solid var(--line);
@@ -72,11 +77,62 @@
   footer { background:var(--footbg); color:#b7b2aa; margin-top:8px; padding:20px;
             font-size:12px; text-align:center; }
   footer a { color:#e6e1d9; text-decoration:underline; }
+  /* header right group: search + share */
+  .hgroup { margin-left:auto; display:flex; align-items:center; gap:14px; }
+  .updated { margin-left:0; flex-basis:100%; text-align:right; }
+  .search { display:flex; gap:0; }
+  .search input { font:inherit; font-size:13px; padding:6px 11px; width:180px; color:var(--ink);
+                   background:var(--card); border:1px solid var(--line); border-right:none;
+                   border-radius:8px 0 0 8px; outline:none; }
+  .search input:focus { border-color:var(--accent); }
+  .search button { font:inherit; font-size:13px; padding:6px 13px; cursor:pointer; color:#fff;
+                    background:var(--accent); border:1px solid var(--accent); border-radius:0 8px 8px 0; }
+  .search button:hover { background:var(--accent-dark); border-color:var(--accent-dark); }
+  .noresults { display:none; color:var(--muted); padding:18px 2px; font-size:13px; }
+  /* site share bar (top-right) */
+  .sharebar { display:flex; align-items:center; gap:6px; }
+  .sharelabel { font-size:11px; text-transform:uppercase; letter-spacing:0.7px; color:var(--muted); }
+  .sbtn { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px;
+           padding:0; cursor:pointer; color:var(--muted); background:var(--card);
+           border:1px solid var(--line); border-radius:50%; }
+  .sbtn svg { width:15px; height:15px; fill:currentColor; }
+  .sbtn:hover { color:#fff; background:var(--accent); border-color:var(--accent); }
+  .sbtn.copy.done { color:#fff; background:#0a7d28; border-color:#0a7d28; }
+  /* sponsor posts — text left, prominent logo right (Techmeme style) */
+  .sponsors { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+  .sp-card { display:flex; align-items:center; gap:14px; background:var(--card);
+              border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .sp-card:hover { border-color:var(--accent); }
+  .sp-text { flex:1; min-width:0; }
+  .sp-by { display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.7px;
+            color:var(--muted); margin-bottom:4px; }
+  .sp-title { display:block; font-size:14px; font-weight:700; line-height:1.3; }
+  .sp-card:hover .sp-title { color:var(--accent); }
+  .sp-body { font-size:12.5px; color:var(--muted); margin:5px 0 0; }
+  .sp-logo { flex-shrink:0; width:auto; max-width:128px; max-height:80px;
+              object-fit:contain; }
+  .sp-card.no-logo { display:block; }
+  /* newsletter */
+  .nl-card { background:var(--card); border:1px solid var(--line); border-radius:10px;
+              padding:14px 15px; margin-bottom:28px; }
+  .nl-blurb { font-size:13px; color:var(--muted); margin:0 0 10px; }
+  .nl-form { display:flex; gap:0; }
+  .nl-input { font:inherit; font-size:13px; flex:1; min-width:0; padding:8px 11px; color:var(--ink);
+               background:var(--bg); border:1px solid var(--line); border-right:none;
+               border-radius:8px 0 0 8px; outline:none; }
+  .nl-input:focus { border-color:var(--accent); }
+  .nl-btn { font:inherit; font-size:13px; font-weight:600; padding:8px 14px; cursor:pointer;
+             color:#fff; background:var(--accent); border:1px solid var(--accent);
+             border-radius:0 8px 8px 0; }
+  .nl-btn:hover { background:var(--accent-dark); border-color:var(--accent-dark); }
+  .nl-link { display:inline-block; border-radius:8px; text-align:center; }
   @media (max-width:780px) {
     .wrap { flex-direction:column; }
     aside { max-width:none; }
     header { padding:14px 16px 10px; }
-    .updated { margin-left:0; }
+    .hgroup { margin-left:0; width:100%; flex-wrap:wrap; gap:10px; }
+    .search { flex:1; min-width:160px; }
+    .search input { flex:1; width:auto; }
   }
 </style>
 </head>
@@ -84,443 +140,484 @@
 <div class="stripe"></div>
 <header>
   <h1 class="brand"><span class="ride">Ride</span>Meme</h1>
-  <span class="tag">Motoring news, Philippines first &middot; 54 publications</span>
-  <span class="updated">Updated Monday, June 15, 2026 1:00 AM PHT</span>
+  <span class="tag">Motoring news, Philippines first &middot; 55 publications</span>
+  <div class="hgroup">
+    <form class="search" id="searchform" role="search">
+      <input id="q" type="search" placeholder="Search headlines&hellip;" aria-label="Search headlines" autocomplete="off">
+      <button type="submit">Search</button>
+    </form>
+    <div class="sharebar" aria-label="Share RideMeme"><span class="sharelabel">Share</span><a class="sbtn" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Frikigarcia.github.io%2Fridememe-site%2F" target="_blank" rel="noopener" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.5-1.5h1.7V3.6c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.1H7.2V13h2.6v8h3.7z"/></svg></a><a class="sbtn" href="https://twitter.com/intent/tweet?text=RideMeme%20%E2%80%94%20Philippine%20%26%20world%20motoring%20news%2C%20updated%20hourly&amp;url=https%3A%2F%2Frikigarcia.github.io%2Fridememe-site%2F" target="_blank" rel="noopener" aria-label="Share on X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.3-5.6L6.4 21H3.3l7-8L2.6 3h6l3.9 5.1L17.5 3zm-1 16h1.6L7.6 4.7H5.9L16.5 19z"/></svg></a><a class="sbtn" href="https://bsky.app/intent/compose?text=RideMeme%20%E2%80%94%20Philippine%20%26%20world%20motoring%20news%2C%20updated%20hourly%20https%3A%2F%2Frikigarcia.github.io%2Fridememe-site%2F" target="_blank" rel="noopener" aria-label="Share on Bluesky"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.3 4.7C8.6 6.4 11 9.9 12 11.8c1-1.9 3.4-5.4 5.7-7.1 1.6-1.2 4.3-2.2 4.3 1 0 .6-.4 5.2-.6 5.9-.7 2.5-3.2 3.1-5.5 2.7 4 .7 5 2.9 2.8 5.2-4.2 4.3-6-1.1-6.5-2.4l-.2-.5-.2.5c-.5 1.3-2.3 6.7-6.5 2.4-2.2-2.3-1.2-4.6 2.8-5.2-2.3.4-4.8-.2-5.5-2.7C2.4 11.3 2 6.7 2 6.1c0-3.2 2.7-2.2 4.3-1.4z"/></svg></a><button class="sbtn copy" type="button" data-link="https://rikigarcia.github.io/ridememe-site/" aria-label="Copy link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 13.4a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1.5 1.5 1.4 1.4L15 6.8a1.5 1.5 0 0 1 2.1 2.1l-3 3a1.5 1.5 0 0 1-2.1 0l-1.4 1.5zm2.8-2.8a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1.5-1.5-1.4-1.4L9 18.2a1.5 1.5 0 0 1-2.1-2.1l3-3a1.5 1.5 0 0 1 2.1 0l1.4-1.5z"/></svg></button></div>
+  </div>
+  <span class="updated">Updated Monday, June 15, 2026 1:11 AM PHT</span>
 </header>
 <div class="wrap">
   <main>
     
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.autocar.co.uk">Autocar</a>
-            <span class="time">Jun 12, 9:22 PM</span></div>
-          <h3 class="hed"><a href="https://www.autocar.co.uk/car-news/motorsport/genesis-magma-gt3-converts-supercar-concept-hardcore-racer">Genesis Magma GT3 converts supercar concept into hardcore racer</a></h3>
-          <p class="snip">Stylish supercar sprouts wings and extra lights in a conversion from road to racetrack The new Genesis Magma GT3 is the first look at how the Korean manufacturer will expand its sports car racing programme beyond its hyp&hellip;</p>
-          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://www.caranddriver.com/news/a71564714/genesis-gt3-concept-le-mans-reveal/" title="Genesis Unveils a New GT3 Concept Ahead of the 2026 24 Hours of Le Mans">Car and Driver</a><a class="chip" href="https://news.google.com/rss/articles/CBMie0FVX3lxTE5HV1VGMG45OS1rNGVFakxVNi1jTlhfU1hjT1lLelBiX1hSb3B4TXJaSGpJOTJEeGt0QllKX1QyR2xRWTc4U3ZPYmVmR3RuYy1qU0djemxLUm5PTGNuU05PTGNfU2xFc1R6b0duMTctNXlNNXJQYi14R3lrSQ?oc=5" title="Yowzer! The New Genesis Magma GT3 Concept Is Straight Wicked">MotorTrend</a><a class="chip" href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxOWlVnQ2ZTNDNvWF9lRkt4eWIxLVRXTFY5bXo0SGZJRklxNENfWFpZbEItN3VxdWNfcXJnNWk3NWo0aWxlQlF2TmJMeFMyX09pZC1fZnh4V2JLb1JiQUdhX2xEOWJmUUpZSWlnaFoxTGFnWDhoclpxZUhPNmw4cDE3QjVmOWhzYWdCZVl3ZmR3UWRVcGI5cXRGLWZicEZJc2Nic2ZuZ09FRE54bVk?oc=5" title="Genesis Unveils Magma GT3 Concept at the 24 Hours of Le Mans">autoevolution</a><a class="chip" href="https://www.autoexpress.co.uk/genesis/369790/genesis-magma-gt3-concept-shows-motorsport-focus-hyundais-luxury-brand" title="Genesis Magma GT3 Concept shows-off motorsport focus of Hyundai’s luxury brand">AutoExpress</a></div>
-        </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.manilatimes.net">Manila Times Fast Times</a>
-            <span class="time">Jun 15, 12:18 AM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxORlBCNTdVUjZuTGFWbnRDWGx6R3VyaG5QTW1pZTN4bGJKY3JXLUxUWHBralMwdnVlMDNvYldtOGlIeWRGZmRHSlUwbndDY0pRc3l5ZFltSVM3MTF5U0V5XzFiRklVaHZaSXRyV2phR3o5N3NheWFlX1NNb05pVkNYWmVDMjYyQzdTb00tTVUyX1pPcjVjUTFR0gGcAUFVX3lxTE9TQzNNNnVWVExtNEhpS0pZV0xZOEw0SGJTb3ZGeUZuR1VuSzZDdklUeWkxS2UtdkYwNXZVRnhMckVPdTNIZkFyM2dnaGpzSkxpa0g2TjY3eVM2NXVWNG1nXzFDQ3VjWEtHM0RObmJkTjN4dUhrbXVVYU1Pd2otVnlFLXNscGdBc3BjTEpnOV92V2RqWDJocnBRRFU5Qg?oc=5">Laguna bypass road completion ordered</a></h3>
-          <p class="snip">Laguna bypass road completion ordered The Manila Times&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://businessmirror.com.ph">BusinessMirror Motoring</a>
-            <span class="time">Jun 15, 12:03 AM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE1lZWNvOTV0ZURSd0JsYzdHWnZ0NEpMTzNER2NsazQwMFN5R2pfc3g5WHJLVVJWekRKSWpSUk9CRGU5aFoxaUJXNVN5NjBhZGJkdVR2S1pwVzh5QmpBQUVXczl0MC16c3FkQUk0ZDZBZ05Ea1ZkM1Z2LXRYME8?oc=5">Editorial Cartoon June 15, 2026</a></h3>
-          <p class="snip">Editorial Cartoon June 15, 2026 BusinessMirror&hellip;</p>
-          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://news.google.com/rss/articles/CBMifEFVX3lxTE5yTVo1b1djejRCSmt5M2VJTHZBQk5rV2tzSEpGaXFxMEpuVHZWaHAyckVoZFQwRklpT1Zaa1gwbk5GRjRmcWJHYzNROEJUdGhiZHZPd2VXNlJsdnNRM1FleC02UTNJOFJ1aTBsQXByYjloRkxnSzV6Z1FCMDg?oc=5" title="Editorial Cartoon June 12, 2026">BusinessMirror Motoring</a></div>
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.thedrive.com">The Drive</a>
-            <span class="time">Jun 15, 1:00 AM</span></div>
-          <h3 class="hed"><a href="https://www.thedrive.com/news/darn-some-chevy-corvette-zr1-owners-report-paint-chipping-at-180-mph-and-above">Darn: Some Chevy Corvette ZR1 Owners Report Paint Chipping at 180 MPH and Above</a></h3>
-          <p class="snip">GM covered repair costs for at least one owner, whose rear wing seemed to create so much downforce that it damaged the paint. The post Darn: Some Chevy Corvette ZR1 Owners Report Paint Chipping at 180 MPH and Above appea&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
-            <span class="time">Jun 15, 12:53 AM</span></div>
-          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/chrysler-pacificas-are-driven-10-times-more-miles-than-ford-mustangs/">The Mustang Is America’s Least-Driven Car Only If You Count One Kind Of Owner</a></h3>
-          <p class="snip">iSeeCars ranked the Mustang dead last for annual mileage, but the study only counted three-year-olds sold in 2025, not the owners who kept driving theirs&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.caranddriver.com">Car and Driver</a>
-            <span class="time">Jun 15, 12:30 AM</span></div>
-          <h3 class="hed"><a href="https://www.caranddriver.com/news/a71550204/1979-jeep-cherokee-bring-a-trailer-auction/">This 1979 Jeep Cherokee on Bring a Trailer Strikes Like a Viper</a></h3>
-          <p class="snip">It&#x27;s been restored and modified with a Viper V-10 under the hood.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 15, 12:25 AM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2189308/how-much-can-mercedes-benz-sprinter-van-tow/">How Much Can You Tow With A Mercedes Sprinter Van?</a></h3>
-          <p class="snip">The Mercedes-Benz Sprinter is a versatile van that comes in numerous configurations. While towing isn&#x27;t its main purpose, here&#x27;s how much you can haul with one.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.motor1.com">Motor1</a>
-            <span class="time">Jun 15, 12:00 AM</span></div>
-          <h3 class="hed"><a href="https://www.motor1.com/news/798623/hybrid-engine-efficiency-breakthrough/">This New Hybrid Engine Achieves A Breakthrough In Efficiency</a></h3>
-          <p class="snip">Dongfeng’s new 2.0-liter hybrid engine reaches 45.5% thermal efficiency, marking a major step forward in combustion tech.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 11:25 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2190445/quickest-manual-transmission-drag-racing-cars/">How Drag Racers Are Running In The Sixes With Manual Transmissions</a></h3>
-          <p class="snip">While much of it comes down to the driver&#x27;s skill, one important component plays a crucial role in allowing manual transmission drag cars to match automatics.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
-            <span class="time">Jun 14, 11:16 PM</span></div>
-          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/mitsubishi-lancer-revival-nissan/">Here’s The Cheapest Way Mitsubishi Could Revive The Lancer, And It’s All Nissan</a></h3>
-          <p class="snip">A reborn Lancer riding on Sentra hardware would be Mitsubishi&#x27;s cheapest US car, but not the rally hero the badge made famous&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.thedrive.com">The Drive</a>
-            <span class="time">Jun 14, 11:00 PM</span></div>
-          <h3 class="hed"><a href="https://www.thedrive.com/news/new-colorado-law-gets-it-right-by-requiring-responsible-ev-battery-recycling">New Colorado Law Gets It Right by Requiring Responsible EV Battery Recycling</a></h3>
-          <p class="snip">The state is making automakers responsible for recycling any EV batteries that don&#x27;t get reused—and asking for receipts. The post New Colorado Law Gets It Right by Requiring Responsible EV Battery Recycling appeared firs&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.autoblog.com">Autoblog</a>
-            <span class="time">Jun 14, 11:00 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxNYnJteElxcHRRbXdsRnJ0RnNXSDJSRDhQTmtEMEdJeUVOeGNXUGh5RldCdDdqTENzcU1hWllOX0lSbEhEdUVZWVo0VlZzQ3dxaTEzYzFPS3VSQjd0V2tVcm9NRjJUOUZMUVJNaHYtdGw2cWhwRUx1ZE0tbl9ibzhHWnR2MlAteElMSDZleDlaUE5vTWFCWmc?oc=5">7 Engines From Major Automakers Raising Red Flags In 2026</a></h3>
-          <p class="snip">7 Engines From Major Automakers Raising Red Flags In 2026 Autoblog&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.autocar.co.uk">Autocar</a>
-            <span class="time">Jun 14, 11:00 PM</span></div>
-          <h3 class="hed"><a href="https://www.autocar.co.uk/car-news/used-cars/my-70-year-old-v8-chevy-350-easier-live-ford-focus">My 70-year-old V8 Chevy 350 is easier to live with than a Ford Focus</a></h3>
-          <p class="snip">This heavily modified supercharged Small-block also proves patience is a virtue Elliot Florio has been waiting rather a long time to own a supercharged, two-door &#x27;55 Chevy 350 sedan . &quot;I&#x27;d been looking for one for what f&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="vinfast philippines prices e-scooters, opens early booking program carguide.ph">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.carguide.ph">CarGuide.PH</a>
             <span class="time">Jun 14, 5:06 PM</span></div>
           <h3 class="hed"><a href="https://www.carguide.ph/2026/06/vinfast-philippines-prices-e-scooters.html">VinFast Philippines Prices E-Scooters, Opens Early Booking Program</a></h3>
           <p class="snip">VinFast has officially launched the Early Booking Program for three e-motorcycle models in the Philippines, including the VinFast Evo, VinFast Feliz II, and VinFast Viper. Read More »&hellip;</p>
           
         </article>
-        <article class="item">
+        <article class="item" data-search="red hot all-electric chili pepper: 2026 porsche cayenne electric first drive carguide.ph">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.carguide.ph">CarGuide.PH</a>
             <span class="time">Jun 14, 4:38 PM</span></div>
           <h3 class="hed"><a href="https://www.carguide.ph/2026/06/red-hot-all-electric-chili-pepper-2026.html">Red Hot All-Electric Chili Pepper: 2026 Porsche Cayenne Electric First Drive</a></h3>
           <p class="snip">Legends aren’t born; they’re forged. Such is the history associated with the Cayenne, a model that’s historically important for Porsche. After all, if not for its very existence, the German sportscar maker would have suc&hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 10:25 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2190345/mercedes-540k-special-roadster-1930s-supercharged-grand-tourer/">Why The Mercedes 540K Special Roadster Was The 1930s Ultimate Supercharged Grand Tourer</a></h3>
-          <p class="snip">From its supercharged straight-8 to its rarity and values on the collector&#x27;s market today, this Mercedes-Benz roadster embodies peak pre-war grand touring.&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="xpress launches own tnvs program called xpress go carguide.ph">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.carguide.ph">CarGuide.PH</a>
             <span class="time">Jun 14, 4:17 PM</span></div>
           <h3 class="hed"><a href="https://www.carguide.ph/2026/06/xpress-launches-own-tnvs-program-called.html">Xpress Launches Own TNVS Program Called Xpress Go</a></h3>
           <p class="snip">Xpress officially launches Xpress Go, a Transport Network Vehicle Service (TNVS) program that charges zero commission to Filipino drivers for their first 60 days on the platform, providing immediate fuel crisis relief wh&hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://businessmirror.com.ph">BusinessMirror Motoring</a>
-            <span class="time">Jun 14, 6:39 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxNcC1OTVVrVEhBVFQxLWxOOFhvVlg0UUVGSE8zZTRPLS1JNzZnQ29xZHNTbUJjUTJ4eDVEMXZpdzd1QWg0YkpZX3FHWkNiWi1JSnVUdkliU3cyQTBGcHpieEp6VmsxOE1MSi1BLW1oQjRfNjVHMVJqUHd1NnRUWXB5WS0zVEVGYmFrY01ZbzkzVUxzN3dyVmg1MWxnamZzUWVWTVFleG5JdjJad2xTS2FySUN0b0ZyWFhGdlRVaklPZHA5ZFE?oc=5">How Americans celebrated the bicentennial—with fireworks, a Freedom Train and Farrah</a></h3>
-          <p class="snip">How Americans celebrated the bicentennial—with fireworks, a Freedom Train and Farrah BusinessMirror&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
-            <span class="time">Jun 14, 9:39 PM</span></div>
-          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/iowa-speed-limit-increase/">Iowa Spent Years Capping Rural Highways At 55, That Ends July 1</a></h3>
-          <p class="snip">A new Iowa law increases the default rural highway speed limit while offering protections for some speeding violations&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="byd dolphin glx vs mg 4 urban ev autodeal">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autodeal.com.ph">AutoDeal</a>
             <span class="time">Jun 14, 6:29 PM</span></div>
           <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMijgFBVV95cUxNREVpZnpUaWh5MEtObDV5RjdXay1QZmVTdmpiSDFvYzN3c2ZJckl0UFc1QTNkenA1aEpCZUxWSENQaTlkcDRXQTl2aE1jZU1TZEJGaG9zdXBHVmh6MEl6bmdBU3lRY3dzaEZnbDNlT0FYRzFJLWpxV0tDLXhwYUkxYzRpdHBzaXB0OGxrcVFn?oc=5">BYD Dolphin GLX vs MG 4 Urban EV</a></h3>
           <p class="snip">BYD Dolphin GLX vs MG 4 Urban EV AutoDeal&hellip;</p>
           <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://news.google.com/rss/articles/CBMikwFBVV95cUxOUWFSMm9Idm9Yb3NSZGtEWm85YS11eFJLb0wxOXpOb28wR1VXQWFaRGhLb1JMZkdwNjAzQmp3M2JfY0pkdy1PeHc0V2Z4LTBPbHBwR2tMSnRQNXJ2cGVaTm5KMXk1eklxdjMyMm1JR2dvamhJRnFMeG0taUxUSTJfSHVDMVZkakk4a0JjUnNNeDRtcmM?oc=5" title="BYD eMAX 7 Standard vs MG 4 Urban EV">AutoDeal</a></div>
         </article>
-        <article class="item">
+        <article class="item" data-search="jac ytterby air 405 vs mg 4 urban ev autodeal">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autodeal.com.ph">AutoDeal</a>
             <span class="time">Jun 14, 6:29 PM</span></div>
           <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNQUdpenVMRkM5ejhoY01CY290dEVNX21ySGZRd1FYVFNxdXMwck9EQ3dfR3ZVRTY0MUUtMmNjNmRqNklfcy1kT0pVcTV5dXJQNkk5bzVmdXJoSnc5YzZVZEJDU1hDYmliTUs1MjJ3aXpfNmN4WHhTRU5EWTdzZXZqZUUtdGRZa0JxbUFR?oc=5">JAC Ytterby Air 405 vs MG 4 Urban EV</a></h3>
           <p class="snip">JAC Ytterby Air 405 vs MG 4 Urban EV AutoDeal&hellip;</p>
           
         </article>
-        <article class="item">
+        <article class="item" data-search="denza b5 hev vs mg rx9 phev autodeal">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autodeal.com.ph">AutoDeal</a>
             <span class="time">Jun 14, 6:29 PM</span></div>
           <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQcTY4c2Z6cXowTWxKd1pjY2c3MDBLZDJxTTFRNlNpZ0FjQTh6R3dvblh4Y0M2Q0hnMUN5MmxDVFVSaWVsNk4xYU1pLXVkT0Y1RGpsdF9SV2xzNW1ub0JUc2RBRW14WlBIZ0FKQ01uc2hvRWFuSDVZSlU5OEhCYk9WZnVzVkJjc1k?oc=5">DENZA B5 HEV vs MG RX9 PHEV</a></h3>
           <p class="snip">DENZA B5 HEV vs MG RX9 PHEV AutoDeal&hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.visordown.com">Visordown</a>
-            <span class="time">Jun 14, 10:30 PM</span></div>
-          <h3 class="hed"><a href="https://www.visordown.com/news/new-ps475-ruroc-at40-carbon-gold-chrome-has-landed">New £475 Ruroc AT4.0 Carbon Gold Chrome has landed</a></h3>
-          <p class="snip">Gold seems to be the ‘in’ colour right now, at least if you’re Ruroc that is, after the Gloucester-based company unveiled its latest gold-coloured helmet.&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="the changan eado plus luxe shows simple done right carguide.ph">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.carguide.ph">CarGuide.PH</a>
             <span class="time">Jun 14, 3:43 PM</span></div>
           <h3 class="hed"><a href="https://www.carguide.ph/2026/06/the-changan-eado-plus-luxe-shows-simple.html">The Changan Eado Plus Luxe Shows Simple Done Right</a></h3>
           <p class="snip">Let’s face it, cars nowadays cost a lot of money. Anything priced at the 1.1-1.5 million mark is considered “good value,” despite that number representing what a Camry or Montero Sport cost around a decade ago. It’s a sa&hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 9:25 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2192940/car-projects-watching-youtube-reader-question/">What Car Projects Are You Watching Or Subscribed To On YouTube?</a></h3>
-          <p class="snip">What&#x27;s a YouTuber car project or project channel that you look forward to watching when an update comes around?&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="hot!!! 2021 toyota hiace super grandia elite for sale at affordable price! philkotse">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://philkotse.com/news">Philkotse</a>
             <span class="time">Jun 14, 6:00 PM</span></div>
           <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMizwFBVV95cUxQdkxRX1dtSTQzTlBycVJRUk9pdW5oVFc3UWJhOWpETElIOVk5aTBkOHk1bnZwX2xTOW5qM3ZiU2dmOU9wYXZFNXM3RG1xZmJjU3BPSHM2OGpjbGtsQndCR2Z0U2xDaGVFSnZDcktzamlZYlVNWkl6YnpXejhhanFzb0NZMUZjbE81NzAzUE5lT1pya2ZYRVZzOVMza1dWWUtpNVFGUDBYM09kZ2s0VDlSSHJXN2Z2R2NHQVpBMy1WMTVUdnFGN0ZuTHd4Ykt5VzA?oc=5">HOT!!! 2021 Toyota Hiace Super Grandia Elite for sale at affordable price!</a></h3>
           <p class="snip">HOT!!! 2021 Toyota Hiace Super Grandia Elite for sale at affordable price! Philkotse&hellip;</p>
           <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxNZXFqSFp3cHVBMHktV0NjOGd4SGZPbmNXZkdOV2U2NWNteDVEUi1EQnU1YU5iWWU0aVpqSTR5S3oyT0xJaFJzZGNHbjNnRXMtOEF1YjZBcWJyVXdpVGthQVdEZkwyRFkzZU0xWXRmSm5GRUJ5VTY2TjU5YTdRRTc5MXd5TTF4OS1VYUxlX0xfT1BxZThrZ1NXRmdqaVphWVpOMHBpS1BBSDE?oc=5" title="HOT!!! 2017 Ferrari 488 GTB for sale at affordable price!">Philkotse</a></div>
         </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.carexpert.com.au">CarExpert (AU)</a>
-            <span class="time">Jun 14, 10:00 PM</span></div>
-          <h3 class="hed"><a href="https://www.carexpert.com.au/car-news/2026-xpeng-g6-preliminary-details-confirmed-for-relaunched-model-y-rival">2026 Xpeng G6: Preliminary details confirmed for relaunched Model Y rival</a></h3>
-          <p class="snip">Initial specifications for the updated Xpeng G6 have been confirmed for Australia ahead of a July 1 relaunch for the Chinese EV brand.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.carexpert.com.au">CarExpert (AU)</a>
-            <span class="time">Jun 14, 10:00 PM</span></div>
-          <h3 class="hed"><a href="https://www.carexpert.com.au/car-reviews/2026-tesla-model-3-premium-long-range-rwd-review">2026 Tesla Model 3 Premium Long Range RWD review</a></h3>
-          <p class="snip">The mid-spec Tesla Model 3 makes a strong case as both the sweet spot in the range and a mid-size sedan standout.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 9:05 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2192875/2026-honda-prelude-review/">2026 Honda Prelude Is Great If You Can Be Honest You&#x27;re Almost 38</a></h3>
-          <p class="snip">You don&#x27;t buy the Prelude for the spec sheet or to impress strangers on the internet, you buy it for the way it feels when you drive it.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://businessmirror.com.ph">BusinessMirror Motoring</a>
-            <span class="time">Jun 14, 5:52 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxOTmluWW4za2l2emhaSVpUY2VtY2VoQUpQaWN3aG9sTmdYQzVXZHJCLVBKT1l6c1c4QklvcnZScFdZZmpESnprbHBlYnFMX3dFYS1FclNwMHdVT1JBdTc4dmtGOGZjZVdkcHZyTWdNeWg4RlNETGozVm56cU5PUDRfWjc1aWh4Q3dsQlVSY0FUNVNTb2llTldkYkVnS0pZT292UmtfZnpwRHZsZVE?oc=5">It’s only Year 3 for Wemby. It’s not like every star wins right away.</a></h3>
-          <p class="snip">It’s only Year 3 for Wemby. It’s not like every star wins right away. BusinessMirror&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://businessmirror.com.ph">BusinessMirror Motoring</a>
-            <span class="time">Jun 14, 5:51 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMipwFBVV95cUxQaWF6UV9ZRFRlM0dZTEtyWEZibTZ3dTBGd3JFMS1qTkE1SFhZMnI4MXFodUpZSnFZeFJtYzczUXpEdFE4dTJoN0hUaF9TazRQNmJHby1qUmxQU1VyX2I3YlBrTU05dHJQYVI4ampNMEcteXRvdkMyWnhPWUhGTmFKYzF4cmpnR1hYSlNSM01KRHVHQlRsTmIxVVhJTkNZdUEta2VJT2RLcw?oc=5">Vini Jr scores highlight-reel goal in Brazil draw with Morocco</a></h3>
-          <p class="snip">Vini Jr scores highlight-reel goal in Brazil draw with Morocco BusinessMirror&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.thedrive.com">The Drive</a>
-            <span class="time">Jun 14, 9:00 PM</span></div>
-          <h3 class="hed"><a href="https://www.thedrive.com/news/big-trucks-like-the-ford-super-duty-and-ram-hd-eluded-safety-evaluations-until-now">Big Trucks Like the Ford Super Duty and Ram HD Eluded Safety Evaluations, Until Now</a></h3>
-          <p class="snip">The IIHS is finally testing commercial vehicles, and the first round didn&#x27;t go as badly as you might expect. The post Big Trucks Like the Ford Super Duty and Ram HD Eluded Safety Evaluations, Until Now appeared first on &hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.caranddriver.com">Car and Driver</a>
-            <span class="time">Jun 14, 9:00 PM</span></div>
-          <h3 class="hed"><a href="https://www.caranddriver.com/news/a71573780/amble-one-beach-buggy-ev-details/">This Electric Beach Buggy Is for Folks Who Can Afford Luxury Vacations</a></h3>
-          <p class="snip">Finally, someone is thinking beyond the anonymous hotel shuttle golf cart, and it&#x27;s a Portuguese company called Amble.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://businessmirror.com.ph">BusinessMirror Motoring</a>
-            <span class="time">Jun 14, 5:48 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMimAFBVV95cUxNSWxYclUxNFZoYk5GakhnUmJJaTBqT2lQRDc3MmpvNzdkc01BQjlBRTJKOFRUTmxpSjlQODFUelRyTk1Hb0NwcUxGamlFSnNtNjhsekcxcDN2Vmp0dlJmdXZxRW1tM2tiZi1rLURPTmg2eWRDejlJWXRVa3BRRVQ1RUZkbjh2dUMtRGVPdnhVV3ZCR0pVUXVncg?oc=5">Swiss stunned as Qatar strikes late to salvage draw</a></h3>
-          <p class="snip">Swiss stunned as Qatar strikes late to salvage draw BusinessMirror&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="jetour expands presence in mindanao with lanang dealership opening carguide.ph">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.carguide.ph">CarGuide.PH</a>
             <span class="time">Jun 14, 3:02 PM</span></div>
           <h3 class="hed"><a href="https://www.carguide.ph/2026/06/jetour-expands-presence-in-mindanao.html">Jetour Expands Presence In Mindanao With Lanang Dealership Opening</a></h3>
           <p class="snip">Jetour Auto expands its presence in South Mindanao with the opening of its newest dealership in Lanang, Davao City. Operated by Davao Bonifacio Motors, the 3,000-square meter dealership brings together sales and service &hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 8:45 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2192289/porsche-important-engines/">These Are Porsche&#x27;s Most Important Engines, From Flat Six To V10</a></h3>
-          <p class="snip">Porsche is an iconic automaker with numerous vehicles that have achieved legendary status. Here are some of the most important engines of the company&#x27;s history.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.autoblog.com">Autoblog</a>
-            <span class="time">Jun 14, 8:45 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxObTk5blJPRTB5Rl9OS0xKZjRjMjBjejdHZVZxX1BlcGw2VFRRWFJBenFsU2R6cXkzakRXZDJvd0p1d0p1MnkzNkNXVi04c3d5V2JIN3VpQl9obTZDQlp5VnNDRWpOVmJPd3dxaVRhbzNjV1g4Y3VpSzZlUE5uX1B5ajdCbWpxNndXRHV1bFdoaw?oc=5">Slate’s $25,000 EV Pickup Is Finally Getting Its Big Reveal</a></h3>
-          <p class="snip">Slate’s $25,000 EV Pickup Is Finally Getting Its Big Reveal Autoblog&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="2026 ford mustang mach-e vs 2026 hyundai ioniq 5 carguide.ph">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.carguide.ph">CarGuide.PH</a>
             <span class="time">Jun 14, 2:52 PM</span></div>
           <h3 class="hed"><a href="https://www.carguide.ph/2026/06/2026-ford-mustang-mach-e-vs-2026.html">2026 Ford Mustang Mach-E Vs 2026 Hyundai Ioniq 5</a></h3>
           <p class="snip">Battery Electric Vehicles have become more mainstream here in the Philippines. The prevalence of Chinese brands has certainly contributed to that, but for those who’re after a more upscale choice, the entry of Tesla. Tha&hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.rideapart.com">RideApart</a>
-            <span class="time">Jun 14, 8:19 PM</span></div>
-          <h3 class="hed"><a href="https://www.rideapart.com/news/798516/piaggio-beverly-25th-anniversary-specs-features-price/">Piaggio&#x27;s 25-Year-Old Scooter Idea Somehow Still Makes Sense Today</a></h3>
-          <p class="snip">The Piaggio Beverly 25th Anniversary isn&#x27;t just a special edition. It&#x27;s a reminder of who got the crossover formula right first.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.autoexpress.co.uk">AutoExpress</a>
-            <span class="time">Jun 14, 9:03 PM</span></div>
-          <h3 class="hed"><a href="https://www.autoexpress.co.uk/opinion/369786/mg-set-build-cars-spain-least-nissan-flying-flag-britain-mike-rutherford">With MG set to build cars in Spain, at least Nissan is flying the flag for Britain</a></h3>
-          <p class="snip">Mike Rutherford discusses the many ups and downs of vehicle production in the UK&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 8:05 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2190405/semi-truck-power-divider-inter-axle-differential-explained/">What The &#x27;Power Divider&#x27; Switch In A Semi Truck Cab Actually Does To Both Drive Axles</a></h3>
-          <p class="snip">As you might imagine, the role of a power divider in a semi-truck is to distribute power between axles. But when is it used, and how do you operate it safely?&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
-            <span class="time">Jun 14, 8:00 PM</span></div>
-          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/subaru-sambar-kei-van-usa/">This Subaru Kei Van Parks Like A Motorcycle But Swallows Half Your Garage</a></h3>
-          <p class="snip">The kei-sized Sambar for sale in Virginia is adorable, practical, and probably slightly terrifying on a freeway surrounded by semis and F-150s&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="hot!!! 2019 mitsubishi montero sport gls for sale at affordable price! philkotse">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://philkotse.com/news">Philkotse</a>
             <span class="time">Jun 14, 4:44 PM</span></div>
           <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiugFBVV95cUxNaHlCTDByM1pPT0N1eWQ0T1dxcmZocXNVNnZLUjhVNW5UY2RYRUJpYWVaNk42Szcyd1gxZkhmMnA3bGd2R0FWNENXRUNEQ1kydnA4dnNKWEdPOXRFYXRUbXVCZi1fNlNfWGJVTXVjckc3bG13QUd3OVhFN3FyYnVtendDSzgtRXNPZ2JMaENNT0ludnFLU1NVMVJhNkpVQjY1bzRsYk1YS1poTDRWaW9CT0NnMjBqM2VMSHc?oc=5">HOT!!! 2019 Mitsubishi Montero Sport GLS for sale at affordable price!</a></h3>
           <p class="snip">HOT!!! 2019 Mitsubishi Montero Sport GLS for sale at affordable price! Philkotse&hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.manilatimes.net">Manila Times Fast Times</a>
-            <span class="time">Jun 14, 4:40 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxOaE80cWpTdFRJQjNpSmJtM1RHNDBuQ0RSVHFSb0hwN3p0WjBuSmdZbnRjb296UGtMU0M5Vkc0dnRoekl2dXk4MUFObk5iTmUtWTMtR2JZNm9uUTJuUDFPQVdKNlRaN0RqWk1CSmJUbVpkUUJydG9sd3E0VjAwMk1XMm8zcGh6elJNV1pscE1QWE0yc1N5alVZUUptZVlodXBWMEtMVHg3aGFMRkxqWjBz0gGvAUFVX3lxTE5oTzRxalN0VElCM2lKYm0zVEc0MG5DRFJUcVJvSHA3enRaMG5KZ1ludGNvb3pQa0xTQzlWRzR2dGh6SXZ1eTgxQU5uTmJOZS1ZMy1HYlk2b25RMm5QMU9BV0o2VFo3RGpaTUJKYlRtWmRRQnJ0b2x3cTRWMDAyTVcybzNwaHp6Uk1XWmxwTVBYTTJzU3lqVVlRSm1lWWh1cFYwS0xUeDdoYUxGTGpaMHM?oc=5">Alaminos–San Pablo Bypass Road finished this year — Dizon</a></h3>
-          <p class="snip">Alaminos–San Pablo Bypass Road finished this year — Dizon The Manila Times&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://mb.com.ph">Manila Bulletin Drive</a>
-            <span class="time">Jun 14, 4:21 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxQYUJFa2JIeXdoNWlFSFNzZkhRNnZiMUFYNjVtU2ZhcEItT0NrRDNNSHFmR05GOG9WbXVQWVpfTFlpTXFUTzVsUVdaT2FLR0p4eHFQdVdLaW1VNUgwdk9DN0xRSEVsMVBMWVQyb09Wck9nSjBsQVhHQTZhQm5EVDg1cnBXT2pGNnhud0NpNHloaDNscGlnZTl6a1ZEMHhHVE1VUGRDYWpn?oc=5">DPWH: More roads, bridges now accessible in quake-hit areas after 24/7 repair</a></h3>
-          <p class="snip">DPWH: More roads, bridges now accessible in quake-hit areas after 24/7 repair Manila Bulletin&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 7:05 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2190319/modern-car-eera-started-with-mercedes-35-ps/">The Modern Car Era All Started With The Mercedes 35 PS</a></h3>
-          <p class="snip">The Mercedes 35 PS was more than a car. It represented a turning point in history, bridging the gap between motorized carriages and the modern vehicle.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.cycleworld.com">Cycle World</a>
-            <span class="time">Jun 14, 7:50 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxQTkVpRnlIaVlwZWJ0ZUxFb1pIUExLRU9ablppUU1hTmJfWXpwVWZ0TzVtOWVQRVBiR3gwcmRRMWZlQ09MVGM5ekNLdWF2aXJVTHJsX0d6QkVBczhwdFdycG4yUEM0Z2ZnM2EwVWJFMXc2X1pKRk9xV0pjS3VwMzJoZ2lZaGJKMEcyYWtQbGpnOFBUWWwxWi1fSTJvY2RiQXhiOVk0?oc=5">2026 World Ducati Week Program Revealed</a></h3>
-          <p class="snip">2026 World Ducati Week Program Revealed Cycle World&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.motorcycle.com">Motorcycle.com</a>
-            <span class="time">Jun 14, 7:44 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMif0FVX3lxTE1lVjBHYk1CdkJzTlJuUWpWemttWDhPeWJKaE5WTkxtS0FqcUZLS3BBNC1tbDhOYmJWTUVNX3hVc1poenJiTlVwaS1ZOFhpb0szLV9raE5CX3YzUHRsQWI5ZEFfaGMtWE9VZ3I4Y3FZOVBLZi0xZTFfZjFOMmJxUHc?oc=5">2027 Yamaha TT-R 230</a></h3>
-          <p class="snip">2027 Yamaha TT-R 230 Motorcycle.com&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.autoevolution.com">autoevolution</a>
-            <span class="time">Jun 14, 7:40 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiygFBVV95cUxOVUFhTm9UdkZnRTdCcDVQYkc2ODBZTlBpbElsNF9aS1RUUjBRWHVhVnE2Rk1CbG9oYmZhMkQ0RzdBMWZ6d2F2VjhGTVZMbU5TWUFvcDRBODBGak9INnpEYlkwVjhJeEFGd3QxR214MWVBRng3Q0ZZQ2tlOXZBMzN1Y3ZNLVE4R2NoWWo4WWdTdzM5VEtwSFBKNnhPTFpCWnpEWE1pUlNhaUVLbG9WUTFTa0k3TXVlaWxVOTdxQ0xNekU1NW1TSGg1akNn?oc=5">Still in the Barn: Someone Discovered an Abandoned 1958 Pontiac, Didn&#x27;t Even Touch It</a></h3>
-          <p class="snip">Still in the Barn: Someone Discovered an Abandoned 1958 Pontiac, Didn&#x27;t Even Touch It autoevolution&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.motorcycle.com">Motorcycle.com</a>
-            <span class="time">Jun 14, 7:11 PM</span></div>
-          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTFBNTnhMakNfTU55MllweUpvTUZ6SjRFWUpzcE5CZ0dVSHFBQ3Fmc1NIUTFDOEdKSVFwdkdlT3lPNDFVMDJMdnhReERtLWpRMkRWZEhHa1o1R2RSdGpVOFVMREg4Wng4SW5xZ2pDcUViYUFkT3BZRmFlTWtVY1I?oc=5">2027 Yamaha YZ 250</a></h3>
-          <p class="snip">2027 Yamaha YZ 250 Motorcycle.com&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.autoexpress.co.uk">AutoExpress</a>
-            <span class="time">Jun 14, 7:05 PM</span></div>
-          <h3 class="hed"><a href="https://www.autoexpress.co.uk/audi/a5/369784/long-term-test-audi-a5-saloon-e-hybrid-s-line-quattro-s-tronic-sarah-perks">Long-term test: Audi A5 Saloon e-hybrid S line quattro S-tronic</a></h3>
-          <p class="snip">PHEV saloon A5 takes over from our diesel estate model&hellip;</p>
-          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://www.autoexpress.co.uk/audi/a5/369783/audi-a5-saloon-e-hybrid-s-line-quattro-s-tronic-long-term-test-pictures" title="Audi A5 Saloon e-hybrid S line quattro S-tronic long-term test - pictures">AutoExpress</a></div>
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 6:05 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2190279/hypersonic-jet-flight-two-hours-usa-japan-one-day/">Want To Fly To Japan In Two Hours? This Jet Could One Day Make That A Reality</a></h3>
-          <p class="snip">Could a flight across the world take just two hours? It might, if we master hypersonic travel - and a group of Japanese researchers is on the right track.&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
-            <span class="time">Jun 14, 5:59 PM</span></div>
-          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/bmw-armored-protection-models/">BMW Let 67 Buyers Test Its Bulletproof Cars, One Shrugs Off Explosives</a></h3>
-          <p class="snip">One armored BMW stops bullets, the other stops explosives, and both hide their protection in plain sight&hellip;</p>
-          
-        </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 5:25 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2190272/pollen-wreak-havoc-on-car-damage/">Pollen Isn&#x27;t Just Bad For Your Allergies, It Can Wreak Havoc On Your Car Too</a></h3>
-          <p class="snip">Pollen is notorious for spoiling our summer fun, making our noses stream and our eyes water, but it isn&#x27;t just humans that tiny particles of pollen can impact.&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="showing 3 results available for zeekr 7x privilege awd autodeal">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autodeal.com.ph">AutoDeal</a>
             <span class="time">Jun 14, 1:48 PM</span></div>
           <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxOZG5XS0V0Q3BkTjZpR2YxZVFKbzZVdUJmMGJXM0J4Z0oxZmNsNnVOUjRRakhjSTIzYm1hWXY1UVVtTkN0MVUwS0VUZlp2RDlMa05kZjlNY0dFNUxMTkVMTXVQY000WEhEQVpFYjBFbVZWU3VOSHdNdjhtdHBMcHFnNm1zTV8yLXJMeHB6XzJwOU9Ydmp5N1pHQUE0Zw?oc=5">Showing 3 results available for ZEEKR 7X Privilege AWD</a></h3>
           <p class="snip">Showing 3 results available for ZEEKR 7X Privilege AWD AutoDeal&hellip;</p>
           
         </article>
-        <article class="item">
+        <article class="item" data-search="the 1,000hp m concept neue klasse previews the first all-electric bmw m3 top gear philippines">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
             <span class="time">Jun 13, 9:31 AM</span></div>
           <h3 class="hed"><a href="https://www.topgear.com.ph/news/car-news/bmw-m-concept-neue-klasse-m3-tguk-a2608-20260613">The 1,000hp M Concept Neue Klasse previews the first all-electric BMW M3</a></h3>
           <p class="snip">There’ll still be a gasoline version in case you absolutely hate this&hellip;</p>
           <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://goflatoutph.com/2026/06/13/bmw-m-concept-neue-klasse-previews-upcoming-electric-m3/" title="BMW M Concept Neue Klasse Previews Upcoming Electric M3">Go Flat Out PH</a><a class="chip" href="https://paultan.org/2026/06/13/electric-bmw-m3-za0-previewed-with-bmw-m-concept-neue-klasse-over-800-hp-800v-100-kwh-battery/" title="Electric BMW M3 ZA0 previewed with BMW M Concept Neue Klasse – over 800 hp, 800V 100 kWh+ battery?">Paul Tan (MY)</a><a class="chip" href="https://www.caranddriver.com/photos/g71482458/2026-toyota-bz-test-interior-gallery/" title="View Interior Photos of the 2026 Toyota bZ">Car and Driver</a><a class="chip" href="https://news.google.com/rss/articles/CBMihAFBVV95cUxOMFdOY1V6VkRpT09aa0loajdVN2s3dkNtb0xYWWFHVXZlWWd6VU5SOG4yd3E0a0RLdUktWDRyZkFNaGx4ek9GMVZMT0FxSFJPdjdtMjFGVlpuYWt2dy01MXJfeU9xeFNvYlhsRTh1dmIzd0hIYjEtWjE5YzdsYUxoeklnWEY?oc=5" title="BMW Previews the First Electric M3 with Radical M Concept Neue Klasse">Autoblog</a><a class="chip" href="https://www.autoexpress.co.uk/bmw/369785/new-bmw-m-concept-neue-klasse-2026-pictures" title="New BMW M Concept Neue Klasse 2026 - pictures">AutoExpress</a><a class="chip" href="https://news.google.com/rss/articles/CBMijwFBVV95cUxPeWxPX0FseVF3YU9aeTh4VXVPQUVJeXZXU3VYYjV5QkFOaVQ2NWY2TDRsd3BDN0VwQmVuRzNra1M5OFpQTUFOMWNxZTFIMXFwTDJKNldqU3NqTGI3RmdaUTRUcFU0UGRpdFRJRzM4NlctMS1vUWVfSTVaUzVtalFzMVdwenpCSWpfa2x6TXlhYw?oc=5" title="Is the BMW M Concept Neue Klasse the i3 M of Our Dreams?">MotorTrend</a><a class="chip" href="https://news.google.com/rss/articles/CBMi2AFBVV95cUxNa3A2SnZoZjdhLVA0eUYxM0c2dl9PcVo2aml4NEVGdjBQU3VyRUMxMnVyMGdqbWNvWjlQb25uQkJqNVJSYXNfMi1fdDRPS05aVjh0Y0FXSHJUUU5MRWlka2pLYVlvaVZWeVZZUmI0ZUNCbWVCOEZhRnJxcW9uQnEzdnVUa2phbENQZzFKaTBQLWpiN3ZrXzF5UkE1NW4xcTBWbkR4MWVCWmZWRkhJa2hqazlwckN2alBpdzg3Q2kxUWEtNXFVMEZGSDcySk9DUmlfLUxEQ29TNmQ?oc=5" title="BMW M Concept Neue Klasse Is the Bitter-Sweet Taste of Future German Electric Performance Cars">autoevolution</a><a class="chip" href="https://www.carexpert.com.au/car-news/electric-bmw-m3-previewed-by-m-neue-klasse-concept" title="Electric BMW M3 previewed by M Neue Klasse concept">CarExpert (AU)</a></div>
         </article>
-        <article class="item">
+        <article class="item" data-search="what’s it like to to be a 19-year-old kimi antonelli? he sits down with tg for a quick chat top gear philippines">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
             <span class="time">Jun 14, 10:59 AM</span></div>
           <h3 class="hed"><a href="https://www.topgear.com.ph/features/feature-articles/kimi-antonelli-2026-interview-tguk-a2609-20260614-lfrm">What’s it like to to be a 19-year-old Kimi Antonelli? He sits down with TG for a quick chat</a></h3>
           <p class="snip">He still thinks his grandma’s cooking is the best in Italy&hellip;</p>
           
         </article>
-        <article class="item">
-          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
-            <span class="time">Jun 14, 4:25 PM</span></div>
-          <h3 class="hed"><a href="https://www.jalopnik.com/2189304/america-aaa-glidden-tour-early-cars-reliability-runs/">How AAA&#x27;s Glidden Tours Proved Early American Cars Could Survive Bad Roads</a></h3>
-          <p class="snip">The AAA&#x27;s Glidden Tour was wildly influential in helping to showcase the reliability and usefulness of early cars. Here&#x27;s the story behind the classic cruise.&hellip;</p>
-          
-        </article>
-        <article class="item">
+        <article class="item" data-search="mad mike is building a rotary-powered f1 drift car top gear philippines">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
             <span class="time">Jun 14, 10:30 AM</span></div>
           <h3 class="hed"><a href="https://www.topgear.com.ph/features/feature-articles/formula-1-drift-car-tguk-a2603-20260614">Mad Mike is building a rotary-powered F1 drift car</a></h3>
           <p class="snip">He’ll be using a 1986 March chassis&hellip;</p>
           
         </article>
-        <article class="item">
+        <article class="item" data-search="the 13 most controversial moments in ferrari’s history top gear philippines">
           <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
             <span class="time">Jun 14, 10:15 AM</span></div>
           <h3 class="hed"><a href="https://www.topgear.com.ph/features/feature-articles/ferrari-most-controversial-moments-tguk-a4665-20260614-lfrm2">The 13 most controversial moments in Ferrari’s history</a></h3>
           <p class="snip">Where does the Luce rank in the midst of all these?&hellip;</p>
           
         </article>
+        <article class="item" data-search="has byd cars philippines finally solved its supply constraints? carguide.ph">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.carguide.ph">CarGuide.PH</a>
+            <span class="time">Jun 14, 8:42 AM</span></div>
+          <h3 class="hed"><a href="https://www.carguide.ph/2026/06/has-byd-cars-philippines-finally-solved.html">Has BYD Cars Philippines Finally Solved Its Supply Constraints?</a></h3>
+          <p class="snip">Has BYD Cars Philippines finally solved its stock issue? With more Filipinos switching to electrified mobility, the Chinese car brand, distributed by ACMobility, has been hit with supply constraints for the past few mont&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="2023 nissan navara 2.5l 4x2 vl calibre dsl at | with warranty by ugarte cars manila philkotse">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://philkotse.com/news">Philkotse</a>
+            <span class="time">Jun 14, 11:05 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMi4AFBVV95cUxNc0hOQWtCQ2tyQ2VOV1NoYVNyUGZKSnQ4MzFnSFhHNVdrdnkyZzdPUnNzd3VaTXZlSjc1OUtnMDViQ004Nm1qTTJtYW1hLUluTFJOU0tyc1ZwV3A4Y2JPTmZ6TUY1eFh4ajBqMG1uLXh5SDRwNVdPZVliNjlwYTZnLUNXNnRLZ2RhcnVUZks4aTBnTlV0bzZDdGk4dzBtbXVkQ0pjOXZhRmx5cHA0WmNKVmdpZUlHMzVrT1NMS1pTNEQ3cUZoR2I4d0o2dTN3YVhIN1ZVd0UwQ3U1VjlkRzlINg?oc=5">2023 Nissan Navara 2.5L 4x2 VL Calibre DSL AT | With Warranty by Ugarte Cars Manila</a></h3>
+          <p class="snip">2023 Nissan Navara 2.5L 4x2 VL Calibre DSL AT | With Warranty by Ugarte Cars Manila Philkotse&hellip;</p>
+          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://news.google.com/rss/articles/CBMi6wFBVV95cUxNMDJKSDBoOHhaWnBUdEhmc05NU2M1Sk9DOTAxYTJMSFp0NDAzRG12YnJQSkswWmxNUlhDUkt0emxxVmlJdHg5R29yRGtwNHpLYjhEam5aWTdNOGhZOGtBY3pFQU9HZWhCMzQybm5WSG1wZkUxWWhiX0RsM2piaTdTNXlwdENQeTZ6TDF2OVFrNVI5VkdtME9Xb0RBM3JMWTdJRWRKTG41cEt5Z3RGMHhjUXVBNDJ0RGd1bXhVVW9WSW9ia2xlbThTZVRVV094RjdtY3l6a05vVVlOaUhicVFUMndSVFpYUFNTWUVJ?oc=5" title="2019 Ford Ranger Wildtrak 2.0L DSL AT | With Warranty by Ugarte Cars Manila">Philkotse</a></div>
+        </article>
+        <article class="item" data-search="changan cars sales agents (dse) in ferrol zigwheels ph">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.zigwheels.ph/car-news">Zigwheels PH</a>
+            <span class="time">Jun 14, 10:42 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxPVUthQlo2UkRUei1SVkpUWjAyM1YxaXh4bEoyanc2dVBKREZodUt3TnVvdThJRGE2ZEN4U2czM0NCbUhVT0QzQ2lCRGJEZUF0RDRfSGFDcXdWZkhyZGtHRXdpbV9PN2VUUWoyOGFYa3hoY1dDZEYwVlhkT1pzLUxJSE5n?oc=5">Changan Cars Sales Agents (DSE) in Ferrol</a></h3>
+          <p class="snip">Changan Cars Sales Agents (DSE) in Ferrol Zigwheels&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="the story of my seiko spb157 baby alpinist visor">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://visor.ph">VISOR</a>
+            <span class="time">Jun 13, 11:47 PM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE1kTVdmUWR0YzRtRlRWQ2FqSzRhLUlZUXlJMjJIaEVmQ0pBSjJjaVloM1ZJNG5zbi1oR3dramc3d21kZkhEQjlPNGtpWUN6T3RjUjQ0M2ltTVY2TVNpbFFMdGVPYlZrOEVpWXRXNlE2a1lVM2VzTm04?oc=5">The story of my Seiko SPB157 Baby Alpinist</a></h3>
+          <p class="snip">The story of my Seiko SPB157 Baby Alpinist Visor PH&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="350 pilipinas celebrates ph independence with bike bus along edsa visor">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://visor.ph">VISOR</a>
+            <span class="time">Jun 13, 10:07 PM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxNcnRiS2Yza0JKNGo4a0NJbDRnNDE3M0RGV3ZrdEtFYkRtTjI1eWxoOUFnLVBOcFF1RjA2dnNwWlJDRGZTMHMzczJaX3Q4Qy1PbTN4d0V2QjNkNWZyaWFSVjNnNHkwc3V1NEZDLW9SUkdfMXN6Wk4xUUQ1T3pWRlFLSjktbXZKQmhfR2xjVXF4QXBwRE0?oc=5">350 Pilipinas celebrates PH independence with bike bus along EDSA</a></h3>
+          <p class="snip">350 Pilipinas celebrates PH independence with bike bus along EDSA Visor PH&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="tyres on the edge | why barcelona’s heat will decide the spanish grand prix businessmirror motoring">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://businessmirror.com.ph">BusinessMirror Motoring</a>
+            <span class="time">Jun 14, 12:00 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMitAFBVV95cUxPV1A4RUJ0YmNMNXhURHBJUkpKaXB5N1dCLU03NzBTVmhUN0JUSGcwMkw2Y0RheGdxTUc2eGluRUNBNWhwVFRPVjM4cVpNUlZ5SWRVTEJlc1FvMHNtY29KWE1iYjJ4MHJUd1lGdnkyRm5KdWVRYUZ0X180V2ZNemwyYzRWSDdXdWFncG00UUNrMHRRbTZUQ0MyVVRmbFo0SE45cXZUQ1hNUnRPUGhxbG9XZjJhb1U?oc=5">TYRES ON THE EDGE | Why Barcelona’s heat will decide the Spanish Grand Prix</a></h3>
+          <p class="snip">TYRES ON THE EDGE | Why Barcelona’s heat will decide the Spanish Grand Prix BusinessMirror&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="gateway and prima sierra tapped to further jetour gaia’s upscale retail push autoindustriya">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autoindustriya.com">AutoIndustriya</a>
+            <span class="time">Jun 13, 6:13 PM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiygFBVV95cUxQXzFfeVFwSGlKZmVPSndSRi1uTWFNeENsMlllSEJvczdNdHZLcHpsMGR3Ukgxa3R0WkRWYjlQWDNqc1NjVFluQldRWTZhaHFVTGNWRGNQLS1jZEJJZFhnV1RYZ1NxU3IwMndXbHZSWTdMRGp1SThMa3pTdjY5aEZZMW9oZlFFb2VkMlVwWDNyQVA3QlVBUWR0bzkyY1F3R0sweE1CZThhLW1Jc2tWSVdpaGFpbzdvZHFnTzloNDRRNE1xaVlNYThmZlZ3?oc=5">Gateway and Prima Sierra tapped to further Jetour GAIA’s upscale retail push</a></h3>
+          <p class="snip">Gateway and Prima Sierra tapped to further Jetour GAIA’s upscale retail push AutoIndustriya&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="eclipse goes electric ridenetwork.ph">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://ridenetwork.ph">RideNetwork.PH</a>
+            <span class="time">Jun 13, 3:01 PM</span></div>
+          <h3 class="hed"><a href="https://ridenetwork.ph/eclipse-goes-electric/">Eclipse Goes Electric</a></h3>
+          <p class="snip">Mitsubishi Motors is bringing back the Eclipse name for a new battery electric vehicle in North America, with the 2027 Mitsubishi Eclipse Sportback set to go on sale in late summer or early fall 2026. The all-new Eclipse&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="4s1m evo yamaha’s inguito wins fim arrc ub150 race again after 3 years! insideracing">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.insideracing.com.ph">InsideRACING</a>
+            <span class="time">Jun 13, 3:56 PM</span></div>
+          <h3 class="hed"><a href="https://insideracing.com.ph/4s1m-evo-yamahas-inguito-wins-fim-arrc-ub150-race-again-after-3-years/">4S1M EVO Yamaha’s Inguito Wins FIM ARRC UB150 Race Again After 3 Years!</a></h3>
+          <p class="snip">Fresh from his spectacular Motul MotoIR National Championship Round 3 performance wherein he won the SSBK main race and delivered a P2 finish in his debut in the Maxi Open GP class, “The Hitman” John Emerson Inguito cont&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="ai voice control: are car brands inventing a solution to a problem that doesn’t exist? top gear philippines">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
+            <span class="time">Jun 13, 9:11 AM</span></div>
+          <h3 class="hed"><a href="https://www.topgear.com.ph/features/feature-articles/opinion-ai-voice-control-tguk-a2602-20260613">AI voice control: Are car brands inventing a solution to a problem that doesn’t exist?</a></h3>
+          <p class="snip">Humanity is for us humans&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="gallery: cars with the funniest names, part 2 top gear philippines">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
+            <span class="time">Jun 13, 9:00 AM</span></div>
+          <h3 class="hed"><a href="https://www.topgear.com.ph/features/feature-articles/funniest-car-names-part-2-tguk-a2620-20260613-lfrm">Gallery: Cars with the funniest names, part 2</a></h3>
+          <p class="snip">Yes, a car brand actually sold something called ‘Dictator’ in the ’30s&hellip;</p>
+          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://www.topgear.com.ph/features/feature-articles/funniest-car-names-part-1-tguk-a2620-20260611-lfrm" title="Gallery: Cars with the funniest names, part 1">Top Gear Philippines</a></div>
+        </article>
+        <article class="item" data-search="zeekr x premium vs zeekr 7x essential rwd autodeal">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autodeal.com.ph">AutoDeal</a>
+            <span class="time">Jun 13, 7:24 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxOa2N0eWRSbUhzekdsc045bTZ1Z0lzc3FnM3czRmRsNGEydy1ZSnFzWVFCS0Nxc2I0U2V5R0kzYUtMWG9lTmRxTXd5WGRyQWc2bjdUWG1hbGdLT1J1MTAwOUxKRnBlcXg3UmI3SDhQTURhMDUyZVZIVDgtelY4cTZRNnJCZXFlUS0waFk4bUZQelpuY0VOampSRkswcG1ZM1VO?oc=5">ZEEKR X Premium vs ZEEKR 7X Essential RWD</a></h3>
+          <p class="snip">ZEEKR X Premium vs ZEEKR 7X Essential RWD AutoDeal&hellip;</p>
+          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxNeUk5QWRORkl4THh3UnlrZERESVV5dXNkV1FCZEtJZklXSjlPWEE2SlFMMDliLXFmVm40S0dGbGYtVDJXX2JJSGF1UTIyLUtHaWM4b2ZoSHNfbi1LWmJ1VTg2anZMZTZQWHB6U3BLS0ItS2FudXV5amlZeVBFQ2NrSU0yNXR5NlFyUEtnLWxHRGZWczlNTzc5dk9JbE9CamlaSGt3WFQwSFBILTA?oc=5" title="BYD Tang EV Performance vs ZEEKR 7X Essential RWD">AutoDeal</a></div>
+        </article>
+        <article class="item" data-search="hot!!! 2020 mclaren 570s coupe for sale at affordable price! philkotse">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://philkotse.com/news">Philkotse</a>
+            <span class="time">Jun 13, 3:37 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxONjdNcThheGhEZmVaRnMxTUVETmNJTmhTTlV1bnAxYWwybnlDOW9YcFg2a0tBaDlmZlJIZ0lLYzVQU3l1WUxiZkEwRk5NalZPZnlPV19ROXZqYkYyUUJ4dWUwNjhpMmdyYV90Wkp3dEw2NlJxZFBVMVRNbDZCNGdtVU5yTzhoSzRVaUY5VnFDOEZ6YTZvLW9EZUd5SjE3X3ZoTjEtZTFFUl9nbkRJZnlkbHg3MVpuZw?oc=5">HOT!!! 2020 McLaren 570S Coupe for sale at affordable price!</a></h3>
+          <p class="snip">HOT!!! 2020 McLaren 570S Coupe for sale at affordable price! Philkotse&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="chery q 2026, philippines price, specs &amp; official promos autodeal">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autodeal.com.ph">AutoDeal</a>
+            <span class="time">Jun 11, 10:44 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiUkFVX3lxTFB0aGVpMDNnOEtJRkV4WW56M1l4U2U0WWdRT3VMc2xMSlNDTGsyWUh4VzMwci1XVmVOcjJNYWNwU2s0c3Q0NzRGai1BeHB6QmdhZUE?oc=5">Chery Q 2026, Philippines Price, Specs &amp; Official Promos</a></h3>
+          <p class="snip">Chery Q 2026, Philippines Price, Specs &amp; Official Promos AutoDeal&hellip;</p>
+          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://news.google.com/rss/articles/CBMiUEFVX3lxTE4zbTh1bG9lUGkzRHZHb01WTGhSblppZV93dmdsYjdIWi13cTRnbzRfdkxySHNYem5FRlNZbnI2UnoxUy1ibU1yVG4wSlNnc0df?oc=5" title="MG RX9 2026, Philippines Price, Specs &amp; Official Promos">AutoDeal</a><a class="chip" href="https://news.google.com/rss/articles/CBMiYkFVX3lxTE9fTFhaVW4wYzYyaHBWQkhIb052bTJzcGNiQ3BFdUZtdmZGVzlyM2M3bjNQVktoQVE2eDRLZmxMelB6cXhydjdPMjRJZ0Fqd2ttM3pQVDhfZWZFNm9aZ045R0ZB?oc=5" title="VinFast Limo Green 2026 Price Philippines, Specs &amp; June Promos">Zigwheels PH</a></div>
+        </article>
+        <article class="item" data-search="ukraine hits fuel supplies to crimea, sparking a fuel crisis on the russian-held peninsula manila bulletin drive">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://mb.com.ph">Manila Bulletin Drive</a>
+            <span class="time">Jun 13, 12:03 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiugFBVV95cUxPcTgyb05fYkg1dHNrYWRYaThRQlYwOFpaVlU1N3JTTXl4ZWp3V21VTVNiY1pwQzRZeFlHM28zUXhCUGVCMVB5OEh5V1liejduQmduZ3VwWmd1ZlpRZ21TT2F3N3BPa3JlTFdydHh2U1laTDY1TjlHV2J1eWU5Zk4tbzlxdDFOdkFELXFXcThoaGUtNkl0bE0xc1FVT2hRR2JOME9JaG9GM2JPN3dZVFFWS1YyRXNXbmViREE?oc=5">Ukraine hits fuel supplies to Crimea, sparking a fuel crisis on the Russian-held peninsula</a></h3>
+          <p class="snip">Ukraine hits fuel supplies to Crimea, sparking a fuel crisis on the Russian-held peninsula Manila Bulletin&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="diesel prices down, gasoline up next week manila times fast times">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.manilatimes.net">Manila Times Fast Times</a>
+            <span class="time">Jun 13, 12:03 AM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxQU254d2s5c2w2M1doeXcydkZRT1JKeHY5MHNKV0JTSndSRlFqc0RyRFVaY0Y0NE56dGpSNGFvR2ZaMk1kalFpcXFhZWtTTllzTDIwUGRKYU5qQmdXOHFiT05LSFVlVUJMbEpCOUltV1k0UVZOVVEwaTdNTURQMXphaE9iTFYyWUdFTzhwQjhPc1RuZHVjOUVNLW5LSUJ1LWlrMnhz0gGoAUFVX3lxTFBLc2h5V1ltVzhLWUFvaFFNaFl4Y19ySEcyWUFBYnluaGhRZ2dyU2pHcDdEUmVwdGtCUEpBNUNoN2lITUhpU0NZX1ZReG85NC1iY3R6S2FhbDFIZnpxXzZuOWNqZkVoRllBUHdMTHdUNkdqQl9ySHFOY0kzRUxNN0tCVTFpRGFuMWRSZlh0ZTBYN0hLRnhUUFRkZEItaVZVM29rQ3VXVUdiLQ?oc=5">Diesel prices down, gasoline up next week</a></h3>
+          <p class="snip">Diesel prices down, gasoline up next week The Manila Times&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="toyota backs asia’s best ridenetwork.ph">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://ridenetwork.ph">RideNetwork.PH</a>
+            <span class="time">Jun 12, 6:27 PM</span></div>
+          <h3 class="hed"><a href="https://ridenetwork.ph/toyota-backs-asias-best/">Toyota Backs Asia’s Best</a></h3>
+          <p class="snip">Toyota Motor Asia has named seven Global Team Toyota Athletes from six Southeast Asian countries as it builds its roster for the Aichi-Nagoya 2026 Asian Games and Asian Para Games. The refreshed line-up includes Olympic &hellip;</p>
+          
+        </article>
+        <article class="item" data-search="is the world ready for the audi nuvolari’s brutalist presence and astronomical price tag? top gear philippines">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
+            <span class="time">Jun 12, 8:35 PM</span></div>
+          <h3 class="hed"><a href="https://www.topgear.com.ph/features/feature-articles/opinion-audi-nuvolari-tguk-a2609-20260612">Is the world ready for the Audi Nuvolari’s brutalist presence and astronomical price tag?</a></h3>
+          <p class="snip">Even Audi’s CEO isn’t absolutely certain it will succeed&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="ford keeps deals rolling ridenetwork.ph">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://ridenetwork.ph">RideNetwork.PH</a>
+            <span class="time">Jun 12, 6:11 PM</span></div>
+          <h3 class="hed"><a href="https://ridenetwork.ph/ford-keeps-deals-rolling/">Ford Keeps Deals Rolling</a></h3>
+          <p class="snip">Ford Philippines has extended its Employee Pricing Program until the end of June following strong customer response to its earlier run. The program allows buyers to pay what Ford employees pay when purchasing select Ford&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="aftermarket goes forward ridenetwork.ph">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://ridenetwork.ph">RideNetwork.PH</a>
+            <span class="time">Jun 12, 5:53 PM</span></div>
+          <h3 class="hed"><a href="https://ridenetwork.ph/aftermarket-goes-forward/">Aftermarket Goes Forward</a></h3>
+          <p class="snip">BSB Junrose Corporation is using the 10th Philippine International Motor Show to put the spotlight on practical aftermarket solutions for Filipino motorists, with products centered on efficiency, safety, reliability and &hellip;</p>
+          
+        </article>
+        <article class="item" data-search="the all-new audi q7 can run on vegetable oil and project turn indicators on the ground top gear philippines">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
+            <span class="time">Jun 12, 8:05 PM</span></div>
+          <h3 class="hed"><a href="https://www.topgear.com.ph/news/car-news/audi-q7-2027-tguk-a2603-20260612">The all-new Audi Q7 can run on vegetable oil and project turn indicators on the ground</a></h3>
+          <p class="snip">It can also be spec’d as a five-, six-, or seven-seater&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="antonelli keeps rolling ridenetwork.ph">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://ridenetwork.ph">RideNetwork.PH</a>
+            <span class="time">Jun 12, 5:24 PM</span></div>
+          <h3 class="hed"><a href="https://ridenetwork.ph/antonelli-keeps-rolling/">Antonelli Keeps Rolling</a></h3>
+          <p class="snip">Kimi Antonelli’s rapid climb in Formula One has left even the Mercedes driver trying to process the speed of his own rise. The 19-year-old Italian enters this weekend’s Catalunya Grand Prix chasing a sixth consecutive vi&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="lto: 830 driver’s licenses suspended, revoked since october ‘25 motopinas">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.motopinas.com">MotoPinas</a>
+            <span class="time">Jun 12, 5:48 PM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxNeXZ2WmJQRFA1WjZyTjY1RnN1NkZPZnBBTnhuakNNb3IzQnJzRzhDanRKc1RxMGxldmpGNEsxMlM4YV82blNSa2pnXy1XNDdXWFhlSXFkQ3pTNXNpQjF6S1VCQUUzcmtCVEZSYkNDcHZoQ3Q4bnhoZ0VWZzRvc0d6NFc1R0FmVHdSRW5CNnZELU9DYmlYMHk0Ry1QRGRsOXdNaTJodllFVFBxSXM?oc=5">LTO: 830 driver’s licenses suspended, revoked since October ‘25</a></h3>
+          <p class="snip">LTO: 830 driver’s licenses suspended, revoked since October ‘25 MotoPinas.com&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="the philippine international motor show had over 55,500 attendees this year top gear philippines">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
+            <span class="time">Jun 11, 7:54 PM</span></div>
+          <h3 class="hed"><a href="https://www.topgear.com.ph/news/industry-news/pims-2026-post-show-report-a2619-20260611">The Philippine International Motor Show had over 55,500 attendees this year</a></h3>
+          <p class="snip">There were 26 product launches and unveilings at the event&hellip;</p>
+          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://goflatoutph.com/2026/06/12/the-10th-philippine-international-motor-show-attracted-55544-visitors/" title="The 10th Philippine International Motor Show Brought In 55,544 Visitors">Go Flat Out PH</a></div>
+        </article>
+        <article class="item" data-search="hot gear: the dji power 1000 mini has something for everyone top gear philippines">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.topgear.com.ph">Top Gear Philippines</a>
+            <span class="time">Jun 12, 3:24 PM</span></div>
+          <h3 class="hed"><a href="https://www.topgear.com.ph/features/lifestyle/dji-power-1000-mini-ph-review-a6941-20260612-lfrm">Hot gear: The DJI Power 1000 Mini has something for everyone</a></h3>
+          <p class="snip">This little guy brings plenty of power to the table&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="save fuel: free train rides tomorrow, june 12 autoindustriya">
+          <div class="src"><span class="ph">PH</span><a class="srcname" href="https://www.autoindustriya.com">AutoIndustriya</a>
+            <span class="time">Jun 12, 3:00 PM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxQMy1BSjFscWJ6WGdtOXd3bFJvc0dFOGlaOWlzSHk2Sl9GZ2kzSGpmM1UzQkJnYTJUYXhpZXE3M3AyMzlWY0tkMzBIWkFTLWNiYzl2WktZemlPMTRENm1MQzJucU10T01SRi0xUWwzOVpKNEFWZmNtdmlONGlqTG83NkFEZWFhWUFpR3Y0dTUtRVFsV1Zxb1F2QTktdmxaOWM?oc=5">Save Fuel: Free train rides tomorrow, June 12</a></h3>
+          <p class="snip">Save Fuel: Free train rides tomorrow, June 12 AutoIndustriya&hellip;</p>
+          
+        </article><div class="river-sep">World motoring</div>
+        <article class="item" data-search="genesis magma gt3 converts supercar concept into hardcore racer autocar">
+          <div class="src"><a class="srcname" href="https://www.autocar.co.uk">Autocar</a>
+            <span class="time">Jun 12, 9:22 PM</span></div>
+          <h3 class="hed"><a href="https://www.autocar.co.uk/car-news/motorsport/genesis-magma-gt3-converts-supercar-concept-hardcore-racer">Genesis Magma GT3 converts supercar concept into hardcore racer</a></h3>
+          <p class="snip">Stylish supercar sprouts wings and extra lights in a conversion from road to racetrack The new Genesis Magma GT3 is the first look at how the Korean manufacturer will expand its sports car racing programme beyond its hyp&hellip;</p>
+          <div class="more"><span class="morelabel">Also covering</span> <a class="chip" href="https://www.caranddriver.com/news/a71564714/genesis-gt3-concept-le-mans-reveal/" title="Genesis Unveils a New GT3 Concept Ahead of the 2026 24 Hours of Le Mans">Car and Driver</a><a class="chip" href="https://news.google.com/rss/articles/CBMie0FVX3lxTE5HV1VGMG45OS1rNGVFakxVNi1jTlhfU1hjT1lLelBiX1hSb3B4TXJaSGpJOTJEeGt0QllKX1QyR2xRWTc4U3ZPYmVmR3RuYy1qU0djemxLUm5PTGNuU05PTGNfU2xFc1R6b0duMTctNXlNNXJQYi14R3lrSQ?oc=5" title="Yowzer! The New Genesis Magma GT3 Concept Is Straight Wicked">MotorTrend</a><a class="chip" href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxOWlVnQ2ZTNDNvWF9lRkt4eWIxLVRXTFY5bXo0SGZJRklxNENfWFpZbEItN3VxdWNfcXJnNWk3NWo0aWxlQlF2TmJMeFMyX09pZC1fZnh4V2JLb1JiQUdhX2xEOWJmUUpZSWlnaFoxTGFnWDhoclpxZUhPNmw4cDE3QjVmOWhzYWdCZVl3ZmR3UWRVcGI5cXRGLWZicEZJc2Nic2ZuZ09FRE54bVk?oc=5" title="Genesis Unveils Magma GT3 Concept at the 24 Hours of Le Mans">autoevolution</a><a class="chip" href="https://www.autoexpress.co.uk/genesis/369790/genesis-magma-gt3-concept-shows-motorsport-focus-hyundais-luxury-brand" title="Genesis Magma GT3 Concept shows-off motorsport focus of Hyundai’s luxury brand">AutoExpress</a></div>
+        </article>
+        <article class="item" data-search="darn: some chevy corvette zr1 owners report paint chipping at 180 mph and above the drive">
+          <div class="src"><a class="srcname" href="https://www.thedrive.com">The Drive</a>
+            <span class="time">Jun 15, 1:00 AM</span></div>
+          <h3 class="hed"><a href="https://www.thedrive.com/news/darn-some-chevy-corvette-zr1-owners-report-paint-chipping-at-180-mph-and-above">Darn: Some Chevy Corvette ZR1 Owners Report Paint Chipping at 180 MPH and Above</a></h3>
+          <p class="snip">GM covered repair costs for at least one owner, whose rear wing seemed to create so much downforce that it damaged the paint. The post Darn: Some Chevy Corvette ZR1 Owners Report Paint Chipping at 180 MPH and Above appea&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="the mustang is america’s least-driven car only if you count one kind of owner carscoops">
+          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
+            <span class="time">Jun 15, 12:53 AM</span></div>
+          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/chrysler-pacificas-are-driven-10-times-more-miles-than-ford-mustangs/">The Mustang Is America’s Least-Driven Car Only If You Count One Kind Of Owner</a></h3>
+          <p class="snip">iSeeCars ranked the Mustang dead last for annual mileage, but the study only counted three-year-olds sold in 2025, not the owners who kept driving theirs&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="this 1979 jeep cherokee on bring a trailer strikes like a viper car and driver">
+          <div class="src"><a class="srcname" href="https://www.caranddriver.com">Car and Driver</a>
+            <span class="time">Jun 15, 12:30 AM</span></div>
+          <h3 class="hed"><a href="https://www.caranddriver.com/news/a71550204/1979-jeep-cherokee-bring-a-trailer-auction/">This 1979 Jeep Cherokee on Bring a Trailer Strikes Like a Viper</a></h3>
+          <p class="snip">It&#x27;s been restored and modified with a Viper V-10 under the hood.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="how much can you tow with a mercedes sprinter van? jalopnik">
+          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
+            <span class="time">Jun 15, 12:25 AM</span></div>
+          <h3 class="hed"><a href="https://www.jalopnik.com/2189308/how-much-can-mercedes-benz-sprinter-van-tow/">How Much Can You Tow With A Mercedes Sprinter Van?</a></h3>
+          <p class="snip">The Mercedes-Benz Sprinter is a versatile van that comes in numerous configurations. While towing isn&#x27;t its main purpose, here&#x27;s how much you can haul with one.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="this new hybrid engine achieves a breakthrough in efficiency motor1">
+          <div class="src"><a class="srcname" href="https://www.motor1.com">Motor1</a>
+            <span class="time">Jun 15, 12:00 AM</span></div>
+          <h3 class="hed"><a href="https://www.motor1.com/news/798623/hybrid-engine-efficiency-breakthrough/">This New Hybrid Engine Achieves A Breakthrough In Efficiency</a></h3>
+          <p class="snip">Dongfeng’s new 2.0-liter hybrid engine reaches 45.5% thermal efficiency, marking a major step forward in combustion tech.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="how drag racers are running in the sixes with manual transmissions jalopnik">
+          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
+            <span class="time">Jun 14, 11:25 PM</span></div>
+          <h3 class="hed"><a href="https://www.jalopnik.com/2190445/quickest-manual-transmission-drag-racing-cars/">How Drag Racers Are Running In The Sixes With Manual Transmissions</a></h3>
+          <p class="snip">While much of it comes down to the driver&#x27;s skill, one important component plays a crucial role in allowing manual transmission drag cars to match automatics.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="here’s the cheapest way mitsubishi could revive the lancer, and it’s all nissan carscoops">
+          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
+            <span class="time">Jun 14, 11:16 PM</span></div>
+          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/mitsubishi-lancer-revival-nissan/">Here’s The Cheapest Way Mitsubishi Could Revive The Lancer, And It’s All Nissan</a></h3>
+          <p class="snip">A reborn Lancer riding on Sentra hardware would be Mitsubishi&#x27;s cheapest US car, but not the rally hero the badge made famous&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="new colorado law gets it right by requiring responsible ev battery recycling the drive">
+          <div class="src"><a class="srcname" href="https://www.thedrive.com">The Drive</a>
+            <span class="time">Jun 14, 11:00 PM</span></div>
+          <h3 class="hed"><a href="https://www.thedrive.com/news/new-colorado-law-gets-it-right-by-requiring-responsible-ev-battery-recycling">New Colorado Law Gets It Right by Requiring Responsible EV Battery Recycling</a></h3>
+          <p class="snip">The state is making automakers responsible for recycling any EV batteries that don&#x27;t get reused—and asking for receipts. The post New Colorado Law Gets It Right by Requiring Responsible EV Battery Recycling appeared firs&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="7 engines from major automakers raising red flags in 2026 autoblog">
+          <div class="src"><a class="srcname" href="https://www.autoblog.com">Autoblog</a>
+            <span class="time">Jun 14, 11:00 PM</span></div>
+          <h3 class="hed"><a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxNYnJteElxcHRRbXdsRnJ0RnNXSDJSRDhQTmtEMEdJeUVOeGNXUGh5RldCdDdqTENzcU1hWllOX0lSbEhEdUVZWVo0VlZzQ3dxaTEzYzFPS3VSQjd0V2tVcm9NRjJUOUZMUVJNaHYtdGw2cWhwRUx1ZE0tbl9ibzhHWnR2MlAteElMSDZleDlaUE5vTWFCWmc?oc=5">7 Engines From Major Automakers Raising Red Flags In 2026</a></h3>
+          <p class="snip">7 Engines From Major Automakers Raising Red Flags In 2026 Autoblog&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="my 70-year-old v8 chevy 350 is easier to live with than a ford focus autocar">
+          <div class="src"><a class="srcname" href="https://www.autocar.co.uk">Autocar</a>
+            <span class="time">Jun 14, 11:00 PM</span></div>
+          <h3 class="hed"><a href="https://www.autocar.co.uk/car-news/used-cars/my-70-year-old-v8-chevy-350-easier-live-ford-focus">My 70-year-old V8 Chevy 350 is easier to live with than a Ford Focus</a></h3>
+          <p class="snip">This heavily modified supercharged Small-block also proves patience is a virtue Elliot Florio has been waiting rather a long time to own a supercharged, two-door &#x27;55 Chevy 350 sedan . &quot;I&#x27;d been looking for one for what f&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="why the mercedes 540k special roadster was the 1930s ultimate supercharged grand tourer jalopnik">
+          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
+            <span class="time">Jun 14, 10:25 PM</span></div>
+          <h3 class="hed"><a href="https://www.jalopnik.com/2190345/mercedes-540k-special-roadster-1930s-supercharged-grand-tourer/">Why The Mercedes 540K Special Roadster Was The 1930s Ultimate Supercharged Grand Tourer</a></h3>
+          <p class="snip">From its supercharged straight-8 to its rarity and values on the collector&#x27;s market today, this Mercedes-Benz roadster embodies peak pre-war grand touring.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="iowa spent years capping rural highways at 55, that ends july 1 carscoops">
+          <div class="src"><a class="srcname" href="https://www.carscoops.com">Carscoops</a>
+            <span class="time">Jun 14, 9:39 PM</span></div>
+          <h3 class="hed"><a href="https://www.carscoops.com/2026/06/iowa-speed-limit-increase/">Iowa Spent Years Capping Rural Highways At 55, That Ends July 1</a></h3>
+          <p class="snip">A new Iowa law increases the default rural highway speed limit while offering protections for some speeding violations&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="new £475 ruroc at4.0 carbon gold chrome has landed visordown">
+          <div class="src"><a class="srcname" href="https://www.visordown.com">Visordown</a>
+            <span class="time">Jun 14, 10:30 PM</span></div>
+          <h3 class="hed"><a href="https://www.visordown.com/news/new-ps475-ruroc-at40-carbon-gold-chrome-has-landed">New £475 Ruroc AT4.0 Carbon Gold Chrome has landed</a></h3>
+          <p class="snip">Gold seems to be the ‘in’ colour right now, at least if you’re Ruroc that is, after the Gloucester-based company unveiled its latest gold-coloured helmet.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="what car projects are you watching or subscribed to on youtube? jalopnik">
+          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
+            <span class="time">Jun 14, 9:25 PM</span></div>
+          <h3 class="hed"><a href="https://www.jalopnik.com/2192940/car-projects-watching-youtube-reader-question/">What Car Projects Are You Watching Or Subscribed To On YouTube?</a></h3>
+          <p class="snip">What&#x27;s a YouTuber car project or project channel that you look forward to watching when an update comes around?&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="2026 xpeng g6: preliminary details confirmed for relaunched model y rival carexpert (au)">
+          <div class="src"><a class="srcname" href="https://www.carexpert.com.au">CarExpert (AU)</a>
+            <span class="time">Jun 14, 10:00 PM</span></div>
+          <h3 class="hed"><a href="https://www.carexpert.com.au/car-news/2026-xpeng-g6-preliminary-details-confirmed-for-relaunched-model-y-rival">2026 Xpeng G6: Preliminary details confirmed for relaunched Model Y rival</a></h3>
+          <p class="snip">Initial specifications for the updated Xpeng G6 have been confirmed for Australia ahead of a July 1 relaunch for the Chinese EV brand.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="2026 tesla model 3 premium long range rwd review carexpert (au)">
+          <div class="src"><a class="srcname" href="https://www.carexpert.com.au">CarExpert (AU)</a>
+            <span class="time">Jun 14, 10:00 PM</span></div>
+          <h3 class="hed"><a href="https://www.carexpert.com.au/car-reviews/2026-tesla-model-3-premium-long-range-rwd-review">2026 Tesla Model 3 Premium Long Range RWD review</a></h3>
+          <p class="snip">The mid-spec Tesla Model 3 makes a strong case as both the sweet spot in the range and a mid-size sedan standout.&hellip;</p>
+          
+        </article>
+        <article class="item" data-search="2026 honda prelude is great if you can be honest you&#x27;re almost 38 jalopnik">
+          <div class="src"><a class="srcname" href="https://jalopnik.com">Jalopnik</a>
+            <span class="time">Jun 14, 9:05 PM</span></div>
+          <h3 class="hed"><a href="https://www.jalopnik.com/2192875/2026-honda-prelude-review/">2026 Honda Prelude Is Great If You Can Be Honest You&#x27;re Almost 38</a></h3>
+          <p class="snip">You don&#x27;t buy the Prelude for the spec sheet or to impress strangers on the internet, you buy it for the way it feels when you drive it.&hellip;</p>
+          
+        </article>
+    <p class="noresults" id="noresults">No headlines match your search.</p>
   </main>
   <aside>
+    <h2>Newsletter</h2><div class="nl-card"><p class="nl-blurb">The day&#x27;s top Philippine and world motoring stories, in your inbox.</p><a class="nl-btn nl-link" href="https://ridenetwork.ph" target="_blank" rel="noopener">Subscribe</a></div>
+    <h2>Sponsor Posts</h2><div class="sponsors"><a class="sp-card" href="https://ridenetwork.ph" target="_blank" rel="noopener sponsored"><span class="sp-text"><span class="sp-by">RideNetwork.PH</span><span class="sp-title">Philippine motoring, all in one place</span><p class="sp-body">Reviews, news, and buyer guides for cars and motorcycles in the Philippines.</p></span><img class="sp-logo" src="https://ridenetwork.ph/wp-content/uploads/2025/06/Ridenetwork-Logo-1x-500W.png" alt="RideNetwork.PH logo" loading="lazy"></a></div>
     <h2>The firehose</h2>
-    <ul class="fire"><li><span class="time">Jun 15, 1:00 AM</span> <a href="https://www.thedrive.com/news/darn-some-chevy-corvette-zr1-owners-report-paint-chipping-at-180-mph-and-above">Darn: Some Chevy Corvette ZR1 Owners Report Paint Chipping at 180 MPH and Above</a> <span class="srcname">/ The Drive</span></li><li><span class="time">Jun 15, 12:53 AM</span> <a href="https://www.carscoops.com/2026/06/chrysler-pacificas-are-driven-10-times-more-miles-than-ford-mustangs/">The Mustang Is America’s Least-Driven Car Only If You Count One Kind Of Owner</a> <span class="srcname">/ Carscoops</span></li><li><span class="time">Jun 15, 12:30 AM</span> <a href="https://www.caranddriver.com/news/a71550204/1979-jeep-cherokee-bring-a-trailer-auction/">This 1979 Jeep Cherokee on Bring a Trailer Strikes Like a Viper</a> <span class="srcname">/ Car and Driver</span></li><li><span class="time">Jun 15, 12:25 AM</span> <a href="https://www.jalopnik.com/2189308/how-much-can-mercedes-benz-sprinter-van-tow/">How Much Can You Tow With A Mercedes Sprinter Van?</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 15, 12:18 AM</span> <a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxORlBCNTdVUjZuTGFWbnRDWGx6R3VyaG5QTW1pZTN4bGJKY3JXLUxUWHBralMwdnVlMDNvYldtOGlIeWRGZmRHSlUwbndDY0pRc3l5ZFltSVM3MTF5U0V5XzFiRklVaHZaSXRyV2phR3o5N3NheWFlX1NNb05pVkNYWmVDMjYyQzdTb00tTVUyX1pPcjVjUTFR0gGcAUFVX3lxTE9TQzNNNnVWVExtNEhpS0pZV0xZOEw0SGJTb3ZGeUZuR1VuSzZDdklUeWkxS2UtdkYwNXZVRnhMckVPdTNIZkFyM2dnaGpzSkxpa0g2TjY3eVM2NXVWNG1nXzFDQ3VjWEtHM0RObmJkTjN4dUhrbXVVYU1Pd2otVnlFLXNscGdBc3BjTEpnOV92V2RqWDJocnBRRFU5Qg?oc=5">Laguna bypass road completion ordered</a> <span class="srcname">/ Manila Times Fast Times</span></li><li><span class="time">Jun 15, 12:03 AM</span> <a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE1lZWNvOTV0ZURSd0JsYzdHWnZ0NEpMTzNER2NsazQwMFN5R2pfc3g5WHJLVVJWekRKSWpSUk9CRGU5aFoxaUJXNVN5NjBhZGJkdVR2S1pwVzh5QmpBQUVXczl0MC16c3FkQUk0ZDZBZ05Ea1ZkM1Z2LXRYME8?oc=5">Editorial Cartoon June 15, 2026</a> <span class="srcname">/ BusinessMirror Motoring</span></li><li><span class="time">Jun 15, 12:00 AM</span> <a href="https://www.motor1.com/news/798623/hybrid-engine-efficiency-breakthrough/">This New Hybrid Engine Achieves A Breakthrough In Efficiency</a> <span class="srcname">/ Motor1</span></li><li><span class="time">Jun 14, 11:25 PM</span> <a href="https://www.jalopnik.com/2190445/quickest-manual-transmission-drag-racing-cars/">How Drag Racers Are Running In The Sixes With Manual Transmissions</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 14, 11:16 PM</span> <a href="https://www.carscoops.com/2026/06/mitsubishi-lancer-revival-nissan/">Here’s The Cheapest Way Mitsubishi Could Revive The Lancer, And It’s All Nissan</a> <span class="srcname">/ Carscoops</span></li><li><span class="time">Jun 14, 11:00 PM</span> <a href="https://www.thedrive.com/news/new-colorado-law-gets-it-right-by-requiring-responsible-ev-battery-recycling">New Colorado Law Gets It Right by Requiring Responsible EV Battery Recycling</a> <span class="srcname">/ The Drive</span></li><li><span class="time">Jun 14, 11:00 PM</span> <a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxNYnJteElxcHRRbXdsRnJ0RnNXSDJSRDhQTmtEMEdJeUVOeGNXUGh5RldCdDdqTENzcU1hWllOX0lSbEhEdUVZWVo0VlZzQ3dxaTEzYzFPS3VSQjd0V2tVcm9NRjJUOUZMUVJNaHYtdGw2cWhwRUx1ZE0tbl9ibzhHWnR2MlAteElMSDZleDlaUE5vTWFCWmc?oc=5">7 Engines From Major Automakers Raising Red Flags In 2026</a> <span class="srcname">/ Autoblog</span></li><li><span class="time">Jun 14, 11:00 PM</span> <a href="https://www.autocar.co.uk/car-news/used-cars/my-70-year-old-v8-chevy-350-easier-live-ford-focus">My 70-year-old V8 Chevy 350 is easier to live with than a Ford Focus</a> <span class="srcname">/ Autocar</span></li><li><span class="time">Jun 14, 10:30 PM</span> <a href="https://www.visordown.com/news/new-ps475-ruroc-at40-carbon-gold-chrome-has-landed">New £475 Ruroc AT4.0 Carbon Gold Chrome has landed</a> <span class="srcname">/ Visordown</span></li><li><span class="time">Jun 14, 10:25 PM</span> <a href="https://www.jalopnik.com/2190345/mercedes-540k-special-roadster-1930s-supercharged-grand-tourer/">Why The Mercedes 540K Special Roadster Was The 1930s Ultimate Supercharged Grand Tourer</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 14, 10:00 PM</span> <a href="https://www.carexpert.com.au/car-news/2026-xpeng-g6-preliminary-details-confirmed-for-relaunched-model-y-rival">2026 Xpeng G6: Preliminary details confirmed for relaunched Model Y rival</a> <span class="srcname">/ CarExpert (AU)</span></li><li><span class="time">Jun 14, 10:00 PM</span> <a href="https://www.carexpert.com.au/car-reviews/2026-tesla-model-3-premium-long-range-rwd-review">2026 Tesla Model 3 Premium Long Range RWD review</a> <span class="srcname">/ CarExpert (AU)</span></li><li><span class="time">Jun 14, 9:39 PM</span> <a href="https://www.carscoops.com/2026/06/iowa-speed-limit-increase/">Iowa Spent Years Capping Rural Highways At 55, That Ends July 1</a> <span class="srcname">/ Carscoops</span></li><li><span class="time">Jun 14, 9:25 PM</span> <a href="https://www.jalopnik.com/2192940/car-projects-watching-youtube-reader-question/">What Car Projects Are You Watching Or Subscribed To On YouTube?</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 14, 9:05 PM</span> <a href="https://www.jalopnik.com/2192875/2026-honda-prelude-review/">2026 Honda Prelude Is Great If You Can Be Honest You&#x27;re Almost 38</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 14, 9:03 PM</span> <a href="https://www.autoexpress.co.uk/opinion/369786/mg-set-build-cars-spain-least-nissan-flying-flag-britain-mike-rutherford">With MG set to build cars in Spain, at least Nissan is flying the flag for Britain</a> <span class="srcname">/ AutoExpress</span></li><li><span class="time">Jun 14, 9:00 PM</span> <a href="https://www.thedrive.com/news/big-trucks-like-the-ford-super-duty-and-ram-hd-eluded-safety-evaluations-until-now">Big Trucks Like the Ford Super Duty and Ram HD Eluded Safety Evaluations, Until Now</a> <span class="srcname">/ The Drive</span></li><li><span class="time">Jun 14, 9:00 PM</span> <a href="https://www.caranddriver.com/news/a71573780/amble-one-beach-buggy-ev-details/">This Electric Beach Buggy Is for Folks Who Can Afford Luxury Vacations</a> <span class="srcname">/ Car and Driver</span></li><li><span class="time">Jun 14, 8:45 PM</span> <a href="https://www.jalopnik.com/2192289/porsche-important-engines/">These Are Porsche&#x27;s Most Important Engines, From Flat Six To V10</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 14, 8:45 PM</span> <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxObTk5blJPRTB5Rl9OS0xKZjRjMjBjejdHZVZxX1BlcGw2VFRRWFJBenFsU2R6cXkzakRXZDJvd0p1d0p1MnkzNkNXVi04c3d5V2JIN3VpQl9obTZDQlp5VnNDRWpOVmJPd3dxaVRhbzNjV1g4Y3VpSzZlUE5uX1B5ajdCbWpxNndXRHV1bFdoaw?oc=5">Slate’s $25,000 EV Pickup Is Finally Getting Its Big Reveal</a> <span class="srcname">/ Autoblog</span></li><li><span class="time">Jun 14, 8:19 PM</span> <a href="https://www.rideapart.com/news/798516/piaggio-beverly-25th-anniversary-specs-features-price/">Piaggio&#x27;s 25-Year-Old Scooter Idea Somehow Still Makes Sense Today</a> <span class="srcname">/ RideApart</span></li><li><span class="time">Jun 14, 8:05 PM</span> <a href="https://www.jalopnik.com/2190405/semi-truck-power-divider-inter-axle-differential-explained/">What The &#x27;Power Divider&#x27; Switch In A Semi Truck Cab Actually Does To Both Drive Axles</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 14, 8:00 PM</span> <a href="https://www.carscoops.com/2026/06/subaru-sambar-kei-van-usa/">This Subaru Kei Van Parks Like A Motorcycle But Swallows Half Your Garage</a> <span class="srcname">/ Carscoops</span></li><li><span class="time">Jun 14, 7:50 PM</span> <a href="https://news.google.com/rss/articles/CBMiowFBVV95cUxQTkVpRnlIaVlwZWJ0ZUxFb1pIUExLRU9ablppUU1hTmJfWXpwVWZ0TzVtOWVQRVBiR3gwcmRRMWZlQ09MVGM5ekNLdWF2aXJVTHJsX0d6QkVBczhwdFdycG4yUEM0Z2ZnM2EwVWJFMXc2X1pKRk9xV0pjS3VwMzJoZ2lZaGJKMEcyYWtQbGpnOFBUWWwxWi1fSTJvY2RiQXhiOVk0?oc=5">2026 World Ducati Week Program Revealed</a> <span class="srcname">/ Cycle World</span></li><li><span class="time">Jun 14, 7:44 PM</span> <a href="https://news.google.com/rss/articles/CBMif0FVX3lxTE1lVjBHYk1CdkJzTlJuUWpWemttWDhPeWJKaE5WTkxtS0FqcUZLS3BBNC1tbDhOYmJWTUVNX3hVc1poenJiTlVwaS1ZOFhpb0szLV9raE5CX3YzUHRsQWI5ZEFfaGMtWE9VZ3I4Y3FZOVBLZi0xZTFfZjFOMmJxUHc?oc=5">2027 Yamaha TT-R 230</a> <span class="srcname">/ Motorcycle.com</span></li><li><span class="time">Jun 14, 7:40 PM</span> <a href="https://news.google.com/rss/articles/CBMiygFBVV95cUxOVUFhTm9UdkZnRTdCcDVQYkc2ODBZTlBpbElsNF9aS1RUUjBRWHVhVnE2Rk1CbG9oYmZhMkQ0RzdBMWZ6d2F2VjhGTVZMbU5TWUFvcDRBODBGak9INnpEYlkwVjhJeEFGd3QxR214MWVBRng3Q0ZZQ2tlOXZBMzN1Y3ZNLVE4R2NoWWo4WWdTdzM5VEtwSFBKNnhPTFpCWnpEWE1pUlNhaUVLbG9WUTFTa0k3TXVlaWxVOTdxQ0xNekU1NW1TSGg1akNn?oc=5">Still in the Barn: Someone Discovered an Abandoned 1958 Pontiac, Didn&#x27;t Even Touch It</a> <span class="srcname">/ autoevolution</span></li><li><span class="time">Jun 14, 7:11 PM</span> <a href="https://news.google.com/rss/articles/CBMifEFVX3lxTFBNTnhMakNfTU55MllweUpvTUZ6SjRFWUpzcE5CZ0dVSHFBQ3Fmc1NIUTFDOEdKSVFwdkdlT3lPNDFVMDJMdnhReERtLWpRMkRWZEhHa1o1R2RSdGpVOFVMREg4Wng4SW5xZ2pDcUViYUFkT3BZRmFlTWtVY1I?oc=5">2027 Yamaha YZ 250</a> <span class="srcname">/ Motorcycle.com</span></li><li><span class="time">Jun 14, 7:05 PM</span> <a href="https://www.autoexpress.co.uk/audi/a5/369784/long-term-test-audi-a5-saloon-e-hybrid-s-line-quattro-s-tronic-sarah-perks">Long-term test: Audi A5 Saloon e-hybrid S line quattro S-tronic</a> <span class="srcname">/ AutoExpress</span></li><li><span class="time">Jun 14, 7:05 PM</span> <a href="https://www.autoexpress.co.uk/audi/a5/369783/audi-a5-saloon-e-hybrid-s-line-quattro-s-tronic-long-term-test-pictures">Audi A5 Saloon e-hybrid S line quattro S-tronic long-term test - pictures</a> <span class="srcname">/ AutoExpress</span></li><li><span class="time">Jun 14, 7:05 PM</span> <a href="https://www.jalopnik.com/2190319/modern-car-eera-started-with-mercedes-35-ps/">The Modern Car Era All Started With The Mercedes 35 PS</a> <span class="srcname">/ Jalopnik</span></li><li><span class="time">Jun 14, 6:39 PM</span> <a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxNcC1OTVVrVEhBVFQxLWxOOFhvVlg0UUVGSE8zZTRPLS1JNzZnQ29xZHNTbUJjUTJ4eDVEMXZpdzd1QWg0YkpZX3FHWkNiWi1JSnVUdkliU3cyQTBGcHpieEp6VmsxOE1MSi1BLW1oQjRfNjVHMVJqUHd1NnRUWXB5WS0zVEVGYmFrY01ZbzkzVUxzN3dyVmg1MWxnamZzUWVWTVFleG5JdjJad2xTS2FySUN0b0ZyWFhGdlRVaklPZHA5ZFE?oc=5">How Americans celebrated the bicentennial—with fireworks, a Freedom Train and Farrah</a> <span class="srcname">/ BusinessMirror Motoring</span></li><li><span class="time">Jun 14, 6:36 PM</span> <a href="https://www.autoexpress.co.uk/genesis/369789/genesis-magma-gt3-concept-pictures">Genesis Magma GT3 Concept - pictures</a> <span class="srcname">/ AutoExpress</span></li><li><span class="time">Jun 14, 6:29 PM</span> <a href="https://www.autoexpress.co.uk/genesis/369790/genesis-magma-gt3-concept-shows-motorsport-focus-hyundais-luxury-brand">Genesis Magma GT3 Concept shows-off motorsport focus of Hyundai’s luxury brand</a> <span class="srcname">/ AutoExpress</span></li><li><span class="time">Jun 14, 6:29 PM</span> <a href="https://news.google.com/rss/articles/CBMijgFBVV95cUxNREVpZnpUaWh5MEtObDV5RjdXay1QZmVTdmpiSDFvYzN3c2ZJckl0UFc1QTNkenA1aEpCZUxWSENQaTlkcDRXQTl2aE1jZU1TZEJGaG9zdXBHVmh6MEl6bmdBU3lRY3dzaEZnbDNlT0FYRzFJLWpxV0tDLXhwYUkxYzRpdHBzaXB0OGxrcVFn?oc=5">BYD Dolphin GLX vs MG 4 Urban EV</a> <span class="srcname">/ AutoDeal</span></li><li><span class="time">Jun 14, 6:29 PM</span> <a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxOUWFSMm9Idm9Yb3NSZGtEWm85YS11eFJLb0wxOXpOb28wR1VXQWFaRGhLb1JMZkdwNjAzQmp3M2JfY0pkdy1PeHc0V2Z4LTBPbHBwR2tMSnRQNXJ2cGVaTm5KMXk1eklxdjMyMm1JR2dvamhJRnFMeG0taUxUSTJfSHVDMVZkakk4a0JjUnNNeDRtcmM?oc=5">BYD eMAX 7 Standard vs MG 4 Urban EV</a> <span class="srcname">/ AutoDeal</span></li><li><span class="time">Jun 14, 6:29 PM</span> <a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNQUdpenVMRkM5ejhoY01CY290dEVNX21ySGZRd1FYVFNxdXMwck9EQ3dfR3ZVRTY0MUUtMmNjNmRqNklfcy1kT0pVcTV5dXJQNkk5bzVmdXJoSnc5YzZVZEJDU1hDYmliTUs1MjJ3aXpfNmN4WHhTRU5EWTdzZXZqZUUtdGRZa0JxbUFR?oc=5">JAC Ytterby Air 405 vs MG 4 Urban EV</a> <span class="srcname">/ AutoDeal</span></li></ul>
+    <ul class="fire"><li data-search="darn: some chevy corvette zr1 owners report paint chipping at 180 mph and above the drive"><span class="time">Jun 15, 1:00 AM</span> <a href="https://www.thedrive.com/news/darn-some-chevy-corvette-zr1-owners-report-paint-chipping-at-180-mph-and-above">Darn: Some Chevy Corvette ZR1 Owners Report Paint Chipping at 180 MPH and Above</a> <span class="srcname">/ The Drive</span></li><li data-search="the mustang is america’s least-driven car only if you count one kind of owner carscoops"><span class="time">Jun 15, 12:53 AM</span> <a href="https://www.carscoops.com/2026/06/chrysler-pacificas-are-driven-10-times-more-miles-than-ford-mustangs/">The Mustang Is America’s Least-Driven Car Only If You Count One Kind Of Owner</a> <span class="srcname">/ Carscoops</span></li><li data-search="this 1979 jeep cherokee on bring a trailer strikes like a viper car and driver"><span class="time">Jun 15, 12:30 AM</span> <a href="https://www.caranddriver.com/news/a71550204/1979-jeep-cherokee-bring-a-trailer-auction/">This 1979 Jeep Cherokee on Bring a Trailer Strikes Like a Viper</a> <span class="srcname">/ Car and Driver</span></li><li data-search="how much can you tow with a mercedes sprinter van? jalopnik"><span class="time">Jun 15, 12:25 AM</span> <a href="https://www.jalopnik.com/2189308/how-much-can-mercedes-benz-sprinter-van-tow/">How Much Can You Tow With A Mercedes Sprinter Van?</a> <span class="srcname">/ Jalopnik</span></li><li data-search="this new hybrid engine achieves a breakthrough in efficiency motor1"><span class="time">Jun 15, 12:00 AM</span> <a href="https://www.motor1.com/news/798623/hybrid-engine-efficiency-breakthrough/">This New Hybrid Engine Achieves A Breakthrough In Efficiency</a> <span class="srcname">/ Motor1</span></li><li data-search="how drag racers are running in the sixes with manual transmissions jalopnik"><span class="time">Jun 14, 11:25 PM</span> <a href="https://www.jalopnik.com/2190445/quickest-manual-transmission-drag-racing-cars/">How Drag Racers Are Running In The Sixes With Manual Transmissions</a> <span class="srcname">/ Jalopnik</span></li><li data-search="here’s the cheapest way mitsubishi could revive the lancer, and it’s all nissan carscoops"><span class="time">Jun 14, 11:16 PM</span> <a href="https://www.carscoops.com/2026/06/mitsubishi-lancer-revival-nissan/">Here’s The Cheapest Way Mitsubishi Could Revive The Lancer, And It’s All Nissan</a> <span class="srcname">/ Carscoops</span></li><li data-search="new colorado law gets it right by requiring responsible ev battery recycling the drive"><span class="time">Jun 14, 11:00 PM</span> <a href="https://www.thedrive.com/news/new-colorado-law-gets-it-right-by-requiring-responsible-ev-battery-recycling">New Colorado Law Gets It Right by Requiring Responsible EV Battery Recycling</a> <span class="srcname">/ The Drive</span></li><li data-search="7 engines from major automakers raising red flags in 2026 autoblog"><span class="time">Jun 14, 11:00 PM</span> <a href="https://news.google.com/rss/articles/CBMilgFBVV95cUxNYnJteElxcHRRbXdsRnJ0RnNXSDJSRDhQTmtEMEdJeUVOeGNXUGh5RldCdDdqTENzcU1hWllOX0lSbEhEdUVZWVo0VlZzQ3dxaTEzYzFPS3VSQjd0V2tVcm9NRjJUOUZMUVJNaHYtdGw2cWhwRUx1ZE0tbl9ibzhHWnR2MlAteElMSDZleDlaUE5vTWFCWmc?oc=5">7 Engines From Major Automakers Raising Red Flags In 2026</a> <span class="srcname">/ Autoblog</span></li><li data-search="my 70-year-old v8 chevy 350 is easier to live with than a ford focus autocar"><span class="time">Jun 14, 11:00 PM</span> <a href="https://www.autocar.co.uk/car-news/used-cars/my-70-year-old-v8-chevy-350-easier-live-ford-focus">My 70-year-old V8 Chevy 350 is easier to live with than a Ford Focus</a> <span class="srcname">/ Autocar</span></li><li data-search="new £475 ruroc at4.0 carbon gold chrome has landed visordown"><span class="time">Jun 14, 10:30 PM</span> <a href="https://www.visordown.com/news/new-ps475-ruroc-at40-carbon-gold-chrome-has-landed">New £475 Ruroc AT4.0 Carbon Gold Chrome has landed</a> <span class="srcname">/ Visordown</span></li><li data-search="why the mercedes 540k special roadster was the 1930s ultimate supercharged grand tourer jalopnik"><span class="time">Jun 14, 10:25 PM</span> <a href="https://www.jalopnik.com/2190345/mercedes-540k-special-roadster-1930s-supercharged-grand-tourer/">Why The Mercedes 540K Special Roadster Was The 1930s Ultimate Supercharged Grand Tourer</a> <span class="srcname">/ Jalopnik</span></li><li data-search="2026 xpeng g6: preliminary details confirmed for relaunched model y rival carexpert (au)"><span class="time">Jun 14, 10:00 PM</span> <a href="https://www.carexpert.com.au/car-news/2026-xpeng-g6-preliminary-details-confirmed-for-relaunched-model-y-rival">2026 Xpeng G6: Preliminary details confirmed for relaunched Model Y rival</a> <span class="srcname">/ CarExpert (AU)</span></li><li data-search="2026 tesla model 3 premium long range rwd review carexpert (au)"><span class="time">Jun 14, 10:00 PM</span> <a href="https://www.carexpert.com.au/car-reviews/2026-tesla-model-3-premium-long-range-rwd-review">2026 Tesla Model 3 Premium Long Range RWD review</a> <span class="srcname">/ CarExpert (AU)</span></li><li data-search="iowa spent years capping rural highways at 55, that ends july 1 carscoops"><span class="time">Jun 14, 9:39 PM</span> <a href="https://www.carscoops.com/2026/06/iowa-speed-limit-increase/">Iowa Spent Years Capping Rural Highways At 55, That Ends July 1</a> <span class="srcname">/ Carscoops</span></li><li data-search="what car projects are you watching or subscribed to on youtube? jalopnik"><span class="time">Jun 14, 9:25 PM</span> <a href="https://www.jalopnik.com/2192940/car-projects-watching-youtube-reader-question/">What Car Projects Are You Watching Or Subscribed To On YouTube?</a> <span class="srcname">/ Jalopnik</span></li><li data-search="new 2027 mercedes s-class coupe is the coolest premium gt you’ll see all week – rendering autoevolution"><span class="time">Jun 14, 9:10 PM</span> <a href="https://news.google.com/rss/articles/CBMizgFBVV95cUxQdE9Lc0drdVBPUThPeFJ6OTExeVFXeWlzYU1IZDYyVDR2S0pZQzhWelJjcFVmSFNGaklYMWZRV0hWdVRRZlpxdTQ0c3hIU3gySENXLTRDczl4dERuM055Nm43Ynk5WUhRZjlSWThIek82NFBpN3JlYzdNY19CcUxENnBSdjIxUFlaMHNBb2JEOVRyWGFnbmR0TVY3RWUwTlZoMUJHdmIwVTlXWnEwdTlEOHU4SjZSYWF0SWFxcjVIR1piV09zV21KSzJWZFFkdw?oc=5">New 2027 Mercedes S-Class Coupe Is THE Coolest Premium GT You’ll See All Week – Rendering</a> <span class="srcname">/ autoevolution</span></li><li data-search="2026 honda prelude is great if you can be honest you&#x27;re almost 38 jalopnik"><span class="time">Jun 14, 9:05 PM</span> <a href="https://www.jalopnik.com/2192875/2026-honda-prelude-review/">2026 Honda Prelude Is Great If You Can Be Honest You&#x27;re Almost 38</a> <span class="srcname">/ Jalopnik</span></li><li data-search="with mg set to build cars in spain, at least nissan is flying the flag for britain autoexpress"><span class="time">Jun 14, 9:03 PM</span> <a href="https://www.autoexpress.co.uk/opinion/369786/mg-set-build-cars-spain-least-nissan-flying-flag-britain-mike-rutherford">With MG set to build cars in Spain, at least Nissan is flying the flag for Britain</a> <span class="srcname">/ AutoExpress</span></li><li data-search="big trucks like the ford super duty and ram hd eluded safety evaluations, until now the drive"><span class="time">Jun 14, 9:00 PM</span> <a href="https://www.thedrive.com/news/big-trucks-like-the-ford-super-duty-and-ram-hd-eluded-safety-evaluations-until-now">Big Trucks Like the Ford Super Duty and Ram HD Eluded Safety Evaluations, Until Now</a> <span class="srcname">/ The Drive</span></li><li data-search="this electric beach buggy is for folks who can afford luxury vacations car and driver"><span class="time">Jun 14, 9:00 PM</span> <a href="https://www.caranddriver.com/news/a71573780/amble-one-beach-buggy-ev-details/">This Electric Beach Buggy Is for Folks Who Can Afford Luxury Vacations</a> <span class="srcname">/ Car and Driver</span></li><li data-search="slate’s $25,000 ev pickup is finally getting its big reveal autoblog"><span class="time">Jun 14, 8:45 PM</span> <a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxObTk5blJPRTB5Rl9OS0xKZjRjMjBjejdHZVZxX1BlcGw2VFRRWFJBenFsU2R6cXkzakRXZDJvd0p1d0p1MnkzNkNXVi04c3d5V2JIN3VpQl9obTZDQlp5VnNDRWpOVmJPd3dxaVRhbzNjV1g4Y3VpSzZlUE5uX1B5ajdCbWpxNndXRHV1bFdoaw?oc=5">Slate’s $25,000 EV Pickup Is Finally Getting Its Big Reveal</a> <span class="srcname">/ Autoblog</span></li><li data-search="these are porsche&#x27;s most important engines, from flat six to v10 jalopnik"><span class="time">Jun 14, 8:45 PM</span> <a href="https://www.jalopnik.com/2192289/porsche-important-engines/">These Are Porsche&#x27;s Most Important Engines, From Flat Six To V10</a> <span class="srcname">/ Jalopnik</span></li><li data-search="piaggio&#x27;s 25-year-old scooter idea somehow still makes sense today rideapart"><span class="time">Jun 14, 8:19 PM</span> <a href="https://www.rideapart.com/news/798516/piaggio-beverly-25th-anniversary-specs-features-price/">Piaggio&#x27;s 25-Year-Old Scooter Idea Somehow Still Makes Sense Today</a> <span class="srcname">/ RideApart</span></li><li data-search="what the &#x27;power divider&#x27; switch in a semi truck cab actually does to both drive axles jalopnik"><span class="time">Jun 14, 8:05 PM</span> <a href="https://www.jalopnik.com/2190405/semi-truck-power-divider-inter-axle-differential-explained/">What The &#x27;Power Divider&#x27; Switch In A Semi Truck Cab Actually Does To Both Drive Axles</a> <span class="srcname">/ Jalopnik</span></li><li data-search="this subaru kei van parks like a motorcycle but swallows half your garage carscoops"><span class="time">Jun 14, 8:00 PM</span> <a href="https://www.carscoops.com/2026/06/subaru-sambar-kei-van-usa/">This Subaru Kei Van Parks Like A Motorcycle But Swallows Half Your Garage</a> <span class="srcname">/ Carscoops</span></li><li data-search="2026 ssr motorsports sr-e8 pro motorcycle.com"><span class="time">Jun 14, 7:45 PM</span> <a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxPb01USGpXY3dtaEI1bExTUXFHWEk5LWtqeVVzSGtPMEFodnV3dm4wTE1GbUhaMm8tS1Z1OS1NTFNEQjFqVmpVV0NBX3htQ0xmZXFDRUVVWXlSSUdlc2c5c1dtOGVkT1R0QmVOenBwS05FXzNmMlNVZGpTMnR1dDRYUkMxLUVmX2pQ?oc=5">2026 SSR Motorsports SR-E8 PRO</a> <span class="srcname">/ Motorcycle.com</span></li><li data-search="still in the barn: someone discovered an abandoned 1958 pontiac, didn&#x27;t even touch it autoevolution"><span class="time">Jun 14, 7:40 PM</span> <a href="https://news.google.com/rss/articles/CBMiygFBVV95cUxOVUFhTm9UdkZnRTdCcDVQYkc2ODBZTlBpbElsNF9aS1RUUjBRWHVhVnE2Rk1CbG9oYmZhMkQ0RzdBMWZ6d2F2VjhGTVZMbU5TWUFvcDRBODBGak9INnpEYlkwVjhJeEFGd3QxR214MWVBRng3Q0ZZQ2tlOXZBMzN1Y3ZNLVE4R2NoWWo4WWdTdzM5VEtwSFBKNnhPTFpCWnpEWE1pUlNhaUVLbG9WUTFTa0k3TXVlaWxVOTdxQ0xNekU1NW1TSGg1akNn?oc=5">Still in the Barn: Someone Discovered an Abandoned 1958 Pontiac, Didn&#x27;t Even Touch It</a> <span class="srcname">/ autoevolution</span></li><li data-search="2027 yamaha yz 85lw motorcycle.com"><span class="time">Jun 14, 7:10 PM</span> <a href="https://news.google.com/rss/articles/CBMifkFVX3lxTE43SnpmYnhZLVVnNUxyelJETmUyQ25OZWtLc2s4cEVLRkRBNldxQlR4ZFB1UjJXOWxzN2VuU0lveEdFRFJ0eDRtNkNybFduWnNUQ19NNk5abHV1R1h2d3dfLS1kSDVmelpiTHF3dWdCUmNhb21VWks4Mml5R2lkQQ?oc=5">2027 Yamaha YZ 85LW</a> <span class="srcname">/ Motorcycle.com</span></li><li data-search="2027 yamaha yz 125 monster energy edition motorcycle.com"><span class="time">Jun 14, 7:06 PM</span> <a href="https://news.google.com/rss/articles/CBMimwFBVV95cUxPRHhhRUYwckYyUUF1VWc1d3B1TWdLeDA4U2VtcU9KczJ1aWIwWlJFV2NDMmRlSnNrZXFzb2hkTlZzaFZvMHRqMERPbkRfRkV0VnRUbkMxVEp2U3JSMVNxT1NTc09CWWN6aHR2RklDdUVBZ0FkZDUyOEJYcFB6NS1fbXRtVDhaUUlZa1JnMzk4YlVkenVUU0d5em5tZw?oc=5">2027 Yamaha YZ 125 Monster Energy Edition</a> <span class="srcname">/ Motorcycle.com</span></li><li data-search="long-term test: audi a5 saloon e-hybrid s line quattro s-tronic autoexpress"><span class="time">Jun 14, 7:05 PM</span> <a href="https://www.autoexpress.co.uk/audi/a5/369784/long-term-test-audi-a5-saloon-e-hybrid-s-line-quattro-s-tronic-sarah-perks">Long-term test: Audi A5 Saloon e-hybrid S line quattro S-tronic</a> <span class="srcname">/ AutoExpress</span></li><li data-search="audi a5 saloon e-hybrid s line quattro s-tronic long-term test - pictures autoexpress"><span class="time">Jun 14, 7:05 PM</span> <a href="https://www.autoexpress.co.uk/audi/a5/369783/audi-a5-saloon-e-hybrid-s-line-quattro-s-tronic-long-term-test-pictures">Audi A5 Saloon e-hybrid S line quattro S-tronic long-term test - pictures</a> <span class="srcname">/ AutoExpress</span></li><li data-search="the modern car era all started with the mercedes 35 ps jalopnik"><span class="time">Jun 14, 7:05 PM</span> <a href="https://www.jalopnik.com/2190319/modern-car-eera-started-with-mercedes-35-ps/">The Modern Car Era All Started With The Mercedes 35 PS</a> <span class="srcname">/ Jalopnik</span></li><li data-search="genesis magma gt3 concept - pictures autoexpress"><span class="time">Jun 14, 6:36 PM</span> <a href="https://www.autoexpress.co.uk/genesis/369789/genesis-magma-gt3-concept-pictures">Genesis Magma GT3 Concept - pictures</a> <span class="srcname">/ AutoExpress</span></li><li data-search="genesis magma gt3 concept shows-off motorsport focus of hyundai’s luxury brand autoexpress"><span class="time">Jun 14, 6:29 PM</span> <a href="https://www.autoexpress.co.uk/genesis/369790/genesis-magma-gt3-concept-shows-motorsport-focus-hyundais-luxury-brand">Genesis Magma GT3 Concept shows-off motorsport focus of Hyundai’s luxury brand</a> <span class="srcname">/ AutoExpress</span></li><li data-search="byd dolphin glx vs mg 4 urban ev autodeal"><span class="time">Jun 14, 6:29 PM</span> <a href="https://news.google.com/rss/articles/CBMijgFBVV95cUxNREVpZnpUaWh5MEtObDV5RjdXay1QZmVTdmpiSDFvYzN3c2ZJckl0UFc1QTNkenA1aEpCZUxWSENQaTlkcDRXQTl2aE1jZU1TZEJGaG9zdXBHVmh6MEl6bmdBU3lRY3dzaEZnbDNlT0FYRzFJLWpxV0tDLXhwYUkxYzRpdHBzaXB0OGxrcVFn?oc=5">BYD Dolphin GLX vs MG 4 Urban EV</a> <span class="srcname">/ AutoDeal</span></li><li data-search="byd emax 7 standard vs mg 4 urban ev autodeal"><span class="time">Jun 14, 6:29 PM</span> <a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxOUWFSMm9Idm9Yb3NSZGtEWm85YS11eFJLb0wxOXpOb28wR1VXQWFaRGhLb1JMZkdwNjAzQmp3M2JfY0pkdy1PeHc0V2Z4LTBPbHBwR2tMSnRQNXJ2cGVaTm5KMXk1eklxdjMyMm1JR2dvamhJRnFMeG0taUxUSTJfSHVDMVZkakk4a0JjUnNNeDRtcmM?oc=5">BYD eMAX 7 Standard vs MG 4 Urban EV</a> <span class="srcname">/ AutoDeal</span></li><li data-search="jac ytterby air 405 vs mg 4 urban ev autodeal"><span class="time">Jun 14, 6:29 PM</span> <a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxNQUdpenVMRkM5ejhoY01CY290dEVNX21ySGZRd1FYVFNxdXMwck9EQ3dfR3ZVRTY0MUUtMmNjNmRqNklfcy1kT0pVcTV5dXJQNkk5bzVmdXJoSnc5YzZVZEJDU1hDYmliTUs1MjJ3aXpfNmN4WHhTRU5EWTdzZXZqZUUtdGRZa0JxbUFR?oc=5">JAC Ytterby Air 405 vs MG 4 Urban EV</a> <span class="srcname">/ AutoDeal</span></li><li data-search="denza b5 hev vs mg rx9 phev autodeal"><span class="time">Jun 14, 6:29 PM</span> <a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQcTY4c2Z6cXowTWxKd1pjY2c3MDBLZDJxTTFRNlNpZ0FjQTh6R3dvblh4Y0M2Q0hnMUN5MmxDVFVSaWVsNk4xYU1pLXVkT0Y1RGpsdF9SV2xzNW1ub0JUc2RBRW14WlBIZ0FKQ01uc2hvRWFuSDVZSlU5OEhCYk9WZnVzVkJjc1k?oc=5">DENZA B5 HEV vs MG RX9 PHEV</a> <span class="srcname">/ AutoDeal</span></li><li data-search="want to fly to japan in two hours? this jet could one day make that a reality jalopnik"><span class="time">Jun 14, 6:05 PM</span> <a href="https://www.jalopnik.com/2190279/hypersonic-jet-flight-two-hours-usa-japan-one-day/">Want To Fly To Japan In Two Hours? This Jet Could One Day Make That A Reality</a> <span class="srcname">/ Jalopnik</span></li></ul>
     <h2>Newsroom wire <span class="sub">official carmaker PRs</span></h2>
-    <ul class="fire wire"><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE1ZWU8ydE1nVVpjLUdRQ1lLQjJiVW0xcm5DUVR5Mkc5bHIyS1czWHcwc2w0aGNKYm9ac2ctNl9oYWkxQWJ4Z0wwbG5HVEJ4ajZPckRyME9LekJrc0JZa2p0TDRaZ3FtSmpUS3M5YWI4ZW9oV2VUVXpNSlhR?oc=5">Suzuki e VITARA EV Launched in the Philippines: Price &amp; Specs</a> <span class="srcname">/ Suzuki Auto PH</span> <span class="time">Jun 11, 10:39 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOTU5pSVZNRG8zdmhOZExYZ0o4UGZPZjZ1OUljSDdUelIzZktKNW5DQ1pDRjBjd18tNGw5dERGOU5PdEhvTDJtRkc1MEhqcGtHNlgwNXNXdzMxU3dIV3JMOWowU29GRV9NUzJnWUctTUFhSG5CWktDM0V0S1JJWW4tamc1X1J6WVpIQmdfQm1QanVMbnBTMU15VTQtUDhUVlk?oc=5">HCPI Amplifies Hybrid Lineup with ‘Hybrid Power, Honda Trust’ Campaign</a> <span class="srcname">/ Honda Cars PH</span> <span class="time">Jun 9, 5:09 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE5JTml1bWFrQXpXclhmR282UzFsaGxIem9WQlFrWTMzWDVnZ0E0Y1NGbGJRT0VxandUbnN6U2w2QTFNNUU2OWtzcVBEWHA2RzV4S25QNk5hLUQxNG5DVTZpeWRrNm5Rc1NW?oc=5">Hybrid Power, Honda Trust</a> <span class="srcname">/ Honda Cars PH</span> <span class="time">Jun 9, 2:07 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE1tLWktT29VMjhSQkVzVmpHRVN0cmRSb1FYdVRYOVpoQ2plYmhjNk9FWE5PdUZyRmhFMVJLWWM1LWtIbU1leHI2RU93NDRhSEMwSVhYOU9HUzVja3NtX0hhd1diWERWYndON3ptNmxFS21wZkVCaDhZ?oc=5">Drive the Future This Weekend: The BYD Tech Tour Comes to Robinsons Magnolia</a> <span class="srcname">/ BYD Cars PH</span> <span class="time">Jun 5, 10:34 AM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxQbnZKWEJoVzZMQzd4aUNGeWdpRDV0c3llejJPSnl2bEJxUF90RHBSSk1vR0p4dktMd3RVVzBIcTN6WFZZWnVnZFRGNmZkSjJ6WmxQMVgzSVRWWHZtTUR4eTFKUzhMd1RmVTVJS1NCTnF4SEVZSDBESUszLTZQQVZ6NUlmMGtOV0VNX1lsNXVuVnRwYU51alhlTzJMWmJ3alNUOVNSb1gzYXNZU2c?oc=5">Honda Cars Philippines Welcomes the Start of Transformation at the 10th PIMS</a> <span class="srcname">/ Honda Cars PH</span> <span class="time">Jun 4, 10:08 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiUkFVX3lxTFBTaElHQ3Nna1otYWdQN01EN0hxOEdoYWZrZERiOGZaX2poYWl6akJxdGhtSGplUTRYLWlBSUxQdU9YSUJFS2lmQmI4R2Z4NFI1Z0E?oc=5">All-new MG RX9 PHEV</a> <span class="srcname">/ MG Motor PH</span> <span class="time">Jun 4, 2:38 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiZkFVX3lxTE9FSGtSZ1o1MC1ua05hQ3FzbDBzaDZUY2RwZkFwM19xVkpxREZNa1FaZ25BTl82c2Nkd2I5OUdzd09ocjRZODlJOFhyazc1a1dMemdjSHRETzd1VUxCUExsV3Z3by1fUQ?oc=5">Plug In Your Next Adventure</a> <span class="srcname">/ MG Motor PH</span> <span class="time">Jun 4, 2:38 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiUEFVX3lxTE0xTmdpSEpwVHZUSTQzd3dWblk4d055bDhEaXdsa25lQWlXSmhFbTh4VGFNZ3licElpaHNQMnlJbkhQU0Z6dTg0VjZyeWpZaktG?oc=5">All-new MG HS PHEV</a> <span class="srcname">/ MG Motor PH</span> <span class="time">Jun 4, 2:37 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE92LWRndS1FNmw3aGR1T3Z6NlFiZUtDRF9HQUhkU29MX29VN3NURWVxX25DU3c5TWt2QVhjWW9JU0E1WmFHN3Fpbkd6LVI2bGxDTmZBa21zWkx0UQ?oc=5">10th PIMS 2026 - Mitsubishi Motors Philippines Corporation</a> <span class="srcname">/ Mitsubishi Motors PH</span> <span class="time">Jun 2, 6:13 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMidkFVX3lxTE5PbEIwaklZN3pqcF80MVItd0ZkYUkyRU8yV0N0ZkgxR2YtbFAzVjRRVXBHT1VJWU9mSEs5bGRJRjZOVXNycDJyaF8wOXdHUUdsYmozTUNDYXpWeUhuSFZkcDI0b2cxWVhJRTEtcm4xS1RkbFpCM0E?oc=5">BYD Sealion 7 Arrives in PH: Bringing Performance Back to Electric SUVs in the PH</a> <span class="srcname">/ BYD Cars PH</span> <span class="time">Jun 2, 3:00 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMickFVX3lxTE9Eb2Y0WEk2MUdIQzJjdXZGbUI2RVNHZHdxRzhhS2dHMDdCaGdEaEdkdGh2QzRwSmlpQTJ6UGRaUnB4Y1F1TGRlVFpDN1N5ZTFOV281N21BWF84RWVKRjgyT3NRTElONWdFanRrLXMwZWFzQQ?oc=5">Traffic is unavoidable. Smarter choices aren&#x27;t.</a> <span class="srcname">/ BYD Cars PH</span> <span class="time">Jun 2, 12:40 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMia0FVX3lxTE9CMklrYTdNemhiS2ltUjNBM3NGYVBFSUdzSWlvS1VZajB2cXl2anFTX0tQWmFrMkY5U2Q3TmhfNUpHQmt2VDdBSVB5YjIzVW9RaWNPdGpCUERFWXVGS0padGIzRm1LYTI1MjNr?oc=5">Toyota Motor Philippines Marks Network Expansion with First Service Center in Palo, Leyte</a> <span class="srcname">/ Toyota Motor PH</span> <span class="time">Jun 2, 11:23 AM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQSm5WVldVNDE5YUxJS3BlWFVIb0g0M2dQTXA1bFJtTXltOUItQ0RXN2tSTExZY0d5Z21hcWhWNzd2c1FrWXRNZVdYRUZteDNnWHMxbERPVUo3ZXBqVFBjZzNySWhqamlNR2tEeGNIOWFSTG9DbkI5cV9YS0lIQXZ1SFFnQjVJVG8?oc=5">Toyota supports Japan-Philippines bilateral relations with manufacturing commitment and ecosystem support</a> <span class="srcname">/ Toyota Motor PH</span> <span class="time">Jun 1, 3:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMiqwJBVV95cUxPWkJZOWZSa19zRFRNUGJIcDF6MjhCT3VnT0x0WWtFZjJGWWM1djU2VXd6alg4RjRUX3ZpM0tjSF9sUnFHYXIxZ1JKOU9mSFhyRkJTeVdjU2RuMlBzXzAyaFEzM01iV2VuQlBQMTZjMWg0RlhmYTd1eGFvQUUwWTNmeHVQWW9GU25ENjFfdWh2T25WRjN5ZFFLc2hWMWR0cFFyQlZnNW9Mc2p0S21ZVTRsdVFKWFVLUXltXzE5LWtYa3R2eDlidGUzRHg5UXNqSTZUdnQyTUFPMHczczdSaHFpU254Q084cUZXMFBNRkpFWUl1WEljRDROV0RUU2RnNF9iSUZVcFJQTGtKWHNEQkc3TFlZNFFwUjdWcXJ0RW9Ma2Nia1R4TEZ4a1RKMA?oc=5">Search results for: racecars</a> <span class="srcname">/ Honda News</span> <span class="time">Jun 14, 8:22 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMiiAFBVV95cUxQV0tUZW5wdHc1UjcyVzhFbm1iZF9HdXBTRVgwbTg4bDM0cVhUVk1Wc1BOS3pWSzJZR0hIR2Jfd2Y3VTF3SUVXSDk1VHRUd3B3Mkg0LWVPRmRYYms0VlNLNkpUNjVtOTZYQzlMaS1LRmVaS3VqRHpvekFrSkdFV2t0b0ZNVUpuQ0JE?oc=5">Image album | Vauxhall</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 14, 9:42 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMi0wFBVV95cUxQbFp4eHBFMnF3ZWQxSDhqUlVlOWZVUUpjY0JJR3dkNGhBOEhlVjB0RjdwMkc2TWpJZGJTT0ZVcXROV1ZNNXBuQzE0cWRnR1B4SVdqRGJ4eWlUcGxHVlBWamFtRjZqZTNzX1lUc3Z6RkZ3dHlublgyR1JSVnVhNUlWOWFodUJrZVNWc2tZRXp5OW9YRjBJX0M0aVhKZWNXb0F1YURhZFFSdkw3cDdmSVdUUEZwLWF1UlVMSlhEeXFMa0tydGgtSGU3em9XOGdKMFo0cGRJ?oc=5">Alfa Romeo continues its undisputed dominance of the 1000 Miglia</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 14, 1:30 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMilwJBVV95cUxOcGQtS3p1RU1uSWFpNEFhQmxDM2RlQXhKSDRmanBuRjlmajhKOGYzbXFfSnhQdkxBZ2JHVTJWQUVZUl9ELXVtdzhOSllia2dKbDJzZHVra2ZoVU1jNEVWdURacXVLa2l2NHNRU1NPaERfdUd6NE5sMDJ3NWVONjR2YzE3OE9FbHg4UzNaVk9kR2RDMXcwcHZzQW9hYkwzckdQT2lKZVg4ekNvdlB3TzA2TDEycjE4LXlKZWlmOThLbTZsVFF3MG9tQ0E4WkF0VDg1aWdjc3Q0c3ZfeFplbnlKQnJyOVZKNnFtUHFzcm5wVzdYLWVXcmdoemdMSGhpODFEZUZHdVFHZWNOOE9EVThDUVdEd3hleUk?oc=5">Le Mans (FRA), 11-14 June 2026. 24 Hours of Le Mans, FIA World Endurance Championship, FIA WEC, BMW M Team WRT, #20 Shell BMW M Hybrid V8, Hypercar, LMDh, Robin Frijns, Sheldon van der Linde, René Rast.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 13, 6:53 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxQd05YV0JQTmdsYm5iMjI3S1hQSlZZMXZfb0ZyRGhmUk5BdVhnMU41ZVR1ZGdIcFhUbnZMeXUtcWFVenVhaWxfLUROY1pwTGk5MXVBR2VKXzd1VGpXTmhXd0FwZGd2eWtsbnc4dDNITzJMZ1VocUUtaEdpUnNQdnBRNjVFVEZ4WWt0clFkeXRkU014dw?oc=5">Image album | Peugeot</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 13, 12:44 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxQdFpxcDM0LWxzc1R3SVNuT3l0SXF0SHliOURfdG5YX0pvR01XcEo0V1RjTkNPOEJwaTZ4R05CUnZPaHNKcTZHSHByb2VXMHJRUlhaLTh2X3gyUWYta2RaTWt5OGJab0NteDAyUm1DYVRxMUdPb1FZMGR3TS1yMzJkNW9QUGhSVE1FVWNyejVMV0E1dFpCMXREa1RhQ1dxeWRSaVN5cmM5Sk1EUEExQlNnRDBuanFYMmEtX1Z1bHRwVUtVSE0?oc=5">Cadillac Racing honored with 2026 DHL Sustainable Endurance Award</a> <span class="srcname">/ GM News</span> <span class="time">Jun 13, 12:18 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxPdzFJQ3R4OWRIWGQxMjJiQXA1enNxdWNFSkxxOU1nMzVSMjQ2RmhUSFUySjRBVXBlRE9GV3d3WE5NanBmX0JTNjN2WXd6OE5xdlllUzFZVkVBU3R5M3oyRzhRcUFORm9FMlRvNThEeVNnSHk3Vlc0QnV4c3k4LUdTQg?oc=5">The future of energy is now</a> <span class="srcname">/ GM News</span> <span class="time">Jun 12, 11:45 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxOLURzb3Vha21jd3VhVnpVblVYNVV5SXNGWDZSSHJWRmxfWDFjZ0FXU3ppUnhhOGR2YVIzZDNjVV81ZUkxY3Z4YmdYYWJDdmRIWHRSbTR2TnFxM1B2MGZjTnNEUi1JWmJkV2RWVmNKaEhiZTQ1aE51ZVVna2ZWM28tOVBoTDdySUhDVGtCbVJaQXNzN3hXend0ejJrUktuUFRWLS11VGI1Z1ZKY2hGcEJvLWl3?oc=5">Corvette Racing’s new Program Manager on the highs and lows of the 24 Hours of Le Mans</a> <span class="srcname">/ GM News</span> <span class="time">Jun 12, 9:16 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxONXpWRm1fY0FCQzAzeHVsVnZqeEdURTVyS3NGVnhTQzJwdmhnVVZBM0JRNUFQYlRma2VCMDVsMk1OVTZaMFNmVGMzSi1BSWw1WXVUYVFLX3ZyOHQ1bWUxYzBBMlljbFFHdk56VU9saVpDdmpzYkRXeXE1dVg3Z2tPN0tGZ3pNdG5tU2JqMEVnQVNBdGZ5b2JhYXFNWm9jVHNEbElqMm1YRHhJQmYzaWFMRExR?oc=5">PEUGEOT AND THE 24 HOURS OF LE MANS: A LEGENDARY PARTNERSHIP</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMikAJBVV95cUxOcTExV2ticTUyMHZ0OHpWdm1kUXFQdzBYTGU1Z3g1RnNOa1lWMjdlVWJaWjFQZE4tMXNkRDNhTHJvbVVDZWx1YTQtS0RLb2ltb1hMenE4STZhTHNZWFBKQnVPZEdCM1lXcEw3Z2plbFZVTGZtMXljMGRnQlQxdEQwblk2OHdCc01KeDE3ZmpQemRoV1BUMlNRS1dsTEptT2xHNmMtY1M5NU43M3RDcDgxOXNyZU5EMnBCaWdUMk90R2FnZWk5dkNfUmxKN1REMWFqSi14RUIweWUzX1kzblpVbUE0VnZULTdHaFl3X0c2R3Q1eTBXNWpmTnJuRVdQemoyci1SMmlETzdDMWJBSUowdQ?oc=5">Design meets Performance: The BMW M Concept Neue Klasse – World Premiere at the 24 Hours of Le Mans.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMiWEFVX3lxTE5CbGxQWlk2djFDUlN6cEdhZDl0bGN5MXg1Vkg0ZEJzd081VVRncFc2S0FIc015ZzJNZkN0c0tQTXRuLW9SS0ZBSXFScVpIUnRkbG9yaC1qWVM?oc=5">PressClub Global · Articles.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMiY0FVX3lxTFBESFp1SGhzUTVLMlo2eXlTVFR0ek9LRlJpU1YxLWVpUFA2a3ZpbC1KYThjenE0QzBmcFp6dXpYVUtYeVBYNzVCSzBDLS1oaEUyUmhwdUQ4b29vQnNfLU10QTljVQ?oc=5">PressClub United Kingdom · Articles.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE9BZ3hOc3ktellreElPVVZWem1tQ3ZhMThiN3JmWEwxVktNRm02djVDZDgxZzRrcW43bEQ2UDNRZGNxMF9IV0NiemtROXZNVF95RXM4U1o0emdjZXloTk1Vb2dJeVpUSFRlNTlQNzg3YVhqakk?oc=5">PressClub Global · Articles · Corporate.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMijwJBVV95cUxNT3MwUWxkbDZjQ2R0Vm9ialYyWVBVZ25kNGM0Y29zVzlnZGdGOFozck13dFZnYXc3ZGNSUXZ1UGVTdW1FMUNubVR2Wm5Bc1JoSDRtOExPTVNBSTdaclNFemQwVlR0QlJEV3ktWHo4ZlRITzVJdWtlRkVfRnRhRlU0WGt2Zl9MOEF0cGllNjJIVWhnR2d6Y1BXQ21MNFVPakR3MmxIUVFDaTg0VzNFc1ZfQTdaVXBaUWdKbzZEUEZOQnlzUEdNS1lvNFF3NHFOeEpFRTZhQ1JjZklIZnhFVFZXdFhTcFF2WmVxTzFqa1FwNHIwVGhWS3NRVWwzdVFCTzNrN3B2NmgzMTZQd3N2WTk4?oc=5">PEUGEOT E-208 GTi: A NEW LEGEND IS BORN ORDERS ARE OPEN FOR THE NEW ELECTRIC HOT HATCH, BACKED BY BEST-IN-CLASS PERFORMANCE FIGURES.</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 12, 7:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxNdnA0X2Itb2d1dHFFOVVxUG9ZOVJOM1BxMFJMcFVXQVNodEpWOXpaRlR5TUlEOWpsaWI3RmhETU02X0NiUm9JdThxMFdpRm9KT2dUSGhVd3hqY0Q2UDVfOWxFS2ZCb21tWXVEaUJJLVNnNkwtejNHaWRNNlNNZG9WT2NPX0h4Wm9PZ1hOMXlLTHJoeGhuV241cWpQaVEyUm5RU2h5UXAtbUdsM2pGY1hYVHRnQVJ1bXZfVEZwTmpIVTZMQkI5Q0ZuZEdrYVJEaFd6YjloVHlR?oc=5">Leapmotor Unveils the New C-hatchback B05. The Next Level of Sporty Electric Mobility</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 12, 6:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMixwFBVV95cUxQR3NvaHV2SE1RaEwzdWlNUlJGMzBDVTdRc2E2VVI4dTZiZDU1ZXluMkJtZXh2SGk0akNXR2ZJekNnb3pnTVdWcEhSTE9sVlE5U3RRdFBQTEg5ZHdpdGFvZF9uOThjOW9wb3RueVJZejNkTVFNQkxINHRFaUxYMzVmaThPb1JtRlltTHR0TDNRUWRRQTR2SW9iTTE0bkNfLXN0Z3VRV2pZM0pSeXB3elZDSWlTRzJleWphbjNCSi1LS1lZNC05YkNF?oc=5">Summer News in Brief from BMW Group UK.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 5:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMi4wFBVV95cUxOYjBtZkgxM2FzWHF4MHJYdy1RdVp1V2FfNU9mRUxaZ2VHSXRTR1NhSE5lalF2Z3NXMjA3VXFLM0l6RW1ITkRUVlZSTnVyQVVaSEpWdlNvNnloREt4RUYyNUNyOHQwVkpVVlBvLU9fa096Yy11OU8xRGY2Y2xrUzNBdXJsQjdxbnlVM0Z4QUFzNzRNTzlmTXZ3X0xSc3JpRTRmRENtS1FCQ3RoTk83NmJrVERpcy0ySEFXcXRobmg1Z1A1MV9ReW5WdlFJX2x0cDE5Z2Y1a2RwUTctM1REWVBHdVFCbw?oc=5">Kia Expands FIFA World Cup 2026™ Campaign with Hero Film Launch and Fan Engagement Activities</a> <span class="srcname">/ Kia Media</span> <span class="time">Jun 12, 7:22 AM</span></li></ul>
+    <ul class="fire wire"><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiekFVX3lxTE1ZWU8ydE1nVVpjLUdRQ1lLQjJiVW0xcm5DUVR5Mkc5bHIyS1czWHcwc2w0aGNKYm9ac2ctNl9oYWkxQWJ4Z0wwbG5HVEJ4ajZPckRyME9LekJrc0JZa2p0TDRaZ3FtSmpUS3M5YWI4ZW9oV2VUVXpNSlhR?oc=5">Suzuki e VITARA EV Launched in the Philippines: Price &amp; Specs</a> <span class="srcname">/ Suzuki Auto PH</span> <span class="time">Jun 11, 10:39 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOTU5pSVZNRG8zdmhOZExYZ0o4UGZPZjZ1OUljSDdUelIzZktKNW5DQ1pDRjBjd18tNGw5dERGOU5PdEhvTDJtRkc1MEhqcGtHNlgwNXNXdzMxU3dIV3JMOWowU29GRV9NUzJnWUctTUFhSG5CWktDM0V0S1JJWW4tamc1X1J6WVpIQmdfQm1QanVMbnBTMU15VTQtUDhUVlk?oc=5">HCPI Amplifies Hybrid Lineup with ‘Hybrid Power, Honda Trust’ Campaign</a> <span class="srcname">/ Honda Cars PH</span> <span class="time">Jun 9, 5:09 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiaEFVX3lxTE5JTml1bWFrQXpXclhmR282UzFsaGxIem9WQlFrWTMzWDVnZ0E0Y1NGbGJRT0VxandUbnN6U2w2QTFNNUU2OWtzcVBEWHA2RzV4S25QNk5hLUQxNG5DVTZpeWRrNm5Rc1NW?oc=5">Hybrid Power, Honda Trust</a> <span class="srcname">/ Honda Cars PH</span> <span class="time">Jun 9, 2:07 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMid0FVX3lxTE1tLWktT29VMjhSQkVzVmpHRVN0cmRSb1FYdVRYOVpoQ2plYmhjNk9FWE5PdUZyRmhFMVJLWWM1LWtIbU1leHI2RU93NDRhSEMwSVhYOU9HUzVja3NtX0hhd1diWERWYndON3ptNmxFS21wZkVCaDhZ?oc=5">Drive the Future This Weekend: The BYD Tech Tour Comes to Robinsons Magnolia</a> <span class="srcname">/ BYD Cars PH</span> <span class="time">Jun 5, 10:34 AM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxQbnZKWEJoVzZMQzd4aUNGeWdpRDV0c3llejJPSnl2bEJxUF90RHBSSk1vR0p4dktMd3RVVzBIcTN6WFZZWnVnZFRGNmZkSjJ6WmxQMVgzSVRWWHZtTUR4eTFKUzhMd1RmVTVJS1NCTnF4SEVZSDBESUszLTZQQVZ6NUlmMGtOV0VNX1lsNXVuVnRwYU51alhlTzJMWmJ3alNUOVNSb1gzYXNZU2c?oc=5">Honda Cars Philippines Welcomes the Start of Transformation at the 10th PIMS</a> <span class="srcname">/ Honda Cars PH</span> <span class="time">Jun 4, 10:08 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiUkFVX3lxTFBTaElHQ3Nna1otYWdQN01EN0hxOEdoYWZrZERiOGZaX2poYWl6akJxdGhtSGplUTRYLWlBSUxQdU9YSUJFS2lmQmI4R2Z4NFI1Z0E?oc=5">All-new MG RX9 PHEV</a> <span class="srcname">/ MG Motor PH</span> <span class="time">Jun 4, 2:38 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiZkFVX3lxTE9FSGtSZ1o1MC1ua05hQ3FzbDBzaDZUY2RwZkFwM19xVkpxREZNa1FaZ25BTl82c2Nkd2I5OUdzd09ocjRZODlJOFhyazc1a1dMemdjSHRETzd1VUxCUExsV3Z3by1fUQ?oc=5">Plug In Your Next Adventure</a> <span class="srcname">/ MG Motor PH</span> <span class="time">Jun 4, 2:38 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiUEFVX3lxTE0xTmdpSEpwVHZUSTQzd3dWblk4d055bDhEaXdsa25lQWlXSmhFbTh4VGFNZ3licElpaHNQMnlJbkhQU0Z6dTg0VjZyeWpZaktG?oc=5">All-new MG HS PHEV</a> <span class="srcname">/ MG Motor PH</span> <span class="time">Jun 4, 2:37 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE92LWRndS1FNmw3aGR1T3Z6NlFiZUtDRF9HQUhkU29MX29VN3NURWVxX25DU3c5TWt2QVhjWW9JU0E1WmFHN3Fpbkd6LVI2bGxDTmZBa21zWkx0UQ?oc=5">10th PIMS 2026 - Mitsubishi Motors Philippines Corporation</a> <span class="srcname">/ Mitsubishi Motors PH</span> <span class="time">Jun 2, 6:13 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMidkFVX3lxTE5PbEIwaklZN3pqcF80MVItd0ZkYUkyRU8yV0N0ZkgxR2YtbFAzVjRRVXBHT1VJWU9mSEs5bGRJRjZOVXNycDJyaF8wOXdHUUdsYmozTUNDYXpWeUhuSFZkcDI0b2cxWVhJRTEtcm4xS1RkbFpCM0E?oc=5">BYD Sealion 7 Arrives in PH: Bringing Performance Back to Electric SUVs in the PH</a> <span class="srcname">/ BYD Cars PH</span> <span class="time">Jun 2, 3:00 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMickFVX3lxTE9Eb2Y0WEk2MUdIQzJjdXZGbUI2RVNHZHdxRzhhS2dHMDdCaGdEaEdkdGh2QzRwSmlpQTJ6UGRaUnB4Y1F1TGRlVFpDN1N5ZTFOV281N21BWF84RWVKRjgyT3NRTElONWdFanRrLXMwZWFzQQ?oc=5">Traffic is unavoidable. Smarter choices aren&#x27;t.</a> <span class="srcname">/ BYD Cars PH</span> <span class="time">Jun 2, 12:40 PM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMia0FVX3lxTE9CMklrYTdNemhiS2ltUjNBM3NGYVBFSUdzSWlvS1VZajB2cXl2anFTX0tQWmFrMkY5U2Q3TmhfNUpHQmt2VDdBSVB5YjIzVW9RaWNPdGpCUERFWXVGS0padGIzRm1LYTI1MjNr?oc=5">Toyota Motor Philippines Marks Network Expansion with First Service Center in Palo, Leyte</a> <span class="srcname">/ Toyota Motor PH</span> <span class="time">Jun 2, 11:23 AM</span></li><li><span class="ph">PH</span> <a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQSm5WVldVNDE5YUxJS3BlWFVIb0g0M2dQTXA1bFJtTXltOUItQ0RXN2tSTExZY0d5Z21hcWhWNzd2c1FrWXRNZVdYRUZteDNnWHMxbERPVUo3ZXBqVFBjZzNySWhqamlNR2tEeGNIOWFSTG9DbkI5cV9YS0lIQXZ1SFFnQjVJVG8?oc=5">Toyota supports Japan-Philippines bilateral relations with manufacturing commitment and ecosystem support</a> <span class="srcname">/ Toyota Motor PH</span> <span class="time">Jun 1, 3:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMickFVX3lxTFBWRm02eVhVOTdNNHdFWGFqRlRUcG5RS1JpU3lxQmlLdTNuSUhQWkswQl9qTmgycHJleWRxeHlzWldwMnFjbkRIS0hmYUFHbkpXOTRWa1d2V3IxQXpITWktdGJhMVRDQTd3aktqM0pxMU1Hdw?oc=5">- Kia America Newsroom</a> <span class="srcname">/ Kia Media</span> <span class="time">Jun 14, 1:11 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMi0wFBVV95cUxQbFp4eHBFMnF3ZWQxSDhqUlVlOWZVUUpjY0JJR3dkNGhBOEhlVjB0RjdwMkc2TWpJZGJTT0ZVcXROV1ZNNXBuQzE0cWRnR1B4SVdqRGJ4eWlUcGxHVlBWamFtRjZqZTNzX1lUc3Z6RkZ3dHlublgyR1JSVnVhNUlWOWFodUJrZVNWc2tZRXp5OW9YRjBJX0M0aVhKZWNXb0F1YURhZFFSdkw3cDdmSVdUUEZwLWF1UlVMSlhEeXFMa0tydGgtSGU3em9XOGdKMFo0cGRJ?oc=5">Alfa Romeo continues its undisputed dominance of the 1000 Miglia</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 14, 1:30 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMilwJBVV95cUxOcGQtS3p1RU1uSWFpNEFhQmxDM2RlQXhKSDRmanBuRjlmajhKOGYzbXFfSnhQdkxBZ2JHVTJWQUVZUl9ELXVtdzhOSllia2dKbDJzZHVra2ZoVU1jNEVWdURacXVLa2l2NHNRU1NPaERfdUd6NE5sMDJ3NWVONjR2YzE3OE9FbHg4UzNaVk9kR2RDMXcwcHZzQW9hYkwzckdQT2lKZVg4ekNvdlB3TzA2TDEycjE4LXlKZWlmOThLbTZsVFF3MG9tQ0E4WkF0VDg1aWdjc3Q0c3ZfeFplbnlKQnJyOVZKNnFtUHFzcm5wVzdYLWVXcmdoemdMSGhpODFEZUZHdVFHZWNOOE9EVThDUVdEd3hleUk?oc=5">Le Mans (FRA), 11-14 June 2026. 24 Hours of Le Mans, FIA World Endurance Championship, FIA WEC, BMW M Team WRT, #20 Shell BMW M Hybrid V8, Hypercar, LMDh, Robin Frijns, Sheldon van der Linde, René Rast.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 13, 6:53 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMimgJBVV95cUxNQWFxc1hTWlZSbDJpaGI5RkJCS19TcC1wdVFtYmFRSC1mSS1zaFZpN3QwejFtRzZlQ0M5VVV4aFhnVkd1MTljVHItUlRZOUl3ODdEb2YxZU42WDZhdnFxb3FKcjdNa2JHMjFzNVdmenFVbmVOQnM4aHN0YzRVUmxlUFhvUUhBRUNCYWl6c2ZWNlI1bTFsWldyQ29VN05ZT3ZhTndpQXhTQ3ZwLUVZeUpBUnZoUGRoUXFyeEJ0LWM5dnJhTFVnQUd5QjRaWFRzUGRnZXVkZ2RnRGU5WGRsV0V0VzZBT1Rzc0Y0S0NFN0F3bFEwbUczNUpGcTIzb2dWdmJXTnhLdUFsdTQxN1hDOXJsbXB5TGRnZndVSGc?oc=5">12th - 14th June 2026. Misano Adriatico (ITA). FIM Superbike World Championship - ROKiT BMW Motorrad WorldSBK Team, BMW M 1000 RR, Miguel Oliveira #88 (POR).</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 13, 10:37 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMikgFBVV95cUxQd05YV0JQTmdsYm5iMjI3S1hQSlZZMXZfb0ZyRGhmUk5BdVhnMU41ZVR1ZGdIcFhUbnZMeXUtcWFVenVhaWxfLUROY1pwTGk5MXVBR2VKXzd1VGpXTmhXd0FwZGd2eWtsbnc4dDNITzJMZ1VocUUtaEdpUnNQdnBRNjVFVEZ4WWt0clFkeXRkU014dw?oc=5">Image album | Peugeot</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 13, 12:44 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMiwwFBVV95cUxQdFpxcDM0LWxzc1R3SVNuT3l0SXF0SHliOURfdG5YX0pvR01XcEo0V1RjTkNPOEJwaTZ4R05CUnZPaHNKcTZHSHByb2VXMHJRUlhaLTh2X3gyUWYta2RaTWt5OGJab0NteDAyUm1DYVRxMUdPb1FZMGR3TS1yMzJkNW9QUGhSVE1FVWNyejVMV0E1dFpCMXREa1RhQ1dxeWRSaVN5cmM5Sk1EUEExQlNnRDBuanFYMmEtX1Z1bHRwVUtVSE0?oc=5">Cadillac Racing honored with 2026 DHL Sustainable Endurance Award</a> <span class="srcname">/ GM News</span> <span class="time">Jun 13, 12:18 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxPdzFJQ3R4OWRIWGQxMjJiQXA1enNxdWNFSkxxOU1nMzVSMjQ2RmhUSFUySjRBVXBlRE9GV3d3WE5NanBmX0JTNjN2WXd6OE5xdlllUzFZVkVBU3R5M3oyRzhRcUFORm9FMlRvNThEeVNnSHk3Vlc0QnV4c3k4LUdTQg?oc=5">The future of energy is now</a> <span class="srcname">/ GM News</span> <span class="time">Jun 12, 11:45 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxOLURzb3Vha21jd3VhVnpVblVYNVV5SXNGWDZSSHJWRmxfWDFjZ0FXU3ppUnhhOGR2YVIzZDNjVV81ZUkxY3Z4YmdYYWJDdmRIWHRSbTR2TnFxM1B2MGZjTnNEUi1JWmJkV2RWVmNKaEhiZTQ1aE51ZVVna2ZWM28tOVBoTDdySUhDVGtCbVJaQXNzN3hXend0ejJrUktuUFRWLS11VGI1Z1ZKY2hGcEJvLWl3?oc=5">Corvette Racing’s new Program Manager on the highs and lows of the 24 Hours of Le Mans</a> <span class="srcname">/ GM News</span> <span class="time">Jun 12, 9:16 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxONXpWRm1fY0FCQzAzeHVsVnZqeEdURTVyS3NGVnhTQzJwdmhnVVZBM0JRNUFQYlRma2VCMDVsMk1OVTZaMFNmVGMzSi1BSWw1WXVUYVFLX3ZyOHQ1bWUxYzBBMlljbFFHdk56VU9saVpDdmpzYkRXeXE1dVg3Z2tPN0tGZ3pNdG5tU2JqMEVnQVNBdGZ5b2JhYXFNWm9jVHNEbElqMm1YRHhJQmYzaWFMRExR?oc=5">PEUGEOT AND THE 24 HOURS OF LE MANS: A LEGENDARY PARTNERSHIP</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMikAJBVV95cUxOcTExV2ticTUyMHZ0OHpWdm1kUXFQdzBYTGU1Z3g1RnNOa1lWMjdlVWJaWjFQZE4tMXNkRDNhTHJvbVVDZWx1YTQtS0RLb2ltb1hMenE4STZhTHNZWFBKQnVPZEdCM1lXcEw3Z2plbFZVTGZtMXljMGRnQlQxdEQwblk2OHdCc01KeDE3ZmpQemRoV1BUMlNRS1dsTEptT2xHNmMtY1M5NU43M3RDcDgxOXNyZU5EMnBCaWdUMk90R2FnZWk5dkNfUmxKN1REMWFqSi14RUIweWUzX1kzblpVbUE0VnZULTdHaFl3X0c2R3Q1eTBXNWpmTnJuRVdQemoyci1SMmlETzdDMWJBSUowdQ?oc=5">Design meets Performance: The BMW M Concept Neue Klasse – World Premiere at the 24 Hours of Le Mans.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMiY0FVX3lxTFBESFp1SGhzUTVLMlo2eXlTVFR0ek9LRlJpU1YxLWVpUFA2a3ZpbC1KYThjenE0QzBmcFp6dXpYVUtYeVBYNzVCSzBDLS1oaEUyUmhwdUQ4b29vQnNfLU10QTljVQ?oc=5">PressClub United Kingdom · Articles.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE9BZ3hOc3ktellreElPVVZWem1tQ3ZhMThiN3JmWEwxVktNRm02djVDZDgxZzRrcW43bEQ2UDNRZGNxMF9IV0NiemtROXZNVF95RXM4U1o0emdjZXloTk1Vb2dJeVpUSFRlNTlQNzg3YVhqakk?oc=5">PressClub Global · Articles · Corporate.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 9:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMijwJBVV95cUxNT3MwUWxkbDZjQ2R0Vm9ialYyWVBVZ25kNGM0Y29zVzlnZGdGOFozck13dFZnYXc3ZGNSUXZ1UGVTdW1FMUNubVR2Wm5Bc1JoSDRtOExPTVNBSTdaclNFemQwVlR0QlJEV3ktWHo4ZlRITzVJdWtlRkVfRnRhRlU0WGt2Zl9MOEF0cGllNjJIVWhnR2d6Y1BXQ21MNFVPakR3MmxIUVFDaTg0VzNFc1ZfQTdaVXBaUWdKbzZEUEZOQnlzUEdNS1lvNFF3NHFOeEpFRTZhQ1JjZklIZnhFVFZXdFhTcFF2WmVxTzFqa1FwNHIwVGhWS3NRVWwzdVFCTzNrN3B2NmgzMTZQd3N2WTk4?oc=5">PEUGEOT E-208 GTi: A NEW LEGEND IS BORN ORDERS ARE OPEN FOR THE NEW ELECTRIC HOT HATCH, BACKED BY BEST-IN-CLASS PERFORMANCE FIGURES.</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 12, 7:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxNdnA0X2Itb2d1dHFFOVVxUG9ZOVJOM1BxMFJMcFVXQVNodEpWOXpaRlR5TUlEOWpsaWI3RmhETU02X0NiUm9JdThxMFdpRm9KT2dUSGhVd3hqY0Q2UDVfOWxFS2ZCb21tWXVEaUJJLVNnNkwtejNHaWRNNlNNZG9WT2NPX0h4Wm9PZ1hOMXlLTHJoeGhuV241cWpQaVEyUm5RU2h5UXAtbUdsM2pGY1hYVHRnQVJ1bXZfVEZwTmpIVTZMQkI5Q0ZuZEdrYVJEaFd6YjloVHlR?oc=5">Leapmotor Unveils the New C-hatchback B05. The Next Level of Sporty Electric Mobility</a> <span class="srcname">/ Stellantis Media</span> <span class="time">Jun 12, 6:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMixwFBVV95cUxQR3NvaHV2SE1RaEwzdWlNUlJGMzBDVTdRc2E2VVI4dTZiZDU1ZXluMkJtZXh2SGk0akNXR2ZJekNnb3pnTVdWcEhSTE9sVlE5U3RRdFBQTEg5ZHdpdGFvZF9uOThjOW9wb3RueVJZejNkTVFNQkxINHRFaUxYMzVmaThPb1JtRlltTHR0TDNRUWRRQTR2SW9iTTE0bkNfLXN0Z3VRV2pZM0pSeXB3elZDSWlTRzJleWphbjNCSi1LS1lZNC05YkNF?oc=5">Summer News in Brief from BMW Group UK.</a> <span class="srcname">/ BMW Group News</span> <span class="time">Jun 12, 5:00 PM</span></li><li><a href="https://news.google.com/rss/articles/CBMi4wFBVV95cUxOYjBtZkgxM2FzWHF4MHJYdy1RdVp1V2FfNU9mRUxaZ2VHSXRTR1NhSE5lalF2Z3NXMjA3VXFLM0l6RW1ITkRUVlZSTnVyQVVaSEpWdlNvNnloREt4RUYyNUNyOHQwVkpVVlBvLU9fa096Yy11OU8xRGY2Y2xrUzNBdXJsQjdxbnlVM0Z4QUFzNzRNTzlmTXZ3X0xSc3JpRTRmRENtS1FCQ3RoTk83NmJrVERpcy0ySEFXcXRobmg1Z1A1MV9ReW5WdlFJX2x0cDE5Z2Y1a2RwUTctM1REWVBHdVFCbw?oc=5">Kia Expands FIFA World Cup 2026™ Campaign with Hero Film Launch and Fan Engagement Activities</a> <span class="srcname">/ Kia Media</span> <span class="time">Jun 12, 7:22 AM</span></li><li><a href="https://news.google.com/rss/articles/CBMiY0FVX3lxTE5VOVByX3hfVlFDc0xZdVZDYnFfSzBEdlZkOXB6RGNTS3NsNmtGSVB4UlhlWHg0ZjZIeGplcUxRWEJHNElwd1JzT0hwdGhMOUpnTXlfMkV3VF9PYloxUENHYU1wSQ?oc=5">- Kia America Newsroom</a> <span class="srcname">/ Kia Media</span> <span class="time">Jun 12, 7:22 AM</span></li></ul>
     <h2>PH motoring media</h2><ul class="follow"><li><a href="https://www.facebook.com/ridenetworkph">RideNetwork.PH</a><a class="ig" href="https://www.instagram.com/ridenetworkph" aria-label="RideNetwork.PH on Instagram">IG</a></li><li><a href="https://www.facebook.com/TopGearPhilippines">Top Gear Philippines</a><a class="ig" href="https://www.instagram.com/topgearph" aria-label="Top Gear Philippines on Instagram">IG</a></li><li><a href="https://www.facebook.com/autoindustriya">AutoIndustriya</a><a class="ig" href="https://www.instagram.com/autoindustriya" aria-label="AutoIndustriya on Instagram">IG</a></li><li><a href="https://www.facebook.com/CarGuidePH">CarGuide.PH</a></li><li><a href="https://www.facebook.com/VisorPH">VISOR</a><a class="ig" href="https://www.instagram.com/visorph" aria-label="VISOR on Instagram">IG</a></li><li><a href="https://www.facebook.com/MotoPinas">MotoPinas</a></li><li><a href="https://www.facebook.com/jamesdeakinph">James Deakin</a><a class="ig" href="https://www.instagram.com/jamesdeakin" aria-label="James Deakin on Instagram">IG</a></li><li><a href="https://www.facebook.com/autodealphilippines">AutoDeal</a><a class="ig" href="https://www.instagram.com/autodealph" aria-label="AutoDeal on Instagram">IG</a></li><li><a href="https://www.facebook.com/goflatoutph">Go Flat Out PH</a></li><li><a href="https://www.facebook.com/InquirerMobility">Inquirer Mobility</a></li></ul><h2>PH carmakers</h2><ul class="follow"><li><a href="https://www.facebook.com/ToyotaMotorPhilippines">Toyota PH</a><a class="ig" href="https://www.instagram.com/toyotamotorph" aria-label="Toyota PH on Instagram">IG</a></li><li><a href="https://www.facebook.com/MitsubishiMotorsPH">Mitsubishi PH</a></li><li><a href="https://www.facebook.com/FordPhilippines">Ford PH</a><a class="ig" href="https://www.instagram.com/fordphilippines" aria-label="Ford PH on Instagram">IG</a></li><li><a href="https://www.facebook.com/NissanPhilippines">Nissan PH</a></li><li><a href="https://www.facebook.com/HondaCarsPH">Honda Cars PH</a></li><li><a href="https://www.facebook.com/SuzukiAutoPH">Suzuki Auto PH</a></li><li><a href="https://www.facebook.com/IsuzuPhilippines">Isuzu PH</a></li><li><a href="https://www.facebook.com/MGmotorsPhilippines">MG PH</a></li><li><a href="https://www.facebook.com/CheryAutoPhilippines">Chery Auto PH</a></li><li><a href="https://www.facebook.com/HyundaiMotorPhilippines">Hyundai PH</a></li><li><a href="https://www.facebook.com/KiaPhilippines">Kia PH</a></li><li><a href="https://www.facebook.com/BYDCarsPhilippines">BYD Cars PH</a></li></ul><h2>Global motoring media</h2><ul class="follow"><li><a href="https://www.facebook.com/topgear">Top Gear</a><a class="ig" href="https://www.instagram.com/topgear" aria-label="Top Gear on Instagram">IG</a></li><li><a href="https://www.facebook.com/caranddriver">Car and Driver</a><a class="ig" href="https://www.instagram.com/caranddriver" aria-label="Car and Driver on Instagram">IG</a></li><li><a href="https://www.facebook.com/motortrendmag">MotorTrend</a><a class="ig" href="https://www.instagram.com/motortrend" aria-label="MotorTrend on Instagram">IG</a></li><li><a href="https://www.facebook.com/Carscoops">Carscoops</a><a class="ig" href="https://www.instagram.com/carscoops" aria-label="Carscoops on Instagram">IG</a></li><li><a href="https://www.facebook.com/Motor1com">Motor1</a></li><li><a href="https://www.facebook.com/thedrive">The Drive</a></li></ul><h2>Global carmakers</h2><ul class="follow"><li><a href="https://www.facebook.com/toyota">Toyota</a></li><li><a href="https://www.facebook.com/ford">Ford</a><a class="ig" href="https://www.instagram.com/ford" aria-label="Ford on Instagram">IG</a></li><li><a href="https://www.facebook.com/BMW">BMW</a><a class="ig" href="https://www.instagram.com/bmw" aria-label="BMW on Instagram">IG</a></li><li><a href="https://www.facebook.com/MercedesBenz">Mercedes-Benz</a><a class="ig" href="https://www.instagram.com/mercedesbenz" aria-label="Mercedes-Benz on Instagram">IG</a></li><li><a href="https://www.facebook.com/VW">Volkswagen</a><a class="ig" href="https://www.instagram.com/volkswagen" aria-label="Volkswagen on Instagram">IG</a></li><li><a href="https://www.facebook.com/nissan">Nissan</a><a class="ig" href="https://www.instagram.com/nissan" aria-label="Nissan on Instagram">IG</a></li><li><a href="https://www.facebook.com/hyundai">Hyundai</a><a class="ig" href="https://www.instagram.com/hyundai" aria-label="Hyundai on Instagram">IG</a></li><li><a href="https://www.facebook.com/kia">Kia</a><a class="ig" href="https://www.instagram.com/kia.worldwide" aria-label="Kia on Instagram">IG</a></li></ul>
     <h2>Social wire</h2>
     <div class="embeds"><iframe loading="lazy" title="Facebook timeline" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fridenetworkph&tabs=timeline&width=340&height=400&small_header=true&hide_cover=true&show_facepile=false" width="340" height="400" style="border:none;overflow:hidden" scrolling="no" allow="encrypted-media"></iframe><iframe loading="lazy" title="Facebook timeline" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FTopGearPhilippines&tabs=timeline&width=340&height=400&small_header=true&hide_cover=true&show_facepile=false" width="340" height="400" style="border:none;overflow:hidden" scrolling="no" allow="encrypted-media"></iframe><iframe loading="lazy" title="Facebook timeline" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fautoindustriya&tabs=timeline&width=340&height=400&small_header=true&hide_cover=true&show_facepile=false" width="340" height="400" style="border:none;overflow:hidden" scrolling="no" allow="encrypted-media"></iframe></div>
   </aside>
 </div>
+<script>
+(function() {
+  var box = document.getElementById('q');
+  var items = document.querySelectorAll('[data-search]');
+  var none = document.getElementById('noresults');
+  function run() {
+    var q = box.value.trim().toLowerCase();
+    var shownMain = 0;
+    items.forEach(function(el) {
+      var hit = !q || el.getAttribute('data-search').indexOf(q) !== -1;
+      el.style.display = hit ? '' : 'none';
+      if (hit && el.classList.contains('item')) shownMain++;
+    });
+    none.style.display = (q && shownMain === 0) ? 'block' : 'none';
+    var sep = document.querySelector('.river-sep');
+    if (sep) sep.style.display = q ? 'none' : '';
+  }
+  box.addEventListener('input', run);
+  document.getElementById('searchform').addEventListener('submit', function(e) { e.preventDefault(); run(); });
+  document.querySelectorAll('.copy').forEach(function(b) {
+    b.addEventListener('click', function() {
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(b.getAttribute('data-link')).then(function() {
+        var t = b.textContent;
+        b.textContent = 'Copied'; b.classList.add('done');
+        setTimeout(function() { b.textContent = t; b.classList.remove('done'); }, 1500);
+      });
+    });
+  });
+})();
+</script>
 <footer>
   RideMeme is an automated river of motoring news. Headlines and snippets belong to their publishers
   &mdash; every link goes straight to the source.
