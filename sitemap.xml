@@ -3,4 +3,7 @@
   <url><loc>https://ridememe.com/</loc><lastmod>2026-06-25</lastmod><changefreq>hourly</changefreq><priority>1.0</priority></url>
   <url><loc>https://ridememe.com/reviews.html</loc><lastmod>2026-06-25</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
   <url><loc>https://ridememe.com/newsletter.html</loc><lastmod>2026-06-25</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ridememe.com/about.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://ridememe.com/privacy.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://ridememe.com/contact.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>
