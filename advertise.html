@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advertise &mdash; RideMeme</title>
+<meta name="description" content="Advertise on RideMeme — reach Filipino car and motorcycle enthusiasts. Featured listings, jobs, and events.">
+<link rel="canonical" href="https://ridememe.com/advertise.html">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  :root{--bg:#faf9f7;--card:#fff;--ink:#1c1b1a;--muted:#6b6862;--line:#e8e5e0;--accent:#c8102e;--accent-dark:#9e0c24;--footbg:#1c1b1a;}
+  @media (prefers-color-scheme:dark){:root{--bg:#171615;--card:#201f1d;--ink:#ece9e4;--muted:#a39e96;--line:#34322e;--accent:#ff4d5e;--accent-dark:#ff8a94;--footbg:#100f0e;}}
+  *{box-sizing:border-box;}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.65;margin:0;color:var(--ink);background:var(--bg);}
+  a{color:var(--accent);text-decoration:none;} a:hover{text-decoration:underline;}
+  .stripe{height:4px;background:linear-gradient(90deg,var(--accent) 0 60%,var(--ink) 60% 62%,var(--accent-dark) 62%);}
+  header{max-width:680px;margin:0 auto;padding:20px 20px 4px;}
+  .brand{font-size:26px;font-weight:800;font-style:italic;letter-spacing:-1px;margin:0;color:var(--ink);}
+  .brand .ride{color:var(--accent);}
+  main{max-width:680px;margin:0 auto;padding:8px 20px 40px;}
+  h1{font-size:26px;letter-spacing:-0.4px;margin:18px 0 6px;}
+  h2{font-size:16px;margin:24px 0 6px;}
+  .proof{color:var(--muted);font-size:14px;margin:0 0 16px;}
+  .offers{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0 22px;}
+  .offer{flex:1;min-width:170px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;}
+  .offer b{display:block;font-size:14px;margin-bottom:2px;}
+  .offer span{font-size:12.5px;color:var(--muted);}
+  .msgrbtn{display:inline-block;background:#0866ff;color:#fff;font-weight:700;font-size:15px;padding:12px 20px;border-radius:10px;margin:4px 0 22px;}
+  .msgrbtn:hover{background:#0654d6;text-decoration:none;}
+  .advform{display:flex;flex-direction:column;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .advform label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:var(--ink);}
+  .advform input,.advform select,.advform textarea{font:inherit;font-size:16px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);}
+  .advform input:focus,.advform select:focus,.advform textarea:focus{outline:none;border-color:var(--accent);}
+  .advsubmit{display:inline-block;font:inherit;font-size:15px;font-weight:700;color:#fff;background:var(--accent);border:none;border-radius:9px;padding:12px 20px;cursor:pointer;}
+  .advsubmit:hover{background:var(--accent-dark);text-decoration:none;}
+  .advresult{font-size:13px;color:var(--muted);margin:2px 0 0;min-height:1em;}
+  footer{background:var(--footbg);color:#b7b2aa;margin-top:24px;padding:20px;font-size:12px;text-align:center;}
+  footer a{color:#e6e1d9;text-decoration:underline;}
+  .footnav{margin-bottom:10px;font-weight:600;} .footnav a{text-decoration:none;margin:0 2px;}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<header><a href="/"><h1 class="brand"><span class="ride">Ride</span>Meme</h1></a></header>
+<main>
+  <h1>Advertise on RideMeme</h1>
+  <p class="proof">RideMeme is from the team behind RideNetwork.PH — a 1.9k-strong Philippine motoring community.</p>
+  <p>Put your brand in front of Filipino car and motorcycle enthusiasts who check in for the day&rsquo;s motoring news. Three simple ways to work with us:</p>
+  <div class="offers">
+    <div class="offer"><b>Featured partner</b><span>Your dealership, shop, or service in the sidebar.</span></div>
+    <div class="offer"><b>Motoring jobs</b><span>Hire from the PH motoring community.</span></div>
+    <div class="offer"><b>Events</b><span>Promote a show, track day, or meet.</span></div>
+  </div>
+  <h2>Get in touch</h2>
+  <p class="proof">Fastest: message us on Messenger. Prefer a form? It&rsquo;s right below.</p>
+  <a class="msgrbtn" href="https://m.me/ridenetworkph" target="_blank" rel="noopener">&#128172; Message us on Messenger</a>
+  <form id="advform" class="advform"><input type="hidden" name="access_key" value="e9580ce8-a6a8-45fe-85f8-528a0f4370fa"><input type="hidden" name="subject" value="RideMeme advertiser enquiry"><input type="hidden" name="from_name" value="RideMeme Advertise"><label>Your name<input type="text" name="name" autocomplete="name" required></label><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Business / organisation<input type="text" name="business" autocomplete="organization"></label><label>I&rsquo;m interested in<select name="interest" id="advtype"><option value="Featured partner">Featured partner listing</option><option value="Job posting">Posting a motoring job</option><option value="Event listing">Listing an event</option><option value="Other">Something else</option></select></label><label>Message<textarea name="message" rows="4" placeholder="Tell us a bit about it"></textarea></label><button type="submit" class="advsubmit">Send enquiry</button><p id="advresult" class="advresult" role="status" aria-live="polite"></p></form>
+</main>
+<footer>
+  <nav class="footnav">
+    <a href="/">Home</a> &middot; <a href="reviews.html">Reviews</a> &middot;
+    <a href="about.html">About</a> &middot; <a href="privacy.html">Privacy</a> &middot;
+    <a href="contact.html">Contact</a>
+  </nav>
+  A community project from the people behind <a href="https://ridenetwork.ph">RideNetwork.PH</a>.
+</footer>
+<script>(function(){var p=new URLSearchParams(location.search).get("type");var map={partner:"Featured partner",job:"Job posting",event:"Event listing"};var sel=document.getElementById("advtype");if(sel&&p&&map[p]){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===map[p])sel.selectedIndex=i;}}var f=document.getElementById("advform");if(f){f.addEventListener("submit",function(e){e.preventDefault();var r=document.getElementById("advresult");r.textContent="Sending\u2026";fetch("https://api.web3forms.com/submit",{method:"POST",body:new FormData(f)}).then(function(x){return x.json();}).then(function(j){r.textContent=j.success?"Thanks! We'll be in touch within a day.":"That didn't go through \u2014 please try Messenger.";if(j.success)f.reset();}).catch(function(){r.textContent="Network error \u2014 please try Messenger.";});});}})();</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "8eea461117f140dfa022ceaff6aaba664"}'></script>
+</body>
+</html>
