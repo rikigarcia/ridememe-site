@@ -69,6 +69,6 @@
   </nav></footer>
 <script>(function(){var p=new URLSearchParams(location.search).get("type");var map={partner:"Featured partner",job:"Job posting",event:"Event listing"};var sel=document.getElementById("advtype");if(sel&&p&&map[p]){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===map[p])sel.selectedIndex=i;}}var f=document.getElementById("advform");if(f){f.addEventListener("submit",function(e){e.preventDefault();var r=document.getElementById("advresult");r.textContent="Sending\u2026";fetch("https://api.web3forms.com/submit",{method:"POST",body:new FormData(f)}).then(function(x){return x.json();}).then(function(j){r.textContent=j.success?"Thanks! We'll be in touch within a day.":"That didn't go through \u2014 please try Messenger.";if(j.success)f.reset();}).catch(function(){r.textContent="Network error \u2014 please try Messenger.";});});}})();</script>
 <script>(function(){var t=document.getElementById('themebtn');if(t){t.addEventListener('click',function(){var cur=document.documentElement.getAttribute('data-theme');if(!cur)cur='light';var next=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);try{localStorage.setItem('ridememe-theme',next);}catch(e){}});}})()</script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "941b3126568c4072bff49aaaa7f4d367"}'></script>
+
 </body>
 </html>
