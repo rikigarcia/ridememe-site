@@ -9,21 +9,27 @@
 <title>Advertise &mdash; RideMeme</title>
 <meta name="description" content="Advertise on RideMeme — reach Filipino car and motorcycle enthusiasts. Featured listings, jobs, and events.">
 <link rel="canonical" href="https://ridememe.com/advertise.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ridememe.com/advertise.html">
+<meta property="og:title" content="Advertise &mdash; RideMeme">
+<meta property="og:description" content="Advertise on RideMeme — reach Filipino car and motorcycle enthusiasts. Featured listings, jobs, and events.">
+<meta property="og:image" content="https://ridememe.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ridememe.com/og.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="css/base.css">
 <style>
-  :root{--bg:#faf9f7;--card:#fff;--ink:#1c1b1a;--muted:#6b6862;--line:#e8e5e0;--accent:#c8102e;--accent-dark:#9e0c24;--footbg:#1c1b1a;}
-  :root[data-theme="dark"]{--bg:#171615;--card:#201f1d;--ink:#ece9e4;--muted:#a39e96;--line:#34322e;--accent:#ff4d5e;--accent-dark:#ff8a94;--footbg:#100f0e;}
-  /* light is the default; dark applies only when the user toggles it */
-  *{box-sizing:border-box;}
-  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.65;margin:0;color:var(--ink);background:var(--bg);}
-  a{color:var(--accent);text-decoration:none;} a:hover{text-decoration:underline;}
-  .stripe{height:4px;background:linear-gradient(90deg,var(--accent) 0 60%,var(--ink) 60% 62%,var(--accent-dark) 62%);}
-  header{max-width:680px;margin:0 auto;padding:20px 20px 4px;display:flex;align-items:center;justify-content:space-between;}
-  .themebtn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0;cursor:pointer;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:50%;}
-  .themebtn:hover{color:#fff;background:var(--accent);border-color:var(--accent);}
-  .brand{font-size:26px;font-weight:800;font-style:italic;letter-spacing:-1px;margin:0;color:var(--ink);}
-  .brand .ride{color:var(--accent);}
+  /* Prose-page overrides of base.css's river-tuned defaults: narrower + centred
+     column, larger body text, accent-coloured links. Everything else — colour
+     tokens, .stripe/.brand/.themebtn/.skip/footer chrome — is inherited from
+     base.css, and the dark-mode toggle from js/site.js (single source for all). */
+  body{font-size:15px;line-height:1.65;}
+  a{color:var(--accent);} a:hover{text-decoration:underline;}
+  header{max-width:680px;padding:20px 20px 4px;align-items:center;justify-content:space-between;}
+  .brand{font-size:26px;letter-spacing:-1px;}
   main{max-width:680px;margin:0 auto;padding:8px 20px 40px;}
+  footer{margin-top:24px;}
+  /* advertise-specific components (not in base.css) */
   h1{font-size:26px;letter-spacing:-0.4px;margin:18px 0 6px;}
   h2{font-size:16px;margin:24px 0 6px;}
   .proof{color:var(--muted);font-size:14px;margin:0 0 16px;}
@@ -40,15 +46,13 @@
   .advsubmit{display:inline-block;font:inherit;font-size:15px;font-weight:700;color:#fff;background:var(--accent);border:none;border-radius:9px;padding:12px 20px;cursor:pointer;}
   .advsubmit:hover{background:var(--accent-dark);text-decoration:none;}
   .advresult{font-size:13px;color:var(--muted);margin:2px 0 0;min-height:1em;}
-  footer{background:var(--footbg);color:#b7b2aa;margin-top:24px;padding:20px;font-size:12px;text-align:center;}
-  footer a{color:#e6e1d9;text-decoration:underline;}
-  .footnav{margin-bottom:10px;font-weight:600;} .footnav a{text-decoration:none;margin:0 2px;}
 </style>
 </head>
 <body>
 <div class="stripe"></div>
+<a class="skip" href="#maincontent">Skip to content</a>
 <header><a href="/"><h1 class="brand"><span class="ride">Ride</span>Meme</h1></a><button class="themebtn" id="themebtn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 3.5a8.5 8.5 0 0 0 0 17z" fill="currentColor"></path></svg></button></header>
-<main>
+<main id="maincontent">
   <p style="margin:6px 0 0;font-size:13px;"><a href="/">&larr; Back to RideMeme</a></p>
   <h1>Advertise on RideMeme</h1>
   <p class="proof">RideMeme is from the team behind RideNetwork.PH — a trusted name in the Philippine motoring community, read by enthusiasts nationwide.</p>
@@ -65,12 +69,17 @@
 </main>
 <footer>
   <nav class="footnav">
-    <a href="/">Home</a> &middot; <a href="reviews.html">Reviews</a> &middot;
-    <a href="about.html">About</a> &middot; <a href="privacy.html">Privacy</a> &middot;
+    <a href="index.html">Home</a> &middot;
+    <a href="reviews.html">Reviews</a> &middot;
+    <a href="advertise.html">Advertise</a> &middot;
+    <a href="about.html">About</a> &middot;
+    <a href="privacy.html">Privacy</a> &middot;
     <a href="contact.html">Contact</a>
-  </nav></footer>
+  </nav>
+  RideMeme is an automated river of motoring news. Headlines and snippets belong to their publishers
+  &mdash; every link goes straight to the source.</footer>
 <script>(function(){var p=new URLSearchParams(location.search).get("type");var map={partner:"Featured partner",job:"Job posting",event:"Event listing"};var sel=document.getElementById("advtype");if(sel&&p&&map[p]){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===map[p])sel.selectedIndex=i;}}var f=document.getElementById("advform");if(f){f.addEventListener("submit",function(e){e.preventDefault();var r=document.getElementById("advresult");r.textContent="Sending\u2026";fetch("https://api.web3forms.com/submit",{method:"POST",body:new FormData(f)}).then(function(x){return x.json();}).then(function(j){r.textContent=j.success?"Thanks! We'll be in touch within a day.":"That didn't go through \u2014 please try Messenger.";if(j.success)f.reset();}).catch(function(){r.textContent="Network error \u2014 please try Messenger.";});});}})();</script>
-<script>(function(){var t=document.getElementById('themebtn');if(t){t.addEventListener('click',function(){var cur=document.documentElement.getAttribute('data-theme');if(!cur)cur='light';var next=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);try{localStorage.setItem('ridememe-theme',next);}catch(e){}});}})()</script>
+<script src="js/site.js" defer></script>
 
 </body>
 </html>

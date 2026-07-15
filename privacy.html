@@ -5,8 +5,15 @@
 <script>try{var t=localStorage.getItem('ridememe-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy &mdash; RideMeme</title>
-<meta name="description" content="RideMeme's privacy approach: privacy-first, cookieless analytics, no personal data collected or sold.">
+<meta name="description" content="RideMeme's privacy approach: no accounts, no data sold. See how we use Google Analytics and third-party form services.">
 <link rel="canonical" href="https://ridememe.com/privacy.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ridememe.com/privacy.html">
+<meta property="og:title" content="Privacy &mdash; RideMeme">
+<meta property="og:description" content="RideMeme's privacy approach: no accounts, no data sold. See how we use Google Analytics and third-party form services.">
+<meta property="og:image" content="https://ridememe.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ridememe.com/og.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
   :root{--bg:#faf9f7;--ink:#1c1b1a;--muted:#6b6862;--line:#e8e5e0;--accent:#c8102e;--accent-dark:#9e0c24;--footbg:#1c1b1a;}
@@ -28,18 +35,24 @@
   footer{background:var(--footbg);color:#b7b2aa;margin-top:24px;padding:20px;font-size:12px;text-align:center;}
   footer a{color:#e6e1d9;text-decoration:underline;}
   .footnav{margin-bottom:10px;font-weight:600;} .footnav a{text-decoration:none;margin:0 2px;}
+  .skip { position:absolute; left:-9999px; top:0; z-index:1000; background:var(--accent); color:#fff; padding:8px 14px; border-radius:0 0 8px 0; font-size:14px; font-weight:600; }
+  .skip:focus { left:0; }
 </style>
 </head>
 <body>
 <div class="stripe"></div>
+<a class="skip" href="#maincontent">Skip to content</a>
 <header><a href="/"><h1 class="brand"><span class="ride">Ride</span>Meme</h1></a><button class="themebtn" id="themebtn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 3.5a8.5 8.5 0 0 0 0 17z" fill="currentColor"></path></svg></button></header>
-<main>
+<main id="maincontent">
   <h1>Privacy</h1>
-  <p class="updated">Last updated: June 26, 2026</p>
+  <p class="updated">Last updated: July 16, 2026</p>
   <p>RideMeme is built privacy-first. We don&rsquo;t ask you to create an account, and we don&rsquo;t build advertising profiles about you.</p>
 
   <h2>Analytics</h2>
-  <p>We use privacy-friendly, <strong>cookieless</strong> analytics (Cloudflare Web Analytics) to understand overall traffic &mdash; things like total page views, the most-read sections, and country-level breakdown. It sets no cookies, does not track you across other websites, and does not identify you personally.</p>
+  <p>We use Google Analytics (GA4) to understand overall traffic &mdash; things like total page views, the most-read sections, and country-level breakdown, so we know what&rsquo;s worth writing more of. Like most websites, this involves standard analytics cookies and basic technical details such as browser type and general location, but we never combine this with anything that identifies you personally, and we don&rsquo;t use it for advertising or cross-site tracking. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google&rsquo;s privacy policy</a> for details on how Google handles this data.</p>
+
+  <h2>Other third-party services</h2>
+  <p>Our advertiser inquiry form is handled by <strong>Web3Forms</strong>, which relays submissions to us by email. Our newsletter signup is handled by <strong>Buttondown</strong>, which stores subscriber email addresses to send the digest. Neither service is used for advertising or cross-site tracking.</p>
 
   <h2>What we don&rsquo;t do</h2>
   <p>We do not collect personal information, we do not sell or share data, and we do not run cross-site tracking.</p>
@@ -55,12 +68,15 @@
 </main>
 <footer>
   <nav class="footnav">
-    <a href="/">Home</a> &middot; <a href="reviews.html">Reviews</a> &middot;
-    <a href="about.html">About</a> &middot; <a href="privacy.html">Privacy</a> &middot;
+    <a href="index.html">Home</a> &middot;
+    <a href="reviews.html">Reviews</a> &middot;
+    <a href="advertise.html">Advertise</a> &middot;
+    <a href="about.html">About</a> &middot;
+    <a href="privacy.html">Privacy</a> &middot;
     <a href="contact.html">Contact</a>
   </nav>
-  A community project from the people behind <a href="https://ridenetwork.ph">RideNetwork.PH</a>.
-</footer>
+  RideMeme is an automated river of motoring news. Headlines and snippets belong to their publishers
+  &mdash; every link goes straight to the source.</footer>
 <script>(function(){var t=document.getElementById('themebtn');if(t){t.addEventListener('click',function(){var cur=document.documentElement.getAttribute('data-theme');if(!cur)cur=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';var next=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);try{localStorage.setItem('ridememe-theme',next);}catch(e){}});}})()</script>
 </body>
 </html>
