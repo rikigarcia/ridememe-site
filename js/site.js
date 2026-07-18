@@ -149,4 +149,30 @@
     }
     localStorage.setItem(VKEY, Math.floor(Date.now() / 1000));
   } catch (e) {}
+
+  // PWA service worker — auto-update, zero user friction.
+  // When a new SW activates (chrome changes, cache strategy bumps), the page
+  // reloads once. We also call registration.update() on open / foreground so
+  // an installed mobile PWA picks up changes without clear-site-data steps.
+  if ('serviceWorker' in navigator) {
+    var swRefreshing = false;
+    var softReload = function () {
+      if (swRefreshing) return;
+      swRefreshing = true;
+      location.reload();
+    };
+    navigator.serviceWorker.addEventListener('controllerchange', softReload);
+    navigator.serviceWorker.addEventListener('message', function (e) {
+      if (e.data && e.data.type === 'RM_SW_UPDATED') softReload();
+    });
+    navigator.serviceWorker.register('sw.js').then(function (reg) {
+      var poke = function () { try { reg.update(); } catch (err) {} };
+      poke();
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') poke();
+      });
+      // Same cadence as the hourly rebuild — catch a new SW if the PWA stays open.
+      setInterval(poke, 60 * 60 * 1000);
+    }).catch(function () {});
+  }
 })();

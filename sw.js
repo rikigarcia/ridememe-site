@@ -1,45 +1,43 @@
 // RideMeme service worker.
 //
-// Its only job is to make the site installable: Chrome/Android fires the PWA
-// install prompt (beforeinstallprompt, which reveals our install bar) only for
-// pages backed by a service worker with a fetch handler. It is network-first so
-// the hourly-updated news is never served stale — the cache is just an offline
-// fallback for the homepage shell. Bump CACHE when the offline shell's chrome
-// changes (e.g. Social wire → Road pulse) so installed PWAs drop the old page.
-const CACHE = 'ridememe-v2';
+// Purpose: make the site installable (Chromium requires a fetch handler for the
+// PWA install prompt). Strategy — network-only, no HTML cache:
+//
+//   Caching `/` as an "offline shell" froze sidebar chrome into installed PWAs
+//   (users kept seeing Social wire after Road pulse shipped). A news river is
+//   useless offline anyway, so we never write to Cache Storage.
+//
+// Updates are zero-friction: skipWaiting + claim + postMessage, and site.js
+// reloads the page once when a new worker takes control. No clear-site-data /
+// reinstall steps for end users.
+const CACHE = 'ridememe-v3'; // name kept so activate can delete legacy v1/v2 caches
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE).then(function (c) { return c.add('/'); }));
 });
 
 self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys()
       .then(function (keys) {
-        return Promise.all(keys
-          .filter(function (k) { return k !== CACHE; })
-          .map(function (k) { return caches.delete(k); }));
+        // Drop every Cache Storage entry — including older ridememe-v* shells.
+        return Promise.all(keys.map(function (k) { return caches.delete(k); }));
       })
       .then(function () { return self.clients.claim(); })
+      .then(function () {
+        return self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+          .then(function (clients) {
+            clients.forEach(function (c) {
+              c.postMessage({ type: 'RM_SW_UPDATED', cache: CACHE });
+            });
+          });
+      })
   );
 });
 
 self.addEventListener('fetch', function (e) {
-  var req = e.request;
-  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
-  e.respondWith(
-    fetch(req)
-      .then(function (res) {
-        // keep the homepage fresh in cache for offline use
-        if (req.mode === 'navigate') {
-          var copy = res.clone();
-          caches.open(CACHE).then(function (c) { c.put('/', copy); });
-        }
-        return res;
-      })
-      .catch(function () {
-        return caches.match(req).then(function (m) { return m || caches.match('/'); });
-      })
-  );
+  // Network-only pass-through. respondWith keeps this a real fetch handler
+  // (installability) without ever serving a stale cached shell.
+  if (e.request.method !== 'GET') return;
+  e.respondWith(fetch(e.request));
 });
