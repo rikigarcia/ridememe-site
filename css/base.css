@@ -133,8 +133,17 @@
   .brandnav a:hover { border-color:var(--accent); color:var(--accent); }
   aside h2 .sub { font-weight:400; letter-spacing:0; text-transform:none; color:var(--muted); font-size:11px; }
   .wire li::before { background:var(--muted); }
-  .embeds { display:flex; flex-direction:column; gap:10px; }
-  .embeds iframe { max-width:100%; border-radius:10px; border:1px solid var(--line); }
+  /* Road pulse — theme-native agency links + traffic headlines (no iframes). */
+  .pulse-agencies { margin:0 0 10px; font-size:12px; line-height:1.6; color:var(--muted); }
+  .pulse-agencies a { color:var(--ink); font-weight:600; text-decoration:none; }
+  .pulse-agencies a:hover { color:var(--accent); }
+  .pulse-agencies .sep { color:var(--line); margin:0 2px; }
+  .pulse-empty { margin:0 0 12px; font-size:12px; color:var(--muted); line-height:1.45; }
+  .pulse-note { margin:0 0 8px; font-size:11px; color:var(--muted); line-height:1.4; }
+  .pulse-more { margin:0 0 22px; font-size:12px; }
+  .pulse-more a { color:var(--accent); font-weight:600; text-decoration:none; }
+  .pulse-more a:hover { text-decoration:underline; }
+  ul.pulse { margin-bottom:18px; }
   footer { background:var(--footbg); color:#b7b2aa; margin-top:8px; padding:20px;
             font-size:12px; text-align:center; }
   footer a { color:#e6e1d9; text-decoration:underline; }

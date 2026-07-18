@@ -4,8 +4,9 @@
 // install prompt (beforeinstallprompt, which reveals our install bar) only for
 // pages backed by a service worker with a fetch handler. It is network-first so
 // the hourly-updated news is never served stale — the cache is just an offline
-// fallback for the homepage shell.
-const CACHE = 'ridememe-v1';
+// fallback for the homepage shell. Bump CACHE when the offline shell's chrome
+// changes (e.g. Social wire → Road pulse) so installed PWAs drop the old page.
+const CACHE = 'ridememe-v2';
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();
