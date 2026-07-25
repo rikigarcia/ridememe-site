@@ -33,8 +33,14 @@
   h1{font-size:26px;letter-spacing:-0.4px;margin:18px 0 6px;}
   h2{font-size:16px;margin:24px 0 6px;}
   .proof{color:var(--muted);font-size:14px;margin:0 0 16px;}
-  .offers{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0 22px;}
-  .offer{flex:1;min-width:170px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;}
+  /* Grid, not flex-wrap: with four cards a flex row fits three and leaves the
+     fourth stretched alone across the next line. auto-fit gives an even 2x2 in
+     the 640px column and a clean single column on phones. */
+  .offers{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0 22px;}
+  .offer{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;}
+  .policy{margin:8px 0 20px;padding-left:20px;}
+  .policy li{font-size:14px;margin:5px 0;}
+  .policy code{font-size:12.5px;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:1px 5px;}
   .offer b{display:block;font-size:14px;margin-bottom:2px;}
   .offer span{font-size:12.5px;color:var(--muted);}
   .msgrbtn{display:inline-block;background:#0866ff;color:#fff;font-weight:700;font-size:15px;padding:12px 20px;border-radius:10px;margin:4px 0 22px;}
@@ -56,16 +62,25 @@
   <p style="margin:6px 0 0;font-size:13px;"><a href="/">&larr; Back to RideMeme</a></p>
   <h1>Advertise on RideMeme</h1>
   <p class="proof">RideMeme is from the team behind RideNetwork.PH — a trusted name in the Philippine motoring community, read by enthusiasts nationwide.</p>
-  <p>Put your brand in front of Filipino car and motorcycle enthusiasts who check in for the day&rsquo;s motoring news. Three simple ways to work with us:</p>
+  <p>Put your brand in front of Filipino car and motorcycle enthusiasts who check in for the day&rsquo;s motoring news. Four ways to work with us:</p>
   <div class="offers">
-    <div class="offer"><b>Featured partner</b><span>Your dealership, shop, or service in the sidebar.</span></div>
-    <div class="offer"><b>Motoring jobs</b><span>Hire from the PH motoring community.</span></div>
-    <div class="offer"><b>Events</b><span>Promote a show, track day, or meet.</span></div>
+    <div class="offer"><b>Featured partner</b><span>Logo and blurb in the mid column. Max 6 at a time.</span></div>
+    <div class="offer"><b>Sponsor card</b><span>Top of the mid column, labelled Sponsored. One visible at a time.</span></div>
+    <div class="offer"><b>Motoring jobs</b><span>Right column plus the jobs page. Auto-expires.</span></div>
+    <div class="offer"><b>Events</b><span>Right column plus the events page. Auto-expires until the event date.</span></div>
   </div>
-  <h2>Get in touch</h2>
+  <h2>How we work</h2>
+  <ul class="policy">
+    <li>Every paid placement is clearly labelled.</li>
+    <li>We never sell ranking in the news river &mdash; that&rsquo;s why a placement here is worth something.</li>
+    <li>Your links carry <code>utm_source=ridememe</code>, so the clicks show up in your own analytics.</li>
+    <li>Slots are capped on purpose. Scarcity keeps the page clean and the placement visible.</li>
+  </ul>
+  <h2>Request a quote</h2>
+  <p>We quote rates directly rather than posting a public list. Tell us which slot you&rsquo;re after and we&rsquo;ll send introductory figures.</p>
   <p class="proof">Fastest: message us on Messenger. Prefer a form? It&rsquo;s right below.</p>
   <a class="msgrbtn" href="https://m.me/ridenetworkph" target="_blank" rel="noopener">&#128172; Message us on Messenger</a>
-  <form id="advform" class="advform"><input type="hidden" name="access_key" value="e9580ce8-a6a8-45fe-85f8-528a0f4370fa"><input type="hidden" name="subject" value="RideMeme advertiser enquiry"><input type="hidden" name="from_name" value="RideMeme Advertise"><label>Your name<input type="text" name="name" autocomplete="name" required></label><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Business / organisation<input type="text" name="business" autocomplete="organization"></label><label>I&rsquo;m interested in<select name="interest" id="advtype"><option value="Featured partner">Featured partner listing</option><option value="Job posting">Posting a motoring job</option><option value="Event listing">Listing an event</option><option value="Other">Something else</option></select></label><label>Message<textarea name="message" rows="4" placeholder="Tell us a bit about it"></textarea></label><button type="submit" class="advsubmit">Send enquiry</button><p id="advresult" class="advresult" role="status" aria-live="polite"></p></form>
+  <form id="advform" class="advform"><input type="hidden" name="access_key" value="e9580ce8-a6a8-45fe-85f8-528a0f4370fa"><input type="hidden" name="subject" value="RideMeme advertiser enquiry"><input type="hidden" name="from_name" value="RideMeme Advertise"><label>Your name<input type="text" name="name" autocomplete="name" required></label><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Business / organisation<input type="text" name="business" autocomplete="organization"></label><label>I&rsquo;m interested in<select name="interest" id="advtype"><option value="Featured partner">Featured partner listing</option><option value="Sponsor card">Sponsor card</option><option value="Job posting">Posting a motoring job</option><option value="Event listing">Listing an event</option><option value="Other">Something else</option></select></label><label>Message<textarea name="message" rows="4" placeholder="Tell us a bit about it"></textarea></label><button type="submit" class="advsubmit">Send enquiry</button><p id="advresult" class="advresult" role="status" aria-live="polite"></p></form>
 </main>
 <footer>
   <nav class="footnav">
@@ -78,7 +93,7 @@
   </nav>
   RideMeme is an automated river of motoring news. Headlines and snippets belong to their publishers
   &mdash; every link goes straight to the source.</footer>
-<script>(function(){var p=new URLSearchParams(location.search).get("type");var map={partner:"Featured partner",job:"Job posting",event:"Event listing"};var sel=document.getElementById("advtype");if(sel&&p&&map[p]){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===map[p])sel.selectedIndex=i;}}var f=document.getElementById("advform");if(f){f.addEventListener("submit",function(e){e.preventDefault();var r=document.getElementById("advresult");r.textContent="Sending\u2026";fetch("https://api.web3forms.com/submit",{method:"POST",body:new FormData(f)}).then(function(x){return x.json();}).then(function(j){r.textContent=j.success?"Thanks! We'll be in touch within a day.":"That didn't go through \u2014 please try Messenger.";if(j.success)f.reset();}).catch(function(){r.textContent="Network error \u2014 please try Messenger.";});});}})();</script>
+<script>(function(){var p=new URLSearchParams(location.search).get("type");var map={partner:"Featured partner",sponsor:"Sponsor card",job:"Job posting",event:"Event listing"};var sel=document.getElementById("advtype");if(sel&&p&&map[p]){for(var i=0;i<sel.options.length;i++){if(sel.options[i].value===map[p])sel.selectedIndex=i;}}var f=document.getElementById("advform");if(f){f.addEventListener("submit",function(e){e.preventDefault();var r=document.getElementById("advresult");r.textContent="Sending\u2026";fetch("https://api.web3forms.com/submit",{method:"POST",body:new FormData(f)}).then(function(x){return x.json();}).then(function(j){r.textContent=j.success?"Thanks! We'll be in touch within a day.":"That didn't go through \u2014 please try Messenger.";if(j.success)f.reset();}).catch(function(){r.textContent="Network error \u2014 please try Messenger.";});});}})();</script>
 <script src="js/site.js" defer></script>
 
 </body>
