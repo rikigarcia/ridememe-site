@@ -2,6 +2,58 @@
   var box = document.getElementById('q');
   var items = document.querySelectorAll('[data-search]');
   var none = document.getElementById('noresults');
+
+  // T-07: the river renders only the top clusters, so the DOM filter alone cannot
+  // find a headline we fetched but did not display. The home page embeds every
+  // fetched item as compact rows [title, source, link, ts, region]; matches that
+  // are not already on the page render below the river. Absent (brand/topic/reviews
+  // pages) this stays null and search behaves exactly as before.
+  var fireEl = document.getElementById('firehose');
+  var fireBox = document.getElementById('firehits');
+  var fireList = document.getElementById('firehitslist');
+  var fire = null;
+  if (fireEl) {
+    try { fire = JSON.parse(fireEl.textContent); } catch (e) { fire = null; }
+  }
+
+  function domLinks() {
+    var set = {};
+    document.querySelectorAll('.item a[href], .fire a[href]').forEach(function(a) {
+      set[a.getAttribute('href')] = 1;
+    });
+    return set;
+  }
+
+  function renderFirehose(q) {
+    if (!fire || !fireBox || !fireList) return 0;
+    if (!q) { fireBox.hidden = true; fireList.textContent = ''; return 0; }
+    var onPage = domLinks();
+    var out = document.createDocumentFragment();
+    var n = 0;
+    for (var i = 0; i < fire.length && n < 50; i++) {
+      var row = fire[i];
+      if ((row[0] + ' ' + row[1]).toLowerCase().indexOf(q) === -1) continue;
+      if (onPage[row[2]]) continue;           // already visible in the river
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = row[2];
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = row[0];                 // textContent: never inject markup
+      var s = document.createElement('span');
+      s.className = 'srcname';
+      s.textContent = ' ' + row[1];
+      li.appendChild(a);
+      li.appendChild(s);
+      out.appendChild(li);
+      n++;
+    }
+    fireList.textContent = '';
+    fireList.appendChild(out);
+    fireBox.hidden = n === 0;
+    return n;
+  }
+
   function run() {
     var q = box.value.trim().toLowerCase();
     var shownMain = 0;
@@ -10,7 +62,8 @@
       el.style.display = hit ? '' : 'none';
       if (hit && el.classList.contains('item')) shownMain++;
     });
-    none.style.display = (q && shownMain === 0) ? 'block' : 'none';
+    var extra = renderFirehose(q);
+    none.style.display = (q && shownMain === 0 && extra === 0) ? 'block' : 'none';
     document.querySelectorAll('.river-sep').forEach(function(sep) {
       sep.style.display = q ? 'none' : '';
     });
@@ -40,6 +93,9 @@
         sep.style.display = (f === 'ph') ? 'none' : '';
       });
       none.style.display = 'none';
+      // Region filter is a different lens than search — clear any firehose hits so
+      // the two never stack up confusingly.
+      if (fireBox) { fireBox.hidden = true; }
     });
   });
   document.querySelectorAll('.copy').forEach(function(b) {
