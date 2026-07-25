@@ -212,17 +212,28 @@
       try { localStorage.setItem('ridememe-theme', next); } catch (e) {}
     });
   }
-  // "New since your last visit" — mark stories newer than the last visit.
-  // First-ever visit marks nothing (no baseline); updates the baseline after.
+  // "NEW" badge: stories published in the last FRESH_HOURS, or newer than the
+  // reader's last visit. First-ever visit still marks age-fresh stories (unlike
+  // the old visit-only rule). Persist the visit baseline on pagehide / tab hide
+  // — not on every paint — so a same-session refresh or SW soft-reload does not
+  // wipe the badges immediately.
   try {
     var VKEY = 'ridememe_lastvisit';
+    var FRESH_HOURS = 12;
+    var nowSec = Math.floor(Date.now() / 1000);
     var prev = parseInt(localStorage.getItem(VKEY) || '0', 10);
-    if (prev > 0) {
-      document.querySelectorAll('.item[data-ts]').forEach(function(el) {
-        if (parseInt(el.getAttribute('data-ts'), 10) > prev) el.classList.add('fresh');
-      });
-    }
-    localStorage.setItem(VKEY, Math.floor(Date.now() / 1000));
+    var ageFloor = nowSec - FRESH_HOURS * 3600;
+    document.querySelectorAll('.item[data-ts]').forEach(function(el) {
+      var ts = parseInt(el.getAttribute('data-ts'), 10);
+      if (ts > ageFloor || (prev > 0 && ts > prev)) el.classList.add('fresh');
+    });
+    var persistVisit = function () {
+      try { localStorage.setItem(VKEY, String(nowSec)); } catch (err) {}
+    };
+    window.addEventListener('pagehide', persistVisit);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') persistVisit();
+    });
   } catch (e) {}
 
   // PWA service worker — auto-update, zero user friction.
