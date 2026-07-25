@@ -4,16 +4,25 @@
   var none = document.getElementById('noresults');
 
   // T-07: the river renders only the top clusters, so the DOM filter alone cannot
-  // find a headline we fetched but did not display. The home page embeds every
-  // fetched item as compact rows [title, source, link, ts, region]; matches that
-  // are not already on the page render below the river. Absent (brand/topic/reviews
-  // pages) this stays null and search behaves exactly as before.
-  var fireEl = document.getElementById('firehose');
+  // find a headline we fetched but did not display. The full index lives in its own
+  // file — compact rows [title, source, link, ts, region] — and is fetched the first
+  // time someone actually searches, so readers who never search pay nothing for it.
+  // Pages without the data-index attribute (brand/topic/reviews) keep DOM-only
+  // search, exactly as before. A failed fetch degrades to DOM-only silently.
   var fireBox = document.getElementById('firehits');
   var fireList = document.getElementById('firehitslist');
+  var indexUrl = null;
   var fire = null;
-  if (fireEl) {
-    try { fire = JSON.parse(fireEl.textContent); } catch (e) { fire = null; }
+  var indexState = 'idle';   // idle -> loading -> ready | failed
+
+  function withIndex(then) {
+    if (indexState === 'ready' || indexState === 'failed' || !indexUrl) return then();
+    if (indexState === 'loading') return;          // in flight; its own callback re-runs
+    indexState = 'loading';
+    fetch(indexUrl, { credentials: 'omit' })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (rows) { fire = rows; indexState = 'ready'; then(); })
+      .catch(function () { indexState = 'failed'; });
   }
 
   function domLinks() {
@@ -62,19 +71,29 @@
       el.style.display = hit ? '' : 'none';
       if (hit && el.classList.contains('item')) shownMain++;
     });
-    var extra = renderFirehose(q);
-    none.style.display = (q && shownMain === 0 && extra === 0) ? 'block' : 'none';
     document.querySelectorAll('.river-sep').forEach(function(sep) {
       sep.style.display = q ? 'none' : '';
     });
+    // The DOM filter above is instant and never waits on the network. The index
+    // fills in the rest as soon as it lands; re-reading box.value here (rather than
+    // closing over q) keeps a slow fetch from painting results for a stale query.
+    function settle() {
+      var cur = box.value.trim().toLowerCase();
+      var extra = renderFirehose(cur);
+      none.style.display = (cur && shownMain === 0 && extra === 0) ? 'block' : 'none';
+    }
+    if (q) { withIndex(settle); } else { settle(); }
   }
   // Search wiring only exists on the river pages (index/reviews/brand). Guarded
   // so this same file can be reused on the prose pages (advertise/support), which
   // have no #q/#searchform — without it, box.addEventListener would throw and
   // abort the whole IIFE before the theme toggle below ever runs.
   if (box) {
-    box.addEventListener('input', run);
     var searchform = document.getElementById('searchform');
+    indexUrl = searchform && searchform.getAttribute('data-index');
+    // Warm the index on focus so the first keystroke usually has it already.
+    if (indexUrl) box.addEventListener('focus', function() { withIndex(function() { run(); }); }, { once: true });
+    box.addEventListener('input', run);
     if (searchform) searchform.addEventListener('submit', function(e) { e.preventDefault(); run(); });
   }
   document.querySelectorAll('.flt').forEach(function(btn) {
