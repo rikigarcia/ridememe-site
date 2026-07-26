@@ -236,6 +236,62 @@
     });
   } catch (e) {}
 
+  // Content freshness. The SW update check below only ever sees sw.js, which the
+  // hourly build never rewrites — so an installed PWA sat on stale feeds until a
+  // real navigation happened to refetch the document. Compare the rendered build
+  // stamp against the server's Last-Modified whenever the app returns to the
+  // foreground, and *offer* a refresh: auto-reloading costs a reader their scroll
+  // position and can move a story out from under a tap.
+  try {
+    var stampEl = document.querySelector('.updated[data-built]');
+    var built = stampEl ? parseInt(stampEl.getAttribute('data-built'), 10) : 0;
+    if (built > 0) {
+      var CHECK_GAP_MS = 5 * 60 * 1000;  // don't re-probe on every tab flick
+      // NOT clock skew — these are two different events. data-built is when
+      // aggregate.py rendered; Last-Modified is when Pages finished deploying,
+      // one rsync + Pages build later. Measured 72s on 2026-07-26, and it varies.
+      // At 60s this fired on a freshly loaded, current page: crying wolf, which
+      // is the one failure that teaches you to ignore the pill.
+      // 900s sits ~12x above the observed lag and well under the hourly build
+      // interval, so a real new build (≈3600s newer) always clears it. That
+      // margin is pinned by tests/test_pwa_refresh.py against build.yml's cron —
+      // if the build ever runs more often than every 30 min, revisit this.
+      var SKEW_S = 900;
+      var lastCheck = 0;
+      var pill = null;
+      var showPill = function () {
+        if (pill) return;
+        pill = document.createElement('button');
+        pill.type = 'button';
+        pill.className = 'freshpill';
+        pill.textContent = 'New stories — refresh';
+        pill.addEventListener('click', function () { location.reload(); });
+        document.body.appendChild(pill);
+      };
+      var checkFresh = function () {
+        var t = Date.now();
+        if (t - lastCheck < CHECK_GAP_MS) return;
+        lastCheck = t;
+        fetch(location.href, { method: 'HEAD', cache: 'no-store' })
+          .then(function (r) {
+            var lm = r.headers.get('Last-Modified');
+            if (!lm) return;
+            var serverS = Math.floor(new Date(lm).getTime() / 1000);
+            if (serverS - built > SKEW_S) showPill();
+          })
+          .catch(function () {});  // offline or edge blocked: stay silent
+      };
+      // Not on first paint — the document was just fetched, so it is current.
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') checkFresh();
+      });
+      // Restored from bfcache (the installed-PWA resume path): no fetch happened.
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) checkFresh();
+      });
+    }
+  } catch (e) {}
+
   // PWA service worker — auto-update, zero user friction.
   // When a new SW activates (chrome changes, cache strategy bumps), the page
   // reloads once. We also call registration.update() on open / foreground so
