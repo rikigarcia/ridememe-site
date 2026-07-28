@@ -2,12 +2,27 @@
     --bg:#faf9f7; --card:#ffffff; --ink:#1c1b1a; --muted:#6b6862;
     --line:#e8e5e0; --accent:#c8102e; --accent-dark:#9e0c24;
     --chipbg:#f4f2ee; --phbg:#fcd116; --phink:#4a3b00; --footbg:#1c1b1a;
+    /* Filled surfaces that carry white text. Identical to --accent here, so light
+       mode is byte-for-byte unchanged; they exist because dark mode needs the two
+       roles to diverge. See the dark block. */
+    --btn:#c8102e; --btn-hover:#9e0c24;
   }
   /* manual dark (forced via the header toggle, regardless of OS) */
   :root[data-theme="dark"] {
     --bg:#171615; --card:#201f1d; --ink:#ece9e4; --muted:#a39e96;
     --line:#34322e; --accent:#ff4d5e; --accent-dark:#ff8a94;
     --chipbg:#2b2926; --phbg:#8a6d00; --phink:#fff3c4; --footbg:#100f0e;
+    /* One token cannot do both jobs here. --accent is read as TEXT on #171615, so
+       it must stay light (#ff4d5e = 5.57:1). The same value as a button SURFACE
+       under white text is 3.24:1 — under AA, on every button in dark mode, and
+       the old hover (#ff8a94) made it 2.25:1. So filled surfaces use the brand
+       red instead: white on #c8102e is 5.88:1, hover 8.29:1.
+       Deliberately the existing brand colour, not a new one tuned to the metric.
+       Known and accepted: #c8102e against --card is 2.80:1, just under the 3:1
+       for control boundaries — these are solid fills with bold white labels, not
+       outline-only controls, and readability (the 5.88) is the criterion that
+       actually governs. Text/link and decorative uses keep --accent. */
+    --btn:#c8102e; --btn-hover:#9e0c24;
   }
   /* light is the default; dark applies only when the user toggles it */
   * { box-sizing:border-box; }
@@ -18,8 +33,8 @@
   /* marketplace: invite placeholders + listings */
   .invite { border:1px dashed var(--line); border-radius:10px; padding:13px 14px; margin-bottom:6px; background:var(--card); }
   .invite-pitch { margin:0 0 8px; font-size:13px; color:var(--muted); line-height:1.5; }
-  .invite-cta { display:inline-block; font-size:12.5px; font-weight:700; color:#fff; background:var(--accent); padding:6px 12px; border-radius:7px; }
-  .invite-cta:hover { background:var(--accent-dark); }
+  .invite-cta { display:inline-block; font-size:12.5px; font-weight:700; color:#fff; background:var(--btn); padding:6px 12px; border-radius:7px; }
+  .invite-cta:hover { background:var(--btn-hover); }
   .invite-note { margin:8px 0 0; font-size:11px; color:var(--muted); line-height:1.4; }
   .partners { display:flex; flex-direction:column; gap:8px; margin-bottom:6px; }
   .partner { display:flex; flex-direction:column; gap:2px; border:1px solid var(--line); border-radius:10px; padding:11px 13px; background:var(--card); }
@@ -50,15 +65,15 @@
   .nlbox-form { display:flex; gap:8px; }
   .nlbox-form input { flex:1; min-width:0; font:inherit; font-size:16px; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); }
   .nlbox-form input:focus { outline:none; border-color:var(--accent); }
-  .nlbox-form button { font:inherit; font-size:14px; font-weight:700; color:#fff; background:var(--accent); border:none; border-radius:8px; padding:10px 16px; cursor:pointer; }
-  .nlbox-form button:hover { background:var(--accent-dark); }
+  .nlbox-form button { font:inherit; font-size:14px; font-weight:700; color:#fff; background:var(--btn); border:none; border-radius:8px; padding:10px 16px; cursor:pointer; }
+  .nlbox-form button:hover { background:var(--btn-hover); }
   .nlbox-fine { margin:10px 0 0; font-size:11px; color:var(--muted); }
   .nlclose { position:absolute; top:8px; right:12px; font-size:24px; line-height:1; background:none; border:none; color:var(--muted); cursor:pointer; }
   /* GCash tip button + modal — emitted by render() only when support.qr_image is
      set (dormant at launch). Kept here so re-enabling the QR renders it styled;
      the open/close handler lives in js/site.js. NOT dead code. */
-  .tipbtn { position:fixed; right:18px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:950; font:inherit; font-size:12px; font-weight:700; color:#fff; background:var(--accent); border:none; border-radius:999px; padding:8px 13px; cursor:pointer; box-shadow:0 2px 7px rgba(0,0,0,.16); opacity:0.9; transition:opacity .15s; }
-  .tipbtn:hover, .tipbtn:focus-visible { background:var(--accent-dark); opacity:1; }
+  .tipbtn { position:fixed; right:18px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:950; font:inherit; font-size:12px; font-weight:700; color:#fff; background:var(--btn); border:none; border-radius:999px; padding:8px 13px; cursor:pointer; box-shadow:0 2px 7px rgba(0,0,0,.16); opacity:0.9; transition:opacity .15s; }
+  .tipbtn:hover, .tipbtn:focus-visible { background:var(--btn-hover); opacity:1; }
   .tipmodal { position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,.55); display:none; align-items:center; justify-content:center; padding:20px; }
   .tipmodal.open { display:flex; }
   .tipbox { position:relative; background:var(--card); border-radius:14px; padding:24px; max-width:320px; width:100%; text-align:center; }
@@ -71,11 +86,11 @@
      it would overlap on a 320px screen). nowrap because the label wrapped to two
      lines inside the pill at 375px. Below .nlmodal/.tipmodal (z-index 1000) so a
      modal still covers it. */
-  .freshpill { position:fixed; left:18px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:960; display:inline-flex; align-items:center; min-height:44px; white-space:nowrap; font:inherit; font-size:13px; font-weight:700; color:#fff; background:var(--accent); border:none; border-radius:999px; padding:0 18px; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,.22); }
-  .freshpill:hover, .freshpill:focus-visible { background:var(--accent-dark); }
+  .freshpill { position:fixed; left:18px; bottom:calc(18px + env(safe-area-inset-bottom)); z-index:960; display:inline-flex; align-items:center; min-height:44px; white-space:nowrap; font:inherit; font-size:13px; font-weight:700; color:#fff; background:var(--btn); border:none; border-radius:999px; padding:0 18px; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,.22); }
+  .freshpill:hover, .freshpill:focus-visible { background:var(--btn-hover); }
   a, button { touch-action:manipulation; }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
-  .skip { position:absolute; left:-9999px; top:0; z-index:1000; background:var(--accent); color:#fff; padding:8px 14px; border-radius:0 0 8px 0; font-size:14px; font-weight:600; }
+  .skip { position:absolute; left:-9999px; top:0; z-index:1000; background:var(--btn); color:#fff; padding:8px 14px; border-radius:0 0 8px 0; font-size:14px; font-weight:600; }
   .skip:focus { left:0; }
   .stripe { height:4px; background:linear-gradient(90deg, var(--accent) 0 60%, var(--ink) 60% 62%, var(--accent-dark) 62%); }
   header { max-width:1200px; margin:0 auto; padding:20px 20px 14px; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; }
@@ -92,7 +107,7 @@
   /* NEW badge overlays (does not reflow) so site.js adding .fresh after paint cannot CLS.
      ::after stays reserved for the float clearfix below. */
   .item.fresh::before { content:"NEW"; position:absolute; top:10px; right:12px; z-index:1;
-                         background:var(--accent); color:#fff; font-size:9px; font-weight:800;
+                         background:var(--btn); color:#fff; font-size:9px; font-weight:800;
                          letter-spacing:.5px; padding:1px 5px; border-radius:3px;
                          pointer-events:none; line-height:1.4; }
   .item:first-child .hed { font-size:20px; }
@@ -167,8 +182,8 @@
                    border-radius:8px 0 0 8px; outline:none; }
   .search input:focus { border-color:var(--accent); }
   .search button { font:inherit; font-size:13px; padding:6px 13px; cursor:pointer; color:#fff;
-                    background:var(--accent); border:1px solid var(--accent); border-radius:0 8px 8px 0; }
-  .search button:hover { background:var(--accent-dark); border-color:var(--accent-dark); }
+                    background:var(--btn); border:1px solid var(--btn); border-radius:0 8px 8px 0; }
+  .search button:hover { background:var(--btn-hover); border-color:var(--accent-dark); }
   .noresults { display:none; color:var(--muted); padding:18px 2px; font-size:13px; }
   /* T-07 search scope + firehose matches not rendered in the river */
   .searchscope { margin:3px 0 0; font-size:11px; color:var(--muted); }
@@ -181,13 +196,13 @@
            padding:0; cursor:pointer; color:var(--muted); background:var(--card);
            border:1px solid var(--line); border-radius:50%; }
   .sbtn svg { width:15px; height:15px; fill:currentColor; }
-  .sbtn:hover { color:#fff; background:var(--accent); border-color:var(--accent); }
+  .sbtn:hover { color:#fff; background:var(--btn); border-color:var(--accent); }
   .sbtn.copy.done { color:#fff; background:#0a7d28; border-color:#0a7d28; }
   .hactions { display:flex; align-items:center; gap:8px; flex-wrap:nowrap; }
   .themebtn { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px;
                padding:0; cursor:pointer; color:var(--muted); background:var(--card);
                border:1px solid var(--line); border-radius:50%; }
-  .themebtn:hover { color:#fff; background:var(--accent); border-color:var(--accent); }
+  .themebtn:hover { color:#fff; background:var(--btn); border-color:var(--accent); }
   /* sponsor posts — text left, prominent logo right */
   .sponsors { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
   .sp-card { display:flex; align-items:center; gap:14px; background:var(--card);
@@ -213,9 +228,9 @@
                border-radius:8px 0 0 8px; outline:none; }
   .nl-input:focus { border-color:var(--accent); }
   .nl-btn { font:inherit; font-size:13px; font-weight:600; padding:8px 14px; cursor:pointer;
-             color:#fff; background:var(--accent); border:1px solid var(--accent);
+             color:#fff; background:var(--btn); border:1px solid var(--btn);
              border-radius:0 8px 8px 0; }
-  .nl-btn:hover { background:var(--accent-dark); border-color:var(--accent-dark); }
+  .nl-btn:hover { background:var(--btn-hover); border-color:var(--accent-dark); }
   .nl-link { display:inline-block; border-radius:8px; text-align:center; }
   .nl-issue { display:inline-block; margin-top:9px; font-size:12.5px; font-weight:600; color:var(--accent); }
   .nl-issue:hover { color:var(--accent-dark); }
@@ -237,8 +252,8 @@
   .installbar[hidden] { display:none; }
   .installtxt { color:var(--muted); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .installacts { display:flex; align-items:center; gap:6px; flex-shrink:0; }
-  .installgo { font:inherit; font-size:12.5px; font-weight:700; color:#fff; background:var(--accent); border:none; border-radius:7px; padding:7px 14px; cursor:pointer; }
-  .installgo:hover { background:var(--accent-dark); }
+  .installgo { font:inherit; font-size:12.5px; font-weight:700; color:#fff; background:var(--btn); border:none; border-radius:7px; padding:7px 14px; cursor:pointer; }
+  .installgo:hover { background:var(--btn-hover); }
   .installx { font-size:20px; line-height:1; background:none; border:none; color:var(--muted); cursor:pointer; padding:0 4px; }
   @media (max-width:780px) { .installbar { margin-left:16px; margin-right:16px; } }
   /* nav filter bar */
@@ -246,7 +261,7 @@
   .flt { display:inline-flex; align-items:center; justify-content:center; min-height:32px;
           font:inherit; font-size:12.5px; font-weight:600; padding:4px 12px; cursor:pointer;
           background:var(--chipbg); border:1px solid var(--line); border-radius:999px; color:var(--muted); }
-  .flt:hover, .flt.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .flt:hover, .flt.active { background:var(--btn); border-color:var(--accent); color:#fff; }
   .nav-spacer { flex:1; }
   /* subtle gap separating the filters from the nav links (proximity cue, no arrow needed) */
   .navlink:first-of-type { margin-left:8px; }
@@ -266,5 +281,5 @@
                 border-radius:0 10px 10px 0; padding:12px 16px; margin-bottom:10px; }
   .nl-inline-text { font-size:13px; color:var(--muted); flex:1; }
   .nl-inline-btn { font-size:12.5px; font-weight:700; white-space:nowrap; padding:5px 12px;
-                    background:var(--accent); color:#fff; border-radius:8px; }
-  .nl-inline-btn:hover { background:var(--accent-dark); }
+                    background:var(--btn); color:#fff; border-radius:8px; }
+  .nl-inline-btn:hover { background:var(--btn-hover); }
