@@ -239,9 +239,17 @@
   // Content freshness. The SW update check below only ever sees sw.js, which the
   // hourly build never rewrites — so an installed PWA sat on stale feeds until a
   // real navigation happened to refetch the document. Compare the rendered build
-  // stamp against the server's Last-Modified whenever the app returns to the
-  // foreground, and *offer* a refresh: auto-reloading costs a reader their scroll
-  // position and can move a story out from under a tap.
+  // stamp against the server's Last-Modified and either fix it or offer to.
+  //
+  // Which of the two depends on *when* we notice, and the split is the whole point:
+  //   first paint — nothing to lose. Correct it silently.
+  //   foreground  — the reader may be mid-scroll or mid-tap, so only offer, because
+  //                 auto-reloading there costs them their place and can move a story
+  //                 out from under a thumb.
+  //
+  // Both comparisons are between two server-rendered clocks (data-built and
+  // Last-Modified), never the device's — a reader with a wrong phone clock is
+  // unaffected.
   try {
     var stampEl = document.querySelector('.updated[data-built]');
     var built = stampEl ? parseInt(stampEl.getAttribute('data-built'), 10) : 0;
@@ -268,7 +276,7 @@
         pill.addEventListener('click', function () { location.reload(); });
         document.body.appendChild(pill);
       };
-      var checkFresh = function () {
+      var checkFresh = function (onStale) {
         var t = Date.now();
         if (t - lastCheck < CHECK_GAP_MS) return;
         lastCheck = t;
@@ -277,11 +285,46 @@
             var lm = r.headers.get('Last-Modified');
             if (!lm) return;
             var serverS = Math.floor(new Date(lm).getTime() / 1000);
-            if (serverS - built > SKEW_S) showPill();
+            if (serverS - built > SKEW_S) (onStale || showPill)();
           })
           .catch(function () {});  // offline or edge blocked: stay silent
       };
-      // Not on first paint — the document was just fetched, so it is current.
+      // First paint is NOT proof the document is current — that assumption is what
+      // left Android readers on old feeds. Reopening an installed PWA on Chrome
+      // paints a document straight out of the HTTP disk cache (Pages sends
+      // Cache-Control: max-age=600 with nothing forcing revalidation), and neither
+      // trigger below fires: the page loads already visible, so no visibilitychange,
+      // and a re-parsed document is not a bfcache restore. Measured with a real
+      // Chromium in tests/test_pwa_refresh_client.py, which fails without this call.
+      var RELOADED_KEY = 'ridememe_reloaded_from';
+      var RELOADED_AT_KEY = 'ridememe_reloaded_at';
+      var RELOAD_FLOOR_MS = 60 * 1000;
+      var selfHeal = function () {
+        var tried = null;
+        var at = 0;
+        try {
+          tried = sessionStorage.getItem(RELOADED_KEY);
+          at = parseInt(sessionStorage.getItem(RELOADED_AT_KEY) || '0', 10);
+        } catch (err) {}
+        // We already reloaded away from this exact stamp and landed back on it, so
+        // reloading again would loop forever. The pill is always safe; take it.
+        if (tried === String(built)) { showPill(); return; }
+        // Belt and braces, and not hypothetical: the check above is only a loop
+        // guard while `built` is stable for a given deployed page. It is — but a
+        // CI run on a slow box proved that keying on the stamp *alone* reloads
+        // again the moment two loads disagree about it. Rate-limit regardless of
+        // what the stamps say. Only ever a delta between two readings on this
+        // device, so a wrong phone clock cannot mute it.
+        if (at && Date.now() - at < RELOAD_FLOOR_MS) { showPill(); return; }
+        // Scroll was restored, so the reader was mid-river when they left. Offer.
+        if (window.scrollY > 0) { showPill(); return; }
+        try {
+          sessionStorage.setItem(RELOADED_KEY, String(built));
+          sessionStorage.setItem(RELOADED_AT_KEY, String(Date.now()));
+        } catch (err) {}
+        location.reload();
+      };
+      checkFresh(selfHeal);
       document.addEventListener('visibilitychange', function () {
         if (document.visibilityState === 'visible') checkFresh();
       });
