@@ -33,6 +33,23 @@
   h1{font-size:26px;letter-spacing:-0.4px;margin:18px 0 6px;}
   h2{font-size:16px;margin:24px 0 6px;}
   .proof{color:var(--muted);font-size:14px;margin:0 0 16px;}
+  /* Evidence strip. The cell count is NOT fixed — it grows from 4 to 7 as
+     audience figures get configured — so the layout has to survive a row that
+     does not divide evenly. Two decisions come from that:
+     - borders per cell, not the 1px-gap-over-a-tinted-container trick, because
+       that trick paints the empty tail of the last row as a dead slab. Measured
+       at 7 cells it looked like a rendering fault.
+     - flex that grows to fill a full row, but with `max-width` so a short last
+       row cannot balloon. At 6 cells the tail is a single cell; unbounded, it
+       stretched into a full-width banner under five small ones. Capped and
+       centred it reads as a chip that simply ran out of neighbours. */
+  .stats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 0 10px;}
+  .stat{flex:1 1 104px;max-width:220px;background:var(--card);
+    border:1px solid var(--line);border-radius:6px;padding:10px 12px;
+    text-align:center;}
+  .stat b{display:block;font-size:19px;line-height:1.15;letter-spacing:-0.3px;}
+  .stat span{display:block;color:var(--muted);font-size:11.5px;margin-top:2px;}
+  .statnote{color:var(--muted);font-size:12.5px;margin:0 0 18px;}
   /* Grid, not flex-wrap: with four cards a flex row fits three and leaves the
      fourth stretched alone across the next line. auto-fit gives an even 2x2 in
      the 640px column and a clean single column on phones. */
@@ -61,7 +78,7 @@
 <main id="maincontent">
   <p style="margin:6px 0 0;font-size:13px;"><a href="/">&larr; Back to RideMeme</a></p>
   <h1>Advertise on RideMeme</h1>
-  <p class="proof">RideMeme is from the team behind RideNetwork.PH — a trusted name in the Philippine motoring community, read by enthusiasts nationwide.</p>
+  <p class="proof">RideMeme is from the team behind RideNetwork.PH — a trusted name in the Philippine motoring community, read by enthusiasts nationwide.</p><div class="stats"><div class="stat"><b>77</b><span>live sources</span></div><div class="stat"><b>41</b><span>Philippine outlets</span></div><div class="stat"><b>hourly</b><span>rebuild</span></div><div class="stat"><b>55</b><span>brands tracked</span></div></div><p class="statnote">Counted from the live site at build time.</p>
   <p>Put your brand in front of Filipino car and motorcycle enthusiasts who check in for the day&rsquo;s motoring news. Four ways to work with us:</p>
   <div class="offers">
     <div class="offer"><b>Featured partner</b><span>Logo and blurb in the mid column. Max 6 at a time.</span></div>
