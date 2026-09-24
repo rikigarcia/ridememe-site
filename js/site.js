@@ -270,19 +270,23 @@
       // Last-Modified moves on ANY Pages deploy, not only a new build. On
       // 2026-09-24 a custom-domain reset redeployed the same 04:00 build at 04:24,
       // so every load showed the pill and clicking it reloaded the same document —
-      // the pill came straight back. Remember the build the reader refreshed FROM;
-      // if the reload lands on that same build, the refresh has nothing newer to
-      // give, so stop offering it until data-built actually changes.
+      // the pill came straight back. Remember the build the reader refreshed FROM
+      // and the deploy (Last-Modified) that prompted it; landing back on that same
+      // build under that same deploy means the refresh has nothing newer to give.
+      // Keyed on the deploy too, not the build alone: a reader who stays on that
+      // page must still be offered the NEXT real build, which arrives as a new
+      // Last-Modified while their data-built has not changed.
       var PILL_KEY = 'ridememe_pill_from';
-      var showPill = function () {
+      var showPill = function (lm) {
         if (pill) return;
-        try { if (sessionStorage.getItem(PILL_KEY) === String(built)) return; } catch (err) {}
+        var from = String(built) + '|' + (lm || '');
+        try { if (sessionStorage.getItem(PILL_KEY) === from) return; } catch (err) {}
         pill = document.createElement('button');
         pill.type = 'button';
         pill.className = 'freshpill';
         pill.textContent = 'New stories — refresh';
         pill.addEventListener('click', function () {
-          try { sessionStorage.setItem(PILL_KEY, String(built)); } catch (err) {}
+          try { sessionStorage.setItem(PILL_KEY, from); } catch (err) {}
           location.reload();
         });
         document.body.appendChild(pill);
@@ -296,7 +300,7 @@
             var lm = r.headers.get('Last-Modified');
             if (!lm) return;
             var serverS = Math.floor(new Date(lm).getTime() / 1000);
-            if (serverS - built > SKEW_S) (onStale || showPill)();
+            if (serverS - built > SKEW_S) (onStale || showPill)(lm);
           })
           .catch(function () {});  // offline or edge blocked: stay silent
       };
@@ -310,7 +314,7 @@
       var RELOADED_KEY = 'ridememe_reloaded_from';
       var RELOADED_AT_KEY = 'ridememe_reloaded_at';
       var RELOAD_FLOOR_MS = 60 * 1000;
-      var selfHeal = function () {
+      var selfHeal = function (lm) {
         var tried = null;
         var at = 0;
         try {
@@ -319,16 +323,16 @@
         } catch (err) {}
         // We already reloaded away from this exact stamp and landed back on it, so
         // reloading again would loop forever. The pill is always safe; take it.
-        if (tried === String(built)) { showPill(); return; }
+        if (tried === String(built)) { showPill(lm); return; }
         // Belt and braces, and not hypothetical: the check above is only a loop
         // guard while `built` is stable for a given deployed page. It is — but a
         // CI run on a slow box proved that keying on the stamp *alone* reloads
         // again the moment two loads disagree about it. Rate-limit regardless of
         // what the stamps say. Only ever a delta between two readings on this
         // device, so a wrong phone clock cannot mute it.
-        if (at && Date.now() - at < RELOAD_FLOOR_MS) { showPill(); return; }
+        if (at && Date.now() - at < RELOAD_FLOOR_MS) { showPill(lm); return; }
         // Scroll was restored, so the reader was mid-river when they left. Offer.
-        if (window.scrollY > 0) { showPill(); return; }
+        if (window.scrollY > 0) { showPill(lm); return; }
         try {
           sessionStorage.setItem(RELOADED_KEY, String(built));
           sessionStorage.setItem(RELOADED_AT_KEY, String(Date.now()));
