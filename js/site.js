@@ -267,13 +267,24 @@
       var SKEW_S = 900;
       var lastCheck = 0;
       var pill = null;
+      // Last-Modified moves on ANY Pages deploy, not only a new build. On
+      // 2026-09-24 a custom-domain reset redeployed the same 04:00 build at 04:24,
+      // so every load showed the pill and clicking it reloaded the same document —
+      // the pill came straight back. Remember the build the reader refreshed FROM;
+      // if the reload lands on that same build, the refresh has nothing newer to
+      // give, so stop offering it until data-built actually changes.
+      var PILL_KEY = 'ridememe_pill_from';
       var showPill = function () {
         if (pill) return;
+        try { if (sessionStorage.getItem(PILL_KEY) === String(built)) return; } catch (err) {}
         pill = document.createElement('button');
         pill.type = 'button';
         pill.className = 'freshpill';
         pill.textContent = 'New stories — refresh';
-        pill.addEventListener('click', function () { location.reload(); });
+        pill.addEventListener('click', function () {
+          try { sessionStorage.setItem(PILL_KEY, String(built)); } catch (err) {}
+          location.reload();
+        });
         document.body.appendChild(pill);
       };
       var checkFresh = function (onStale) {
