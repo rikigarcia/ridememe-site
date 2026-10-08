@@ -9,7 +9,6 @@
   <url><loc>https://ridememe.com/advertise.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://ridememe.com/toyota.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/honda.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://ridememe.com/ford.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/suzuki.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/hyundai.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/geely.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -21,6 +20,7 @@
   <url><loc>https://ridememe.com/omoda.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/jaecoo.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/denza.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ridememe.com/polestar.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/jaguar.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/ferrari.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ridememe.com/ev.html</loc><lastmod>2026-10-08</lastmod><changefreq>hourly</changefreq><priority>0.8</priority></url>
